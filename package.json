@@ -1,15 +1,31 @@
 {
-  "name": "blueberrycloud_front",
+  "name": "cuba-starter-kits",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.21.1",
+    "bootstrap-scss": "^4.5.0",
+    "http-proxy-middleware": "^1.0.6",
+    "moment": "^2.29.1",
+    "node-sass": "^4.14.1",
     "react": "^17.0.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-feather": "^2.0.8",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.3",
+    "react-switch-lang": "^1.0.2",
+    "react-toastify": "^6.0.8",
+    "react-transition-group": "^4.4.1",
+    "reactstrap": "^8.5.1",
+    "redux": "^4.0.5",
+    "redux-promise": "^0.6.0",
+    "redux-saga": "^1.1.3",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -18,10 +34,7 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
