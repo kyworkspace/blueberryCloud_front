@@ -113,7 +113,7 @@ const Logins = (props) => {
                         </div>
                       </div>
                       {/* 회원가입 */}
-                      <p className="mt-4 mb-0">{"Don't have account?"}<a className="ml-2" href="#javascript">{CreateAccount}</a></p>
+                      <p className="mt-4 mb-0">{"Don't have account?"}<a className="ml-2" href={`${process.env.PUBLIC_URL}/user/register`}>{CreateAccount}</a></p>
                     </Form>
               </div>
             </div>
