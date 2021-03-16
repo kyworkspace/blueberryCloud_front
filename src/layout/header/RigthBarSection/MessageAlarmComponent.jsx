@@ -3,7 +3,7 @@ import { MessageSquare } from 'react-feather';
 import { AinChavez, EricaHughes, KoriThomas, MessageBox, ViewAll } from '../../../constant';
 
 
-function MessageAlarm(props) {
+function MessageAlarmComponent(props) {
     const [chatDropDown, setChatDropDown] = useState(false)
     return (
         <li className="onhover-dropdown" onClick={() => setChatDropDown(!chatDropDown)}><MessageSquare />
@@ -45,4 +45,4 @@ function MessageAlarm(props) {
     )
 }
 
-export default MessageAlarm
+export default MessageAlarmComponent

@@ -3,15 +3,17 @@ import { Account, Admin, Inbox,Taskboard,LogOut } from '../../../constant'
 import {User, Mail, FileText, LogIn} from 'react-feather'
 import man from '../../../assets/images/dashboard/profile.jpg'
 import emptyUser from '../../../assets/images/dashboard/emptyProfile.png'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import { windowClickEvent } from '../EventListener/eventListener'
+import {logoutUser} from '../../../redux/user/_actions/user_actions'
 
-const UserDropdown= memo((props) => {
+const UserDropdownComponent= memo((props) => {
 
   const user = useSelector(state => state.user)
   const [userStatus, setUserStatus] = useState(false);
   const [name, setName] = useState("");
+  const dispatch = useDispatch();
   
 
   useEffect(() => {
@@ -28,10 +30,19 @@ const UserDropdown= memo((props) => {
 
 
   const onLogoutHandler = (e)=>{
-    
+    dispatch(logoutUser()).then(response=>{
+      if(response.payload.success){
+        gotoLogin();
+      }else{
+        alert("로그아웃 실패! 다시 시도해주세요")
+      }
+    })
   }
   const onLoginHandler =(e)=>{
     document.removeEventListener('click',windowClickEvent);
+    gotoLogin()
+  }
+  const gotoLogin=()=>{
     props.history.push("/user/login")
   }
     return (
@@ -70,4 +81,4 @@ const UserDropdown= memo((props) => {
     )
 })
 
-export default withRouter(UserDropdown)
+export default withRouter(UserDropdownComponent)

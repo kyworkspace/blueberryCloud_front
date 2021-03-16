@@ -40,7 +40,7 @@ const Root = (props) =>  {
           <Route exact path={`${process.env.PUBLIC_URL}/user/register`} component={Auth(RegisterPage,false)}/>
           <App>
             <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
-                return (<Redirect to={`${process.env.PUBLIC_URL}/dashboard/default`} />)
+                return (<Redirect to={`${process.env.PUBLIC_URL}/cloud/dashboard`} />)
             }} />
           <TransitionGroup>
             {routes.map(({ path, Component }) => (

@@ -170,9 +170,11 @@ const Sidebar = (props) => {
     <Fragment>
       <div className="sidebar-wrapper">
         <div className="logo-wrapper">
-          <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}>
-            <img className="img-fluid for-light" src={require("../../assets/images/logo/logo.png")} alt="" />
-            <img className="img-fluid for-dark" src={require("../../assets/images/logo/logo_dark.png")} alt="" />
+          <Link to={`${process.env.PUBLIC_URL}/cloud/dashboard`}>
+            {/* 어떤 로고를 넣을까요 */}
+            <div>BLUBERRY CLOUD</div>
+            {/* <img className="img-fluid for-light" src={require("../../assets/images/logo/logo.png")} alt="" />
+            <img className="img-fluid for-dark" src={require("../../assets/images/logo/logo_dark.png")} alt="" /> */}
           </Link>
           <div className="back-btn" onClick={() => responsiveSidebar()}><i className="fa fa-angle-left"></i></div>
           <div className="toggle-sidebar" onClick={() => openCloseSidebar(sidebartoogle)}><Grid className="status_toggle middle sidebar-toggle" /></div>

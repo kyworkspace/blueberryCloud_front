@@ -6,7 +6,7 @@ export const MENUITEMS = [
         Items:[
             {
                 title: 'Dashboard', icon: Home, type: 'sub', active: false, children: [
-                    { path: `${process.env.PUBLIC_URL}/dashboard/default`, title: 'CLOUD PLAN', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/cloud/dashboard`, title: 'CLOUD PLAN', type: 'link' },
                     { path: `${process.env.PUBLIC_URL}/cloud/pictures`, title: 'Pictures', type: 'link' },
                     { path: `${process.env.PUBLIC_URL}/cloud/videos`, title: 'Videos', type: 'link' },
                 ]
