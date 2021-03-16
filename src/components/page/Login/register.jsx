@@ -45,7 +45,6 @@ const Register = (props) => {
         name: Name,
         image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
       }
-      console.log(body)
       dispatch(registerUser(body))
       .then(response=>{
         if(response.payload.success){

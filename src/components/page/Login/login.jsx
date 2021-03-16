@@ -52,7 +52,9 @@ const Logins = (props) => {
             }
             props.history.push("/"); //=> 대쉬보드 메인으로 감
           }else{
-            alert("Check out your Account or Password again")
+            // alert("Check out your Account or Password again")
+            alert(response.payload.message)
+            return;
           }
         })
     },500)

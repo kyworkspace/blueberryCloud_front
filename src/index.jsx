@@ -36,8 +36,8 @@ const Root = (props) =>  {
         <Provider store={store}>
         <BrowserRouter basename={`/`}>
         <Switch>
-          <Route exact path={`${process.env.PUBLIC_URL}/user/login`} component={LoginPage}/>
-          <Route exact path={`${process.env.PUBLIC_URL}/user/register`} component={RegisterPage}/>
+          <Route exact path={`${process.env.PUBLIC_URL}/user/login`} component={Auth(LoginPage,false)}/>
+          <Route exact path={`${process.env.PUBLIC_URL}/user/register`} component={Auth(RegisterPage,false)}/>
           <App>
             <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
                 return (<Redirect to={`${process.env.PUBLIC_URL}/dashboard/default`} />)

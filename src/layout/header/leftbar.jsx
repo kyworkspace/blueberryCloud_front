@@ -4,6 +4,7 @@ import { X, Layers, GitPullRequest, User, Users, UserMinus, UserCheck, Airplay, 
 import { Link } from 'react-router-dom'
 import { errorPages, authPages, usefullPages, comingsoonPages } from './pages'
 import {BonusUi,MegaMenu,ErrorPage,Authentication,UsefullPages,ComingSoon, FileManager,SocialApp,UserEdit,UsersCards,UserProfile,KanbanBoard,Bookmark,LevelMenu} from '../../constant'
+import { windowClickEvent } from './EventListener/eventListener';
 const Leftbar = (props) => {
 
   const [bonusui, setBonusUI] = useState(false)
@@ -31,17 +32,8 @@ const Leftbar = (props) => {
 
   useEffect(() => {
 
-    var ignoreClick_On_Out_side_Element = document.getElementById('out_side_click');
-    var ignoreClick_On_Main_Nav_Element = document.getElementById('sidebar-menu');
-    document.addEventListener('click', function(event) {
-        var isClickOutSideElement = ignoreClick_On_Out_side_Element.contains(event.target);
-        var isClickMainNavElement = ignoreClick_On_Main_Nav_Element.contains(event.target);
-        if (window.innerWidth <= 991 && !isClickOutSideElement && !isClickMainNavElement) {
-            //Do something click is outside specified element
-            document.querySelector(".page-header").className = "page-header close_icon";
-            document.querySelector(".sidebar-wrapper").className = "sidebar-wrapper close_icon "
-        }
-    });
+    
+    document.addEventListener('click', windowClickEvent);
 
     if (width <= 767) {
       setMegaboxtoggle1(true)

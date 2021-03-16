@@ -25,16 +25,11 @@ export const MENUITEMS = [
                     { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '동영상', type: 'link' },
                     { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '날짜', type: 'link' },
                 ]
-            }
-        ]
-    },
-    {
-        menutitle:"Account Infomation",
-        menucontent:"Community",
-        Items:[
+            },
             {
-                title: '회원 정보', icon: Anchor , type: 'sub', active: false, children: [
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: 'Sample Page', type: 'link' },
+                title: '친구 관리', icon: Anchor , type: 'sub', active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '친구 관리', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '그룹 관리', type: 'link' },
                 ]
             }
         ]

@@ -20,6 +20,8 @@ import du from '../../assets/i18n/du.json';
 import cn from '../../assets/i18n/cn.json';
 import ae from '../../assets/i18n/ae.json';
 import { InputGroup, InputGroupAddon, Button } from 'reactstrap';
+import MessageAlarm from './Sections/MessageAlarm';
+import UserDropdown from './Sections/UserDropdown';
 
 setTranslations({ en, es, pt, fr, du, cn, ae });
 setDefaultLanguage('en');
@@ -32,7 +34,7 @@ const Rightbar = (props) => {
   const [selected, setSelected] = useState("en")
   const [cartDropdown, setCartDropDown] = useState(false)
   const [notificationDropDown, setNotificationDropDown] = useState(false)
-  const [chatDropDown, setChatDropDown] = useState(false)
+  
 
   const handleSetLanguage = (key) => {
     setLanguage(key);
@@ -104,7 +106,7 @@ const Rightbar = (props) => {
         <ul className="nav-menus">
           <li className="language-nav">
             <div className={`translate_wrapper ${langdropdown ? 'active' : ''}`}>
-              <div className="current_lang">
+              {/* <div className="current_lang">
                 <div className="lang" onClick={() => LanguageSelection(langdropdown)}>
                   <i className={`flag-icon flag-icon-${selected === "en" ? "us" : selected === "du" ? "de" : selected}`}></i>
                   <span className="lang-txt">{selected}</span>
@@ -118,7 +120,7 @@ const Rightbar = (props) => {
                 <div className="lang" onClick={() => handleSetLanguage('pt')}><i className="flag-icon flag-icon-pt"></i><span className="lang-txt">{Português}<span> {"(BR)"}</span></span></div>
                 <div className="lang" onClick={() => handleSetLanguage('cn')}><i className="flag-icon flag-icon-cn"></i><span className="lang-txt">{简体中文}</span></div>
                 <div className="lang" onClick={() => handleSetLanguage('ae')}><i className="flag-icon flag-icon-ae"></i><span className="lang-txt">{"لعربية"}<span> {"(ae)"}</span></span></div>
-              </div>
+              </div> */}
             </div>
           </li>
           <li><span className="header-search"><Search onClick={() => SeacrhResposive(searchresponsive)} /></span></li>
@@ -149,7 +151,7 @@ const Rightbar = (props) => {
           <li>
             <div className="mode" onClick={() => MoonlightToggle(moonlight)}><i className={`fa ${moonlight ? 'fa-lightbulb-o' : 'fa-moon-o'}`}></i></div>
           </li>
-          <li className="cart-nav onhover-dropdown">
+          {/* <li className="cart-nav onhover-dropdown">
             <div className="cart-box" onClick={() => setCartDropDown(!cartDropdown)}><ShoppingCart/><span className="badge badge-pill badge-primary">{"2"}</span></div>
             <ul className={`cart-dropdown onhover-show-div ${cartDropdown ? "active" : ""}`}>
               <li>
@@ -205,58 +207,10 @@ const Rightbar = (props) => {
                 <Button color="secondary" className="btn-block view-cart mt-2">{CheckOut}</Button>
               </li>
             </ul>
-          </li>
-          <li className="onhover-dropdown" onClick={() => setChatDropDown(!chatDropDown)}><MessageSquare />
-            <ul className={`chat-dropdown onhover-show-div ${chatDropDown ? "active" : ""}`}>
-              <li>
-                <MessageSquare />
-                <h6 className="f-18 mb-0">{MessageBox}</h6>
-              </li>
-              <li>
-                <div className="media"><img className="img-fluid rounded-circle mr-3" src={require("../../assets/images/user/1.jpg")} alt="" />
-                  <div className="status-circle online"></div>
-                  <div className="media-body"><span>{EricaHughes}</span>
-                    <p>{"Lorem Ipsum is simply dummy..."}</p>
-                  </div>
-                  <p className="f-12 font-success">{"58 mins ago"}</p>
-                </div>
-              </li>
-              <li>
-                <div className="media"><img className="img-fluid rounded-circle mr-3" src={require("../../assets/images/user/2.jpg")} alt="" />
-                  <div className="status-circle online"></div>
-                  <div className="media-body"><span>{KoriThomas}</span>
-                    <p>{"Lorem Ipsum is simply dummy..."}</p>
-                  </div>
-                  <p className="f-12 font-success">{"1 hr ago"}</p>
-                </div>
-              </li>
-              <li>
-                <div className="media"><img className="img-fluid rounded-circle mr-3" src={require("../../assets/images/user/4.jpg")} alt="" />
-                  <div className="status-circle offline"></div>
-                  <div className="media-body"><span>{AinChavez}</span>
-                    <p>{"Lorem Ipsum is simply dummy..."}</p>
-                  </div>
-                  <p className="f-12 font-danger">{"32 mins ago"}</p>
-                </div>
-              </li>
-              <li className="text-center"> <button className="btn btn-primary">{ViewAll}     </button></li>
-            </ul>
-          </li>
+          </li> */}
+          <MessageAlarm/>
           <li className="maximize"><a className="text-dark" href="#javascript" onClick={goFull}><Minimize /></a></li>
-          <li className="profile-nav onhover-dropdown p-0">
-            <div className="media profile-media">
-              <img className="b-r-10" src={man} alt="" />
-              <div className="media-body"><span>{'Emay Walter'}</span>
-                <p className="mb-0 font-roboto">{Admin} <i className="middle fa fa-angle-down"></i></p>
-              </div>
-            </div>
-            <ul className="profile-dropdown onhover-show-div">
-              <li><User /><span>{Account} </span></li>
-              <li><Mail /><span>{Inbox}</span></li>
-              <li><FileText /><span>{Taskboard}</span></li>
-              <li><LogIn /><span>{LogOut}</span></li>
-            </ul>
-          </li>
+          <UserDropdown/>
         </ul>
       </div>
     </Fragment>
