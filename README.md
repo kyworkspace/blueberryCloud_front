@@ -32,3 +32,7 @@
 
 ### 화면 구성
 ![image](https://user-images.githubusercontent.com/45280952/111332400-18e81e80-86b5-11eb-97f1-b5ff7c1246bb.png)
+
+
+### 헤더 아이콘 
+- favicon.png 수정 필요
