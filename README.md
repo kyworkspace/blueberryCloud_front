@@ -40,5 +40,10 @@
 
 ### 화면 구성
 ![image](https://user-images.githubusercontent.com/45280952/111332400-18e81e80-86b5-11eb-97f1-b5ff7c1246bb.png)
+
 #### 모든 파일 뷰어
 ![image](https://user-images.githubusercontent.com/45280952/111907073-157adb80-8a97-11eb-8dbb-226ba8f57c4f.png)
+
+### 헤더 아이콘 
+- favicon.png 수정 필요
+
