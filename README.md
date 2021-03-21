@@ -30,5 +30,15 @@
 ### API's
 - route에 연결 URL 기본 값 저장해둠.
 
+### 사진 업로드
+- 다중 업로드 기능
+- 사진마다 설명 및 태그를 부착할 수 있는 기능
+![image](https://user-images.githubusercontent.com/45280952/111907051-fda35780-8a96-11eb-9d4e-34f23c83cbad.png)
+![image](https://user-images.githubusercontent.com/45280952/111907055-05fb9280-8a97-11eb-9193-c44a7bc800a8.png)
+
+
+
 ### 화면 구성
 ![image](https://user-images.githubusercontent.com/45280952/111332400-18e81e80-86b5-11eb-97f1-b5ff7c1246bb.png)
+#### 모든 파일 뷰어
+![image](https://user-images.githubusercontent.com/45280952/111907073-157adb80-8a97-11eb-8dbb-226ba8f57c4f.png)

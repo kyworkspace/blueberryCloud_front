@@ -7,8 +7,9 @@ export const MENUITEMS = [
             {
                 title: 'Dashboard', icon: Home, type: 'sub', active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/cloud/dashboard`, title: 'CLOUD PLAN', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/cloud/pictures`, title: 'Pictures', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/cloud/videos`, title: 'Videos', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/cloud/viewer/all`, title: '모든 파일', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/cloud/viewer/pictures`, title: 'Pictures', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/cloud/viewer/videos`, title: 'Videos', type: 'link' },
                 ]
             }
         ]
