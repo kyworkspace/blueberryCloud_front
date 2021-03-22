@@ -25,10 +25,27 @@ const renderFileList = FileList.map((item,idx)=>(
 ))
 
 
-function CloudViewer() {
+const  CloudViewer =(props) =>{
+    const theme = props.match.params.theme;
+    let title = "";
+    switch (theme) {
+        case "all":
+            title = "모든 파일"
+            break;
+        case "picture":
+            title = "사진 모아보기"
+        break;
+        case "video":
+            title = "동영상 모아보기"
+        break;
+    
+        default:
+            break;
+    }
+
     return (
         <Fragment>
-         <Breadcrumb parent="Cloud" title="모든 파일"/>
+         <Breadcrumb parent="Cloud" title={title}/>
          <BoardNavbar/>
           <Container fluid={true}>
             <Row>

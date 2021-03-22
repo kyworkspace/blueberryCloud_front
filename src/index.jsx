@@ -13,6 +13,8 @@ import Auth from './hoc/auth'
 //Login-page
 import LoginPage from './components/page/Login/login';
 import RegisterPage from './components/page/Login/register';
+import CloudDashBoard from './components/dashboard/cloud/Dashboard/CloudDashBoard';
+import CloudViewer from './components/dashboard/cloud/Board/CloudViewer';
 
 
 const Root = (props) =>  {
@@ -43,20 +45,24 @@ const Root = (props) =>  {
                 return (<Redirect to={`${process.env.PUBLIC_URL}/cloud/dashboard`} />)
             }} />
           <TransitionGroup>
-            {routes.map(({ path, Component }) => (
+          <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,null)}/>
+          <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
+            {/* {routes.map(({ path, Component }) => (
+              
+              { path:`${process.env.PUBLIC_URL}/cloud/viewer/:theme`, Component:CloudViewer},
                 <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>
-                    {({ match }) => (
+                    {({ match,props }) => (
                         <CSSTransition 
                         in={match != null}
                         timeout={100}
                         classNames={anim} 
                         unmountOnExit
                         >
-                        <div><Component/></div>
+                        <div><Component {...props}/></div>
                         </CSSTransition> 
                     )}
                 </Route>
-                ))}
+                ))} */}
           </TransitionGroup>
           </App>
         </Switch>

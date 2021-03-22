@@ -2,17 +2,21 @@ import TextArea from 'antd/lib/input/TextArea';
 import React, { memo, useState } from 'react'
 import { Image, Table } from 'react-bootstrap';
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
+
 const PictureInfomationModal=memo((props)=> {
 
-    const {buttonLabel,className,picture,ModalHandler,isOpen} = props
-
+    const {buttonLabel,className,picture,ModalHandler,isOpen,pictureHandler} = props
+    const [description, setDescription] = useState(picture.desc ? picture.desc:"");
     const onCloseModal = () => {
         ModalHandler(false)
     };
     const onConfirmModal = () => {
-        alert("확인");
+        pictureHandler(picture,description)
         ModalHandler(false)
     };
+    const onDescHandler =(e)=>{
+        setDescription(e.currentTarget.value);
+    }
     return (
     <Modal isOpen={isOpen} className={className} style={{minWidth:'600px'}}>
         <ModalHeader toggle={onCloseModal}>사진 상세 정보</ModalHeader>
@@ -28,12 +32,16 @@ const PictureInfomationModal=memo((props)=> {
                     <td>{picture.mimetype}</td>
                 </tr>
                 <tr>
+                    <td>용량</td>
+                    <td>{picture.size}</td>
+                </tr>
+                <tr>
                     <td>태그 추가</td>
                     <td colSpan="3">{picture.mimetype}</td>
                 </tr>
                 <tr>
                     <td>설명</td>
-                    <td colSpan="3"><TextArea rows={4} style={{width:'100%'}}/></td>
+                    <td colSpan="3"><TextArea rows={4} style={{width:'100%'}} value={description} onChange={onDescHandler}/></td>
                 </tr>
                 
             </Table>

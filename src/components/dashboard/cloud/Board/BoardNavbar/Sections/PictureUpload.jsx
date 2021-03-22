@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
-import { pictureInsert } from '../../utils/commonMethod'
+import { pictureInsert } from '../../../../../../utils/commonMethod'
 import Image from 'react-bootstrap/Image'
-import { Badge } from 'react-bootstrap'
-import {X} from 'react-feather'
 import { Button } from 'reactstrap'
-import PictureInfomationModal from '../dashboard/cloud/Board/BoardNavbar/Sections/PictureInfomationModal'
+import PictureInfomationModal from './PictureInfomationModal'
 
 const PictureUpload=(props) =>{
     const [Files, setFiles] = useState([])
-    const [information, setInformation] = useState({});
+    const [fileInformation, setFileInformation] = useState({});
     const [informationModalViewer, setinformationModalViewer] = useState(false);
-    useEffect(() => {
-        
-    }, [])
 
 
     const onDropHandler = async (files)=>{
@@ -24,7 +19,7 @@ const PictureUpload=(props) =>{
         )
         setFiles([...Files,...uploadFileList])
 
-        //props.refreshFunction([...Files,...uploadFileList])
+        props.refreshFunction([...Files,...uploadFileList])
     }
     const deleteHandler =(image)=>{
         //삭제하고자하는 이미지 인덱스
@@ -37,15 +32,18 @@ const PictureUpload=(props) =>{
         setFiles(newImages)
 
         //부모 컴포넌트에 값 전달
-        //props.refreshFunction(newImages);
+        props.refreshFunction(newImages);
     }
     const pictureInfomation=(item)=>{
-        
-        alert('사진 상세 정보');
-        setInformation(item)
+        setFileInformation(item)
         setinformationModalViewer(true);
-
-
+    }
+    const onPictureDescriptionHandler=(item,desc)=>{
+        const currentIndex = Files.indexOf(item);
+        let newImages = [...Files];
+        newImages[currentIndex].description = desc
+        setFiles(newImages)
+        props.refreshFunction(newImages);
     }
 
 
@@ -73,7 +71,7 @@ const PictureUpload=(props) =>{
                 </section>
             )}
             </Dropzone>
-            <div style={{display:'grid', width:"250px",height:'280px',overflowY:'scroll'}}>
+            <div style={{display:'grid', maxWidth:"250px",maxHeight:'280px',overflowY:'scroll'}}>
                 {Files.map((item,index)=>(
                     <>
                     
@@ -91,7 +89,7 @@ const PictureUpload=(props) =>{
                 ))}
             </div>
         </div>
-        {informationModalViewer && <PictureInfomationModal isOpen={informationModalViewer} ModalHandler={setinformationModalViewer} picture={information}/>}
+        {informationModalViewer && <PictureInfomationModal isOpen={informationModalViewer} ModalHandler={setinformationModalViewer} picture={fileInformation} pictureHandler={onPictureDescriptionHandler}/>}
         </div>
     )
 }

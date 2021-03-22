@@ -17,9 +17,10 @@ const UserDropdownComponent= memo((props) => {
   
 
   useEffect(() => {
-    console.log(user.userData)
-    if(user.userData){
-      const {userData} = user;
+    const {userData} = user;
+    if(userData){
+      if(userData.error)
+        return;
       setName(userData.name);
       setUserStatus(true);
     }
