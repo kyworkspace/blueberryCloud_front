@@ -1,13 +1,15 @@
 import { message } from 'antd';
 import axios from 'axios';
-import React, { memo, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
 import PictureUpload from './PictureUpload';
 import {CLOUD_API} from '../../../../../../route/Apis'
 import { useSelector } from 'react-redux';
+import { CloudBoardContext } from '../../CloudViewer';
 const PictureUploadModal=memo((props)=> {
 
     const user = useSelector(state => state.user)
+    const {refreshFileList} = useContext(CloudBoardContext)
 
     const {buttonLabel,className} = props
     const [Image, setImage] = useState([]);
@@ -28,6 +30,7 @@ const PictureUploadModal=memo((props)=> {
           if(response.data.success){
             alert(`${Image.length}건의 업로드를 성공하였습니다.`)
             props.ModalHandler(false)
+            refreshFileList();
           }else{
             alert("업로드에 실패하였습니다. \n 오류가 반복될시 관리자에게 문의해주세요")
           }

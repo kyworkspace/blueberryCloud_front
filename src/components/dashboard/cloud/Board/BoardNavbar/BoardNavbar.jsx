@@ -18,7 +18,6 @@ import PictureUploadModal from './Sections/PictureUploadModal';
 
 
 const BoardNavbar= memo(()=> {
-
     const [isOpen, setIsOpen] = useState(false);
     const [pictureModal, setPictureModal] = useState(false);
 
