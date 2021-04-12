@@ -48,17 +48,15 @@ const Root = (props) =>  {
           <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,null)}/>
           <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
             {/* {routes.map(({ path, Component }) => (
-              
-              { path:`${process.env.PUBLIC_URL}/cloud/viewer/:theme`, Component:CloudViewer},
                 <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>
-                    {({ match,props }) => (
+                    {({ match }) => (
                         <CSSTransition 
                         in={match != null}
                         timeout={100}
                         classNames={anim} 
                         unmountOnExit
                         >
-                        <div><Component {...props}/></div>
+                        <Component {...props}/>
                         </CSSTransition> 
                     )}
                 </Route>

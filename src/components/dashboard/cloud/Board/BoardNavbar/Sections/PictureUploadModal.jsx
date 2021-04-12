@@ -10,7 +10,6 @@ const PictureUploadModal=memo((props)=> {
 
     const user = useSelector(state => state.user)
     const {refreshFileList} = useContext(CloudBoardContext)
-
     const {buttonLabel,className} = props
     const [Image, setImage] = useState([]);
     const onCloseModal = () => {

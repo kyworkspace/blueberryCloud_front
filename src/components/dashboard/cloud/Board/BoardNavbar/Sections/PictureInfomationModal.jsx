@@ -1,6 +1,7 @@
 import TextArea from 'antd/lib/input/TextArea';
 import React, { memo, useState } from 'react'
 import { Image, Table } from 'react-bootstrap';
+import CKEditors from "react-ckeditor-component";
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
 
 const PictureInfomationModal=memo((props)=> {
@@ -14,8 +15,9 @@ const PictureInfomationModal=memo((props)=> {
         pictureHandler(picture,description)
         ModalHandler(false)
     };
-    const onDescHandler =(e)=>{
-        setDescription(e.currentTarget.value);
+    const onDescHandler =(evt)=>{
+        const newContent = evt.editor.getData();
+        setDescription(newContent);
     }
     return (
     <Modal isOpen={isOpen} className={className} style={{minWidth:'600px'}}>
@@ -41,7 +43,16 @@ const PictureInfomationModal=memo((props)=> {
                 </tr>
                 <tr>
                     <td>설명</td>
-                    <td colSpan="3"><TextArea rows={4} style={{width:'100%'}} value={description} onChange={onDescHandler}/></td>
+                    <td colSpan="3">
+                        <CKEditors
+                            activeclassName="p10"
+                            content={description}
+                            events={{
+                                "change": onDescHandler
+                            }}
+                        />
+                        {/* <TextArea rows={4} style={{width:'100%'}} value={description} onChange={onDescHandler}/> */}
+                    </td>
                 </tr>
                 
             </Table>

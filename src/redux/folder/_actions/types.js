@@ -1,0 +1,1 @@
+export const SET_FOLDER_ROUTE = "SET_FOLDER_ROUTE";

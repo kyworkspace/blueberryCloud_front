@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useState } from 'react'
+import React, { Fragment, memo, useState, useEffect,useDispatch } from 'react'
 import {
     Collapse,
     Navbar,
@@ -13,6 +13,7 @@ import {
     DropdownItem,
     NavbarText
   } from 'reactstrap';
+import FolderCreateModal from './Sections/FolderCreateModal';
 import PictureUploadModal from './Sections/PictureUploadModal';
 
 
@@ -20,10 +21,14 @@ import PictureUploadModal from './Sections/PictureUploadModal';
 const BoardNavbar= memo(()=> {
     const [isOpen, setIsOpen] = useState(false);
     const [pictureModal, setPictureModal] = useState(false);
+    //const dispatch = useDispatch();
+
+    // 폴더 모달
+    const [folderModal, setFolderModal] = useState(false);
+    // 현재 폴더 상 경로
+    const [route, setRoute] = useState("")
 
     const toggle = () => setIsOpen(!isOpen);
-
-
 
     const onPictureUploadModalOpen = (flag) =>{
         setPictureModal(flag);
@@ -31,6 +36,15 @@ const BoardNavbar= memo(()=> {
     const onVideoUploadModalOpen =()=>{
         alert("비디오 업로드")
     }
+    const onCreateNewFolderModalOpen=(flag)=>{
+      setFolderModal(flag)
+    }
+
+    useEffect(() => {
+
+      
+    }, [])
+
 
     return (
         <div>
@@ -43,7 +57,7 @@ const BoardNavbar= memo(()=> {
                 <NavLink href="/cloud/viewer/all">파일 전체 선택</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="#">새폴더</NavLink>
+                <NavLink href="#" onClick={()=>onCreateNewFolderModalOpen(true)}>새폴더</NavLink>
               </NavItem>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
@@ -80,11 +94,11 @@ const BoardNavbar= memo(()=> {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
-            <NavbarText>폴더 및 파일을 관리합니다.</NavbarText>
+            <NavbarText>경로 : {route}</NavbarText>
           </Collapse>
         </Navbar>
         {pictureModal && <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>}
-        
+        {folderModal && <FolderCreateModal ModalHandler = {onCreateNewFolderModalOpen} isOpen={folderModal}/>}
       </div>
     )
 })
