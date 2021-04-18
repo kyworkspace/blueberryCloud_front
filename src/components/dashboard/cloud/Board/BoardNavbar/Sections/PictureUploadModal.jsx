@@ -9,6 +9,7 @@ import { CloudBoardContext } from '../../CloudViewer';
 const PictureUploadModal=memo((props)=> {
 
     const user = useSelector(state => state.user)
+    const folderPath = useSelector(state => state.folder.path)
     const {refreshFileList} = useContext(CloudBoardContext)
     const {buttonLabel,className} = props
     const [Image, setImage] = useState([]);
@@ -20,9 +21,13 @@ const PictureUploadModal=memo((props)=> {
           message.error("이미지를 등록해 주세요")
           return;
         }
-        Image.map(item=>(
-          item.writer = user.userData._id
-        ))
+        Image.map(item=>{
+          console.log(item)
+          item.writer = user.userData._id;
+          item.originalpath = item.path;
+          //저장경로
+          item.cloudpath = folderPath;
+        })
         let body = Image;
       axios.post(`${CLOUD_API}/pictures/save`,body)
         .then(response=>{

@@ -19,24 +19,25 @@ export default function (SpecificComponent, option, adminRoute = null) {
         useEffect(() => {
             //하이어 오더 컴포넌트이기 때문에 하위 컴포넌트 사이에서 이동이 이루어질때 계속 백엔드에 접근하여
             // response 정보를 가져옴
-            dispatch(auth()).then(response => {
-                //-> 분기처리
-                //로그인 하지 않은 상태
-                if (!response.payload.isAuth) {
-                    if (option) {
-                        props.history.push("/user/login") //로그인 페이지로 보내버림
-                    }
-                } else {
-                    //로그인 한 상태
-                    if (adminRoute && !response.payload.isAdmin) {//admin 유저가 아닌데 어드민 페이지로 가려고 할때
-                        props.history.push("/");
+            dispatch(auth())
+                .then(response => {
+                    //-> 분기처리
+                    //로그인 하지 않은 상태
+                    if (!response.payload.isAuth) {
+                        if (option) {
+                            props.history.push("/user/login") //로그인 페이지로 보내버림
+                        }
                     } else {
-                        if (option === false) {
-                            props.history.push('/');
+                        //로그인 한 상태
+                        if (adminRoute && !response.payload.isAdmin) {//admin 유저가 아닌데 어드민 페이지로 가려고 할때
+                            props.history.push("/");
+                        } else {
+                            if (option === false) {
+                                props.history.push('/');
+                            }
                         }
                     }
-                }
-            });
+                });
         }, [])
 
         return ( //컴포넌트 리턴

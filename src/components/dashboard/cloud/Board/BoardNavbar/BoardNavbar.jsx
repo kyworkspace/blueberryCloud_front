@@ -1,4 +1,5 @@
 import React, { Fragment, memo, useState, useEffect,useDispatch } from 'react'
+import { useSelector } from 'react-redux';
 import {
     Collapse,
     Navbar,
@@ -26,7 +27,7 @@ const BoardNavbar= memo(()=> {
     // 폴더 모달
     const [folderModal, setFolderModal] = useState(false);
     // 현재 폴더 상 경로
-    const [route, setRoute] = useState("")
+    const folderPath = useSelector(state => state.folder.path)
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -94,7 +95,7 @@ const BoardNavbar= memo(()=> {
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
-            <NavbarText>경로 : {route}</NavbarText>
+            <NavbarText>경로 : {`${folderPath}/`}</NavbarText>
           </Collapse>
         </Navbar>
         {pictureModal && <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>}

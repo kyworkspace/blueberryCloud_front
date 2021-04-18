@@ -3,7 +3,7 @@ import {
 } from '../_actions/types';
 
 
-export default function (state = {}, action) {
+export default function (state = { path: "ALL" }, action) {
     switch (action.type) {
         case SET_FOLDER_ROUTE:
             return { ...state, path: action.payload }
