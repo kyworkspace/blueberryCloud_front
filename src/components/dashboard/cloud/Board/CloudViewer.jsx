@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFolderRoute } from '../../../../redux/folder/_actions/folder_actions';
 
 export const CloudBoardContext=createContext({
-    refreshFileList :()=>{}
+    refreshFileList :()=>{},
 })
 
 const  CloudViewer =(props) =>{
@@ -44,7 +44,6 @@ const  CloudViewer =(props) =>{
     //폴더 경로 state
     const dispatch = useDispatch();
     const folderPath = useSelector(state => state.folder.path)
-    const folderPathRef = useRef(folderPath);
     //페이지 state
     const [limit, setLimit] = useState(18);
     const [skip, setSkip] = useState(0);
@@ -54,7 +53,7 @@ const  CloudViewer =(props) =>{
 
     useEffect(() => {
         selectFileList(1);
-    }, [theme])
+    }, [theme,folderPath])
     //파일 상세
     const onFileDetail = (file)=>{
         setDetailModal(true);
@@ -63,7 +62,6 @@ const  CloudViewer =(props) =>{
     //폴더일때 상세 -> 상세 폴더로 경로 이동
     const openFolder = (path)=>{
         dispatch(setFolderRoute(path))
-        folderPathRef.current = path
         selectFileList(1)
     }
     //목록 리로딩
@@ -75,19 +73,19 @@ const  CloudViewer =(props) =>{
         let body ={
             limit : limit,
             skip : (page-1)*limit,
-            cloudpath : folderPathRef.current, //폴더 경로
+            cloudpath : folderPath, //폴더 경로
         };
         axios.post(`${CLOUD_API}/files/list`,body)
         .then(response => {
             if(response.data.success){
                 setFiles(response.data.fileList);
                 setTotal(response.data.totalCount)
-                toast.success("불러오기 성공 !", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:3000})
+                toast.success("불러오기 성공 !", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
                 setCurrentPage(page)
                 setSkip(page-1*limit);
 
             }else{
-                toast.error("불러오기 실패ㅠㅠ", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:3000})
+                toast.error("불러오기 실패ㅠㅠ", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
             }
         })
     }
@@ -109,7 +107,7 @@ const  CloudViewer =(props) =>{
                     <img src={folderImage}/>
                 </div>
             );
-            cardText = <div>폴더</div>
+            cardText = "폴더";
             cardEvent = ()=>{openFolder(`${item.cloudpath}/${item.filename}`)}
         }else{ //타입이 폴더가 아닐때
             cardImage =(
@@ -123,15 +121,15 @@ const  CloudViewer =(props) =>{
                 >
             </div>
                 );
-            cardText = <CardText>{dateToString(item.createdAt)}</CardText>
+            cardText = dateToString(item.createdAt)
             cardEvent = ()=>{onFileDetail(item)};
         }
         return(
         <Col xs="4" sm="3"  md="2"  key={item.filename}>
-            <Card key = {item.filename} style={{cursor:'pointer'}} onClick={cardEvent}>
+            <Card key = {item.filename} style={{cursor:'pointer'}} onClick={cardEvent} >
                 {cardImage}
                 <CardBody>
-                <CardTitle>
+                <CardTitle >
                     <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>
                     {item.filename}
                     </div>

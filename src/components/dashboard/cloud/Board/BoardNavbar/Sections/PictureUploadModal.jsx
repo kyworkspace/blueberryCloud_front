@@ -22,7 +22,6 @@ const PictureUploadModal=memo((props)=> {
           return;
         }
         Image.map(item=>{
-          console.log(item)
           item.writer = user.userData._id;
           item.originalpath = item.path;
           //저장경로

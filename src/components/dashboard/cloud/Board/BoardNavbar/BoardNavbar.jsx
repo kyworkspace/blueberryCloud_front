@@ -1,5 +1,5 @@
-import React, { Fragment, memo, useState, useEffect,useDispatch } from 'react'
-import { useSelector } from 'react-redux';
+import React, { memo, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {
     Collapse,
     Navbar,
@@ -14,6 +14,7 @@ import {
     DropdownItem,
     NavbarText
   } from 'reactstrap';
+import { setFolderRoute } from '../../../../../redux/folder/_actions/folder_actions';
 import FolderCreateModal from './Sections/FolderCreateModal';
 import PictureUploadModal from './Sections/PictureUploadModal';
 
@@ -22,8 +23,7 @@ import PictureUploadModal from './Sections/PictureUploadModal';
 const BoardNavbar= memo(()=> {
     const [isOpen, setIsOpen] = useState(false);
     const [pictureModal, setPictureModal] = useState(false);
-    //const dispatch = useDispatch();
-
+    const dispatch = useDispatch(null);
     // 폴더 모달
     const [folderModal, setFolderModal] = useState(false);
     // 현재 폴더 상 경로
@@ -40,17 +40,24 @@ const BoardNavbar= memo(()=> {
     const onCreateNewFolderModalOpen=(flag)=>{
       setFolderModal(flag)
     }
+    const onMoveToPrevFolder =()=>{
+      let splitedPath = folderPath.split("/");
 
-    useEffect(() => {
+      splitedPath.pop(); //맨뒤에 폴더 제거
 
-      
-    }, [])
+      let newPath = splitedPath.join("/");
 
+      dispatch(setFolderRoute(newPath));
+    }
 
     return (
         <div>
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/cloud/viewer/all">관리</NavbarBrand>
+          {folderPath === "ALL" ?
+          <NavbarBrand>관리</NavbarBrand>
+          :
+          <NavbarBrand onClick={onMoveToPrevFolder}>뒤로가기</NavbarBrand>
+          }
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
