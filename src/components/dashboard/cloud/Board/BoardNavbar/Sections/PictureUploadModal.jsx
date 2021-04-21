@@ -18,7 +18,7 @@ const PictureUploadModal=memo((props)=> {
     };
     const onConfirmModal = () => {
         if(Image.length === 0){
-          message.error("이미지를 등록해 주세요")
+          alert("이미지를 등록해주세요")
           return;
         }
         Image.map(item=>{

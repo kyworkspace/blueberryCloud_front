@@ -52,7 +52,7 @@ const BoardNavbar= memo(()=> {
 
     return (
         <div>
-        <Navbar color="light" light expand="md">
+        <Navbar light expand="md">
           {folderPath === "ALL" ?
           <NavbarBrand>관리</NavbarBrand>
           :
@@ -60,13 +60,24 @@ const BoardNavbar= memo(()=> {
           }
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
-            <Nav className="mr-auto" navbar>
-              <NavItem>
-                <NavLink href="/cloud/viewer/all">파일 전체 선택</NavLink>
-              </NavItem>
+            <Nav className="mr-auto" navbar>              
               <NavItem>
                 <NavLink href="#" onClick={()=>onCreateNewFolderModalOpen(true)}>새폴더</NavLink>
               </NavItem>
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  파일 선택
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={()=>{alert("선택모드")}}>
+                    선택 모드
+                  </DropdownItem>
+                  <DropdownItem onClick={()=>{alert("전체 선택")}}>
+                    전체 선택
+                  </DropdownItem>
+                  <DropdownItem/>
+                </DropdownMenu>
+              </UncontrolledDropdown>
               <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   업로드

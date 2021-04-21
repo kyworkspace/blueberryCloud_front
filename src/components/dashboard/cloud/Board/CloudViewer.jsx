@@ -8,7 +8,7 @@ import axios from 'axios';
 import { CLOUD_API, FOLDER_API } from '../../../../route/Apis';
 import { toast } from 'react-toastify';
 import { dateToString, openNotification } from '../../../../utils/commonMethod';
-
+import { SettingOutlined } from '@ant-design/icons';
 
 import url from '../../../../route/DevUrl'
 import CloudDetailModal from './CloudDetailModal';
@@ -45,7 +45,7 @@ const  CloudViewer =(props) =>{
     const dispatch = useDispatch();
     const folderPath = useSelector(state => state.folder.path)
     //페이지 state
-    const [limit, setLimit] = useState(18);
+    const [limit, setLimit] = useState(20);
     const [skip, setSkip] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [total, setTotal]= useState(1);
@@ -97,14 +97,16 @@ const  CloudViewer =(props) =>{
         if(item.mimetype === "Folder") { //타입이 폴더 일때
             cardImage = (
                 <div
+                    className="file-top"
                     style = {{
-                        display : 'flex',
-                        justifyContent : 'center',
                         height : '200px',
-                        marginTop:'15px'
+                        backgroundImage:`url(${folderImage})`,
+                        backgroundSize:'70%',
+                        backgroundPosition:'center',
+                        backgroundRepeat:'no-repeat'
                     }}
                 >
-                    <img src={folderImage}/>
+                    <i className="fa fa-ellipsis-v f-14 ellips" style={{cursor:'pointer'}}></i>
                 </div>
             );
             cardText = "폴더";
@@ -112,33 +114,41 @@ const  CloudViewer =(props) =>{
         }else{ //타입이 폴더가 아닐때
             cardImage =(
             <div 
-                style={{backgroundImage:`url(${url}/${item.originalpath.replace(/\\/g, "/")})`
+                className="file-top"
+                style={{
+                    backgroundImage:`url(${url}/${item.originalpath.replace(/\\/g, "/")})`
                     , height:'200px' 
-                    , backgroundSize:'90%'
+                    , backgroundSize:'70%'
                     , backgroundPosition:'center'
                     , backgroundRepeat:'no-repeat'
-                    , marginTop:'15px'}}
+                    }}
                 >
+                    <i className="fa fa-ellipsis-v f-14 ellips" style={{cursor:'pointer'}}></i>
             </div>
                 );
             cardText = dateToString(item.createdAt)
             cardEvent = ()=>{onFileDetail(item)};
         }
         return(
-        <Col xs="4" sm="3"  md="2"  key={item.filename}>
-            <Card key = {item.filename} style={{cursor:'pointer'}} onClick={cardEvent} >
-                {cardImage}
-                <CardBody>
-                <CardTitle >
-                    <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>
-                    {item.filename}
-                    </div>
-                </CardTitle>
-                {/* <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle> */}
-                <CardText>{cardText}</CardText>
-                </CardBody>
-            </Card>
-          </Col>
+          <li className="file-box" style={{width:`calc(20% - 15px)`,marginTop:'10px',marginLeft:'10px'}} key={item.filename}>
+            {cardImage}
+            <div className="file-bottom" onClick={cardEvent} style={{cursor:'pointer'}}>
+                <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>
+                    <h6>{item.filename}</h6>
+                </div>
+                {item.mimetype === "Folder" ?
+                    <>
+                        <p className="mb-1">&nbsp;</p>
+                        <p><b>{cardText}</b></p>
+                    </>
+                :
+                    <>
+                        <p className="mb-1">용량 : {item.size}</p>
+                        <p><b>{cardText}</b></p>
+                    </>
+                }
+            </div>
+          </li>
     )})
 
     //파일 새로고침 용도
@@ -147,21 +157,30 @@ const  CloudViewer =(props) =>{
     return (
         <Fragment>
         <CloudBoardContext.Provider value={contextValue}>
-         <Breadcrumb parent="Cloud" title={title}/>
-         <BoardNavbar/>
-          <Container fluid={true}>
-            <Row>
-                {renderFileList}
-                <Col xl="12" className="m-t-30">  
-                    <Nav style={{display:'flex', justifyContent:"center", paddingBottom:'20px'}}>
-                    <Pagination  current={currentPage} onChange={selectFileList} total={total} pageSize={limit} showSizeChanger={false}/>
-                    </Nav>
+            <Container fluid={true}>
+                
+                <Col xl="12" md="12" className="box-col-12">
+                    <div className="file-content">
+                    <Card>
+                    <Breadcrumb parent="Cloud" title={title}/>
+                    <BoardNavbar/>
+                        <CardBody className="file-manager">
+                            <ul className="files">
+                                {renderFileList}
+                            </ul>
+                        </CardBody>
+                        <Col xl="12" className="m-t-30">  
+                            <Nav style={{display:'flex', justifyContent:"center", paddingBottom:'20px'}}>
+                            <Pagination  current={currentPage} onChange={selectFileList} total={total} pageSize={limit} showSizeChanger={false}/>
+                            </Nav>
+                        </Col>
+                    </Card>
+                    </div>
                 </Col>
-            </Row>
-          </Container>
-             {DetailModal && <CloudDetailModal file={SelectedFile} ModalHandler={setDetailModal} isOpen={DetailModal}/>}
+            </Container>
+            {DetailModal && <CloudDetailModal file={SelectedFile} ModalHandler={setDetailModal} isOpen={DetailModal}/>}
         </CloudBoardContext.Provider>
-         </Fragment> 
+        </Fragment>
     )
 }
 

@@ -35,7 +35,7 @@
 - 사진마다 설명 및 태그를 부착할 수 있는 기능
 ![image](https://user-images.githubusercontent.com/45280952/111907051-fda35780-8a96-11eb-9d4e-34f23c83cbad.png)
 ![image](https://user-images.githubusercontent.com/45280952/111907055-05fb9280-8a97-11eb-9193-c44a7bc800a8.png)
-- 모달 벗어나면 저장된 파일 로컬에서도 삭제해야함
+- 모달 벗어나면 저장된 파일 로컬에서도 삭제해야함 - 아직 기능 미정
 
 
 ### 화면 구성
@@ -47,3 +47,8 @@
 ### 헤더 아이콘 
 - favicon.png 수정 필요
 
+### CLOUD
+- 폴더 구조 확립
+- 뒤로가기 기능 구성
+- 화면 UI 변경
+![image](https://user-images.githubusercontent.com/45280952/115579810-7c431d00-a301-11eb-9c76-6c2361061a7b.png)
