@@ -12,12 +12,20 @@ import { SettingOutlined } from '@ant-design/icons';
 
 import url from '../../../../route/DevUrl'
 import CloudDetailModal from './CloudDetailModal';
-import { Pagination } from 'antd';
+import { Checkbox, Pagination } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFolderRoute } from '../../../../redux/folder/_actions/folder_actions';
+import CloudFileCard from './CloudFileCard';
 
 export const CloudBoardContext=createContext({
+    SelectionMode : false,
+    Files:[],
+    setSelectionMode :()=>{},
     refreshFileList :()=>{},
+    openFolder :()=>{},
+    onFileDetail :()=>{},
+    setFiles:()=>{},
+    selectedFileDelete :()=>{}
 })
 
 const  CloudViewer =(props) =>{
@@ -40,6 +48,7 @@ const  CloudViewer =(props) =>{
     const [Files, setFiles] = useState([]);
     const [SelectedFile, setSelectedFile] = useState({});
     const [DetailModal, setDetailModal] = useState(false);
+    const [SelectionMode, setSelectionMode] = useState(false); //선택 모드
 
     //폴더 경로 state
     const dispatch = useDispatch();
@@ -49,11 +58,11 @@ const  CloudViewer =(props) =>{
     const [skip, setSkip] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [total, setTotal]= useState(1);
-    
 
     useEffect(() => {
         selectFileList(1);
     }, [theme,folderPath])
+
     //파일 상세
     const onFileDetail = (file)=>{
         setDetailModal(true);
@@ -91,68 +100,34 @@ const  CloudViewer =(props) =>{
     }
     //파일목록 그리기
     const renderFileList = Files.map((item,idx)=>{
-        let cardImage; //파일 이미지
-        let cardText; //파일 설명
-        let cardEvent; // 클릭 이벤트
-        if(item.mimetype === "Folder") { //타입이 폴더 일때
-            cardImage = (
-                <div
-                    className="file-top"
-                    style = {{
-                        height : '200px',
-                        backgroundImage:`url(${folderImage})`,
-                        backgroundSize:'70%',
-                        backgroundPosition:'center',
-                        backgroundRepeat:'no-repeat'
-                    }}
-                >
-                    <i className="fa fa-ellipsis-v f-14 ellips" style={{cursor:'pointer'}}></i>
-                </div>
-            );
-            cardText = "폴더";
-            cardEvent = ()=>{openFolder(`${item.cloudpath}/${item.filename}`)}
-        }else{ //타입이 폴더가 아닐때
-            cardImage =(
-            <div 
-                className="file-top"
-                style={{
-                    backgroundImage:`url(${url}/${item.originalpath.replace(/\\/g, "/")})`
-                    , height:'200px' 
-                    , backgroundSize:'70%'
-                    , backgroundPosition:'center'
-                    , backgroundRepeat:'no-repeat'
-                    }}
-                >
-                    <i className="fa fa-ellipsis-v f-14 ellips" style={{cursor:'pointer'}}></i>
-            </div>
-                );
-            cardText = dateToString(item.createdAt)
-            cardEvent = ()=>{onFileDetail(item)};
-        }
-        return(
-          <li className="file-box" style={{width:`calc(20% - 15px)`,marginTop:'10px',marginLeft:'10px'}} key={item.filename}>
-            {cardImage}
-            <div className="file-bottom" onClick={cardEvent} style={{cursor:'pointer'}}>
-                <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>
-                    <h6>{item.filename}</h6>
-                </div>
-                {item.mimetype === "Folder" ?
-                    <>
-                        <p className="mb-1">&nbsp;</p>
-                        <p><b>{cardText}</b></p>
-                    </>
-                :
-                    <>
-                        <p className="mb-1">용량 : {item.size}</p>
-                        <p><b>{cardText}</b></p>
-                    </>
-                }
-            </div>
-          </li>
-    )})
+        return <CloudFileCard item={item} key={item._id}/>
+    })
 
-    //파일 새로고침 용도
-    const contextValue = {refreshFileList}
+    //파일 삭제
+    const selectedFileDelete=(body)=>{
+        axios.post(`${CLOUD_API}/files/delete`,body)
+         .then(response=>{
+        if(response.data.success){
+            selectFileList(1)
+            toast.success(`${response.data.count} 건 삭제 완료`, {position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
+        }else{
+            toast.error("삭제 실패", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
+        }
+      })
+    }
+    
+
+    
+    const contextValue = {
+        refreshFileList //파일 새로고침 용도
+        ,SelectionMode //선택모드
+        ,Files
+        ,setSelectionMode 
+        ,openFolder 
+        ,onFileDetail
+        ,setFiles
+        ,selectedFileDelete
+    }
     
     return (
         <Fragment>
