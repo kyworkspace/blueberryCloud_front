@@ -132,12 +132,11 @@ const  CloudViewer =(props) =>{
     return (
         <Fragment>
         <CloudBoardContext.Provider value={contextValue}>
+        <Breadcrumb parent="Cloud" title={title}/>
             <Container fluid={true}>
-                
                 <Col xl="12" md="12" className="box-col-12">
                     <div className="file-content">
                     <Card>
-                    <Breadcrumb parent="Cloud" title={title}/>
                     <BoardNavbar/>
                         <CardBody className="file-manager">
                             <ul className="files">
