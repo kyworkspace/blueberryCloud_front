@@ -69,7 +69,7 @@ const BoardNavbar= memo(()=> {
     }
     const onSelectedFileDelete=()=>{
       
-      let selectedFiles = Files.filter((item)=>item.selected)
+      let selectedFiles = Files.filter((item)=>item.selected);
       selectedFiles = selectedFiles.map(file=>file._id);
       let count = selectedFiles.length;
       if(count===0){
@@ -80,7 +80,16 @@ const BoardNavbar= memo(()=> {
         fileList : selectedFiles,
       }
       selectedFileDelete(body);
-      
+    }
+    const onAllFileSelection=()=>{
+      let selectedFiles = [...Files];
+      selectedFiles.forEach((item)=>{
+        if(item.mimetype !=="Folder"){
+          item.selected = true;
+        }
+      })
+      setFiles(selectedFiles);
+      setSelectionMode(true);
     }
 
     return (
@@ -105,7 +114,7 @@ const BoardNavbar= memo(()=> {
                   <DropdownItem onClick={onChangeSelectionMode}>
                     선택 모드
                   </DropdownItem>
-                  <DropdownItem onClick={()=>{alert("전체 선택")}}>
+                  <DropdownItem onClick={onAllFileSelection}>
                     전체 선택
                   </DropdownItem>
                   <DropdownItem/>
