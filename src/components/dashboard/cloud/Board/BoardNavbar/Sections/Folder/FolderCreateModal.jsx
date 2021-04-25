@@ -3,8 +3,9 @@ import axios from 'axios';
 import React, { memo, useContext, useState } from 'react'
 import { useSelector } from 'react-redux';
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button, Label, Input} from 'reactstrap'
-import { CLOUD_API } from '../../../../../../route/Apis';
-import { CloudBoardContext } from '../../CloudViewer';
+import { CLOUD_API } from '../../../../../../../route/Apis';
+import { CloudBoardContext } from '../../../CloudViewer';
+
 
 const FolderCreateModal=memo((props) =>{
     //리스트 리프레쉬 컨텍스트

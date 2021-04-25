@@ -17,20 +17,23 @@ import {
   } from 'reactstrap';
 import { setFolderRoute } from '../../../../../redux/folder/_actions/folder_actions';
 import { CloudBoardContext } from '../CloudViewer';
-import FolderCreateModal from './Sections/FolderCreateModal';
-import PictureUploadModal from './Sections/PictureUploadModal';
-import url from '../../../../../route/DevUrl'
-import { CLOUD_API } from '../../../../../route/Apis';
+import FolderCreateModal from './Sections/Folder/FolderCreateModal';
+import PictureUploadModal from './Sections/Picture/PictureUploadModal';
+import VideoUploadModal from './Sections/Video/VideoUploadModal';
+
 
 
 
 const BoardNavbar= memo(()=> {
     const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete} = useContext(CloudBoardContext);
-    const [isOpen, setIsOpen] = useState(false);
-    const [pictureModal, setPictureModal] = useState(false);
     const dispatch = useDispatch(null);
+    const [isOpen, setIsOpen] = useState(false);
+    // 사진 모달
+    const [pictureModal, setPictureModal] = useState(false);
     // 폴더 모달
     const [folderModal, setFolderModal] = useState(false);
+    // 동영상 모달
+    const [videoModal, setVideoModal] = useState(false);
     // 현재 폴더 상 경로
     const folderPath = useSelector(state => state.folder.path)
 
@@ -39,8 +42,8 @@ const BoardNavbar= memo(()=> {
     const onPictureUploadModalOpen = (flag) =>{
         setPictureModal(flag);
     }
-    const onVideoUploadModalOpen =()=>{
-        alert("비디오 업로드")
+    const onVideoUploadModalOpen =(flag)=>{
+        setVideoModal(flag)
     }
     const onCreateNewFolderModalOpen=(flag)=>{ // 새폴더 모달
       setFolderModal(flag)
@@ -112,7 +115,11 @@ const BoardNavbar= memo(()=> {
                 </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem onClick={onChangeSelectionMode}>
-                    선택 모드
+                    {SelectionMode ? 
+                      "선택 모드 해제"
+                    : 
+                      "선택 모드"
+                    }
                   </DropdownItem>
                   <DropdownItem onClick={onAllFileSelection}>
                     전체 선택
@@ -128,7 +135,7 @@ const BoardNavbar= memo(()=> {
                   <DropdownItem onClick={()=>onPictureUploadModalOpen(true)}>
                     사진 업로드
                   </DropdownItem>
-                  <DropdownItem onClick={onVideoUploadModalOpen}>
+                  <DropdownItem onClick={()=>onVideoUploadModalOpen(true)}>
                     비디오 업로드
                   </DropdownItem>
                   <DropdownItem/>
@@ -166,6 +173,7 @@ const BoardNavbar= memo(()=> {
         </Navbar>
         {pictureModal && <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>}
         {folderModal && <FolderCreateModal ModalHandler = {onCreateNewFolderModalOpen} isOpen={folderModal}/>}
+        {videoModal && <VideoUploadModal ModalHandler = {onVideoUploadModalOpen} isOpen={videoModal}/>}
       </div>
     )
 })

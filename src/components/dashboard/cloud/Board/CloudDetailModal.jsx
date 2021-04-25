@@ -5,6 +5,7 @@ import { Image } from 'react-bootstrap';
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import url from '../../../../route/DevUrl'
 import htmlParser from 'html-react-parser';
+import { calcUnit } from '../../../../utils/fileSizeUnit';
 
 const CloudDetailModal=memo((props)=> {
     const {isOpen, file,ModalHandler} = props
@@ -47,7 +48,7 @@ const CloudDetailModal=memo((props)=> {
                     <Descriptions title = {file.filename} bordered>
                         <Descriptions.Item label="제목" span={2}>{file.filename}</Descriptions.Item>
                         <Descriptions.Item label="확장자">{file.mimetype}</Descriptions.Item>
-                        <Descriptions.Item label="용량" span={3}>{file.size}</Descriptions.Item>
+                        <Descriptions.Item label="용량" span={3}>{calcUnit(file.size)}</Descriptions.Item>
                         <Descriptions.Item label="태그" span={3}>{file.tags}</Descriptions.Item>
                         <Descriptions.Item label="설명" span={3}>{htmlParser(file.description)}</Descriptions.Item>
                         <Descriptions.Item label="다운로드" span={3}>

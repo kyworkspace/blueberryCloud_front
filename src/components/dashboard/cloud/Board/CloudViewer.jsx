@@ -3,16 +3,13 @@ import BoardNavbar from './BoardNavbar/BoardNavbar'
 import Breadcrumb from '../../../../layout/breadcrumb'
 import {Container,Row,Col,Card,CardText,CardBody,CardImg,CardSubtitle,CardTitle, Button, Alert,Nav} from 'reactstrap';
 
-import folderImage from '../../../../assets/images/dashboard/folder.png'
 import axios from 'axios';
-import { CLOUD_API, FOLDER_API } from '../../../../route/Apis';
+import { CLOUD_API } from '../../../../route/Apis';
 import { toast } from 'react-toastify';
-import { dateToString, openNotification } from '../../../../utils/commonMethod';
-import { SettingOutlined } from '@ant-design/icons';
 
 import url from '../../../../route/DevUrl'
 import CloudDetailModal from './CloudDetailModal';
-import { Checkbox, Pagination } from 'antd';
+import { Pagination } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFolderRoute } from '../../../../redux/folder/_actions/folder_actions';
 import CloudFileCard from './CloudFileCard';

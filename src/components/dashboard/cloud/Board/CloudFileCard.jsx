@@ -4,6 +4,7 @@ import folderImage from '../../../../assets/images/dashboard/folder.png'
 import { CloudBoardContext } from './CloudViewer';
 import url from '../../../../route/DevUrl';
 import { dateToString } from '../../../../utils/commonMethod';
+import { calcUnit } from '../../../../utils/fileSizeUnit';
 
 const CloudFileCard = memo((props) =>{
     const {openFolder,onFileDetail,SelectionMode,Files,setFiles} = useContext(CloudBoardContext)
@@ -55,7 +56,7 @@ const CloudFileCard = memo((props) =>{
                 {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
         </div>
             );
-        cardText = dateToString(item.createdAt)
+        cardText = dateToString(item.createdAt,true)
         cardEvent = ()=>{onFileDetail(item)};
     }
 
@@ -74,7 +75,7 @@ const CloudFileCard = memo((props) =>{
                     </>
                 :
                     <>
-                        <p className="mb-1">용량 : {item.size}</p>
+                        <p className="mb-1">용량 : {calcUnit(item.size)}</p>
                         <p><b>{cardText}</b></p>
                     </>
                 }

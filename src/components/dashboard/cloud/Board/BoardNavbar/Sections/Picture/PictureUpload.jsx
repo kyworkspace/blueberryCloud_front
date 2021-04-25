@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import Dropzone from 'react-dropzone'
-import { pictureInsert } from '../../../../../../utils/commonMethod'
 import Image from 'react-bootstrap/Image'
 import { Button } from 'reactstrap'
 import PictureInfomationModal from './PictureInfomationModal'
+import { useSelector } from 'react-redux'
+import { dateToString, pictureInsert } from '../../../../../../../utils/commonMethod'
 
 const PictureUpload=(props) =>{
     const [Files, setFiles] = useState([])
     const [fileInformation, setFileInformation] = useState({});
     const [informationModalViewer, setinformationModalViewer] = useState(false);
+    const {_id} = useSelector(state => state.user.userData)
+    const folder = useSelector(state => state.folder)
 
 
     const onDropHandler = async (files)=>{
         const uploadFileList = await Promise.all(
             files.map(file=>{
-                return pictureInsert(file).then(response=>{return response.data.fileInfo});
+                // 경로 앞부분 수정
+                let cloudPath = folder.path;
+                cloudPath = cloudPath.split("/")
+                cloudPath[0] = _id; //루트 폴더명으로 바꿔줌
+                let body ={
+                    file : file,
+                    path : `${cloudPath.join("/")}/${dateToString(new Date(),false)}`
+                }
+                return pictureInsert(body).then(response=>{return response.data.fileInfo});
             })
         )
         setFiles([...Files,...uploadFileList])
