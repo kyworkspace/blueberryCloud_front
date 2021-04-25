@@ -52,3 +52,7 @@
 - 뒤로가기 기능 구성
 - 화면 UI 변경
 ![image](https://user-images.githubusercontent.com/45280952/115579810-7c431d00-a301-11eb-9c76-6c2361061a7b.png)
+
+### 파일 저장 경로
+- Root/아이디/ 할려고 했으나 잘안되서 날짜로 변경
+- formData에서 field값을 빼서 경로를 설정할수 있는 방법을 찾아야함
