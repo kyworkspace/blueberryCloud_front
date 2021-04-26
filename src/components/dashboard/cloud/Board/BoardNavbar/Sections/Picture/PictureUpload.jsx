@@ -28,8 +28,8 @@ const PictureUpload=(props) =>{
                 return pictureInsert(body).then(response=>{return response.data.fileInfo});
             })
         )
+        
         setFiles([...Files,...uploadFileList])
-
         props.refreshFunction([...Files,...uploadFileList])
     }
     const deleteHandler =(image)=>{

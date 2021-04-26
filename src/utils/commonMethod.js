@@ -31,7 +31,52 @@ export const pictureInsert = (body) => {
             })
     })
 }
+/**
+ * 동영상을 드랍존에 넣을 경우
+ * ****/
+export const videoInsert = (files) => {
 
+    let formData = new FormData;
+    const config = {
+        header: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    //파일 타입을 보낼때 설정해줌
+    //멀티파트 이기 때문에 몇개가 들어올지 모름
+    //그래서 하나만 들어오게 해뒀기 때문에 첫번째 것만 가져옴
+    formData.append("file", files[0])
+
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/file/upload/video`, formData, config).then(response => {
+            resolve(response)
+        })
+    })
+}
+/**
+ * 동영상 res가 오면 썸네일 만듬
+ * ***/
+export const makeThumbnail = (varibale) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/file/upload/video/thumbnail`, varibale) //매개변수를 통해 res를 받음
+            .then(response => {
+                resolve(response);
+            })
+    })
+}
+/**
+ * 동영상 업로드
+ * ***/
+export const uploadVideo = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/video/save`, body).then(response => {
+            resolve(response);
+        })
+    })
+
+}
+
+//알림창?
 export const openNotification = ({ title, desc, event, placement }) => {
     notification.open({
         message: title,

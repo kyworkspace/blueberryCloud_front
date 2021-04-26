@@ -5,6 +5,7 @@ import PictureUpload from './PictureUpload';
 import { useSelector } from 'react-redux';
 import { CLOUD_API } from '../../../../../../../route/Apis';
 import { CloudBoardContext } from '../../../CloudViewer';
+import { toast } from 'react-toastify';
 
 const PictureUploadModal=memo((props)=> {
 
@@ -32,7 +33,7 @@ const PictureUploadModal=memo((props)=> {
       axios.post(`${CLOUD_API}/pictures/save`,body)
         .then(response=>{
           if(response.data.success){
-            alert(`${Image.length}건의 업로드를 성공하였습니다.`)
+            toast.success(`${Image.length}건의 업로드를 성공하였습니다.`, {position: toast.POSITION.BOTTOM_RIGHT,autoClose:2000})
             props.ModalHandler(false)
             refreshFileList();
           }else{

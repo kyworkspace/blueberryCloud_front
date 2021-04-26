@@ -32,10 +32,10 @@ const  CloudViewer =(props) =>{
         case "all":
             title = "모든 파일"
             break;
-        case "pictures":
+        case "image":
             title = "사진 모아보기"
         break;
-        case "videos":
+        case "video":
             title = "동영상 모아보기"
         break;
     
@@ -77,6 +77,7 @@ const  CloudViewer =(props) =>{
     //페이징
     const selectFileList =(page)=>{
         let body ={
+            theme : theme,
             limit : limit,
             skip : (page-1)*limit,
             cloudpath : folderPath, //폴더 경로

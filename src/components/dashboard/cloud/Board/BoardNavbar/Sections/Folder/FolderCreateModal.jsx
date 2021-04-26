@@ -27,6 +27,7 @@ const FolderCreateModal=memo((props) =>{
         let body = {
             //File과 같은 스키마 사용
             filename : folderName,
+            originalname : folderName,
             cloudpath : folderPath,
             writer : user.userData._id,
             mimetype : "Folder",

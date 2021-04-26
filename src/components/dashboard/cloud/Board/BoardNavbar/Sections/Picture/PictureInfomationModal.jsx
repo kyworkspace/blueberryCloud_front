@@ -3,6 +3,7 @@ import React, { memo, useState } from 'react'
 import { Image, Table } from 'react-bootstrap';
 import CKEditors from "react-ckeditor-component";
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
+import { calcUnit } from '../../../../../../../utils/fileSizeUnit';
 
 const PictureInfomationModal=memo((props)=> {
 
@@ -35,7 +36,7 @@ const PictureInfomationModal=memo((props)=> {
                 </tr>
                 <tr>
                     <td>용량</td>
-                    <td>{picture.size}</td>
+                    <td colSpan="3">{calcUnit(picture.size)}</td>
                 </tr>
                 <tr>
                     <td>태그 추가</td>

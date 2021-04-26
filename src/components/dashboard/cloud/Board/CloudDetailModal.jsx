@@ -40,8 +40,8 @@ const CloudDetailModal=memo((props)=> {
         <ModalBody>
             <Row>
                 <Col xs="12" sm="6"  md="6" >
-                    <div style={{display:'flex', justifyContent:'center'}}>
-                        <Image src={`${url}/${file.originalpath}`} rounded style={{maxWidth:'50%',maxHeight:'50%'}}/>
+                    <div style={{display:'flex', justifyContent:'center',alignItems: 'center', height:'100%'}}>
+                        <Image src={`${url}/${file.originalpath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}}/>
                     </div>
                 </Col>
                 <Col xs="12" sm="6"  md="6" >
