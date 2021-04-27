@@ -7,26 +7,15 @@ import { CLOUD_API } from "../route/Apis";
  * 루트 파일에 업로드함
  * 경로는 지정식
  * **/
-export const pictureInsert = (body) => {
-    // let body ={
-    //     file : file,
-    //     path : `605893111e9ec505b89fe02e/20210425`
-    // }
-
+export const pictureInsert = (file) => {
     const formData = new FormData();
     const config = {
         header: { 'Content-type': 'multipart/form-data' }
     }
-    formData.append("file", body.file)
-    formData.append("path", body.path)
-
-    // console.log(formData)
-
+    formData.append("file", file)
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/file/upload/pictures`, formData, config)
-            // axios.post(`${CLOUD_API}/file/upload/pictures`, body)
             .then(response => {
-                console.log(response)
                 resolve(response);
             })
     })

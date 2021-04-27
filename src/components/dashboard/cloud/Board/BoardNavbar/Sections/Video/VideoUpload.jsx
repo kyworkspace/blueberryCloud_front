@@ -1,9 +1,8 @@
-import Icon from '@ant-design/icons/lib/components/AntdIcon';
-import axios from 'axios';
 import React, { memo, useState } from 'react'
 import Dropzone from 'react-dropzone';
 import {videoInsert,makeThumbnail} from '../../../../../../../utils/commonMethod'
 import {VideoCameraAddOutlined} from '@ant-design/icons'
+import url from '../../../../../../../route/DevUrl';
 
 const VideoUpload=memo((props) =>{
     const {onFileInfoHandler,onThumbnailHandler} = props;
@@ -66,7 +65,7 @@ const VideoUpload=memo((props) =>{
                         <br/>
                         <div style={{display:'flex',justifyContent : 'center', alignItems: 'center'}}>
                             {ThumbnailPath &&
-                                <img src={`http://localhost:5000/${ThumbnailPath}`} alt="Thumnail" style={{maxWidth:'250px', maxHeight:'180px'}}>
+                                <img src={`${url}/${ThumbnailPath}`} alt="Thumnail" style={{maxWidth:'250px', maxHeight:'180px'}}>
                                 </img>
                             }
                         </div>

@@ -4,6 +4,7 @@ import { Image, Table } from 'react-bootstrap';
 import CKEditors from "react-ckeditor-component";
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
 import { calcUnit } from '../../../../../../../utils/fileSizeUnit';
+import url from '../../../../../../../route/DevUrl'
 
 const PictureInfomationModal=memo((props)=> {
 
@@ -26,7 +27,7 @@ const PictureInfomationModal=memo((props)=> {
         <ModalBody>
             <Table responsive="md">
                 <tr>
-                    <th colSpan="4" style={{textAlign:'center'}}> <Image src={`http://localhost:5000/${picture.path}`} rounded style={{width:'300px'}}/></th>
+                    <th colSpan="4" style={{textAlign:'center'}}> <Image src={`${url}/${picture.path}`} rounded style={{width:'300px'}}/></th>
                 </tr>
                 <tr>
                     <td>파일제목</td>

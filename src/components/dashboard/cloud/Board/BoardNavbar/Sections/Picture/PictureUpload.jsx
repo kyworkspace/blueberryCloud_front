@@ -4,7 +4,8 @@ import Image from 'react-bootstrap/Image'
 import { Button } from 'reactstrap'
 import PictureInfomationModal from './PictureInfomationModal'
 import { useSelector } from 'react-redux'
-import { dateToString, pictureInsert } from '../../../../../../../utils/commonMethod'
+import { pictureInsert } from '../../../../../../../utils/commonMethod'
+import url from '../../../../../../../route/DevUrl';
 
 const PictureUpload=(props) =>{
     const [Files, setFiles] = useState([])
@@ -17,15 +18,7 @@ const PictureUpload=(props) =>{
     const onDropHandler = async (files)=>{
         const uploadFileList = await Promise.all(
             files.map(file=>{
-                // 경로 앞부분 수정
-                let cloudPath = folder.path;
-                cloudPath = cloudPath.split("/")
-                cloudPath[0] = _id; //루트 폴더명으로 바꿔줌
-                let body ={
-                    file : file,
-                    path : `${cloudPath.join("/")}/${dateToString(new Date(),false)}`
-                }
-                return pictureInsert(body).then(response=>{return response.data.fileInfo});
+                return pictureInsert(file).then(response=>{return response.data.fileInfo});
             })
         )
         
@@ -87,11 +80,7 @@ const PictureUpload=(props) =>{
                     <>
                     
                     <div key={index} style={{margin:'10px'}} >
-                        {/* <img style={{width:'200px'}}
-                        src = {`http://localhost:5000/${item.path||item.file_path}`}
-                        /> */}
-                        
-                            <Image src = {`http://localhost:5000/${item.path||item.file_path}`} rounded style={{width:'200px'}}/>
+                        <Image src = {`${url}/${item.path||item.file_path}`} rounded style={{width:'200px'}}/>
                         <Button color="primary" onClick={()=>pictureInfomation(item)}>상세정보</Button>
                         <Button color="secondary" onClick={()=>deleteHandler(item)}>삭제</Button>
                     </div>

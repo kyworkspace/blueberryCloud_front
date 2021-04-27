@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { CLOUD_API } from '../../../../../../../route/Apis';
 import { CloudBoardContext } from '../../../CloudViewer';
 import { toast } from 'react-toastify';
+import { dateToString } from '../../../../../../../utils/commonMethod';
 
 const PictureUploadModal=memo((props)=> {
 
@@ -25,8 +26,12 @@ const PictureUploadModal=memo((props)=> {
         }
         Image.map(item=>{
           item.writer = user.userData._id;
-          item.originalpath = item.path;
-          //저장경로
+          // 경로 앞부분 수정
+          let newPath =  folderPath.split("/");
+          newPath[0] = user.userData._id;
+          //로컬 저장 경로
+          item.originalpath = `${newPath.join("/")}/${dateToString(new Date(),false)}`;
+          //클라우드 저장 경로
           item.cloudpath = folderPath;
         })
         let body = Image;

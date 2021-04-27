@@ -7,11 +7,15 @@ import url from '../../../../route/DevUrl'
 import htmlParser from 'html-react-parser';
 import { calcUnit } from '../../../../utils/fileSizeUnit';
 
+
 const CloudDetailModal=memo((props)=> {
     const {isOpen, file,ModalHandler} = props
+    
+    //닫기
     const onCloseModal = () => {
         ModalHandler(false)
     };
+    //다운로드
     const onDownloadHandler =()=>{
         //window.location.href=`${url}/${file.path}`
         axios.get(`${url}/${file.path}`)
@@ -41,12 +45,18 @@ const CloudDetailModal=memo((props)=> {
             <Row>
                 <Col xs="12" sm="6"  md="6" >
                     <div style={{display:'flex', justifyContent:'center',alignItems: 'center', height:'100%'}}>
-                        <Image src={`${url}/${file.originalpath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}}/>
+                        {
+                            file.mimetype.indexOf("image") > -1 ?
+                            <Image src={`${url}/${file.originalpath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}}/>
+                            :
+                            <video style={{width:'100%'}} src={`${url}/${file.originalpath}`} controls />
+                        }
+                        
                     </div>
                 </Col>
                 <Col xs="12" sm="6"  md="6" >
-                    <Descriptions title = {file.filename} bordered>
-                        <Descriptions.Item label="제목" span={2}>{file.filename}</Descriptions.Item>
+                    <Descriptions title = {file.originalname} bordered>
+                        <Descriptions.Item label="제목" span={2}>{file.originalname}</Descriptions.Item>
                         <Descriptions.Item label="확장자">{file.mimetype}</Descriptions.Item>
                         <Descriptions.Item label="용량" span={3}>{calcUnit(file.size)}</Descriptions.Item>
                         <Descriptions.Item label="태그" span={3}>{file.tags}</Descriptions.Item>
