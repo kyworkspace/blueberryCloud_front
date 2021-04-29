@@ -49,7 +49,7 @@ const CloudDetailModal=memo((props)=> {
                             file.mimetype.indexOf("image") > -1 ?
                             <Image src={`${url}/${file.originalpath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}}/>
                             :
-                            <video style={{width:'100%'}} src={`${url}/${file.originalpath}`} controls />
+                            <video style={{maxWidth:'800px', maxHeight:'450px'}} src={`${url}/${file.originalpath}`} controls />
                         }
                         
                     </div>
