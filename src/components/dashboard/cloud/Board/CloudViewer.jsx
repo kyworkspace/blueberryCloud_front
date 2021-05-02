@@ -16,13 +16,15 @@ import CloudFileCard from './CloudFileCard';
 
 export const CloudBoardContext=createContext({
     SelectionMode : false,
+    searchContents :{},
     Files:[],
     setSelectionMode :()=>{},
     refreshFileList :()=>{},
     openFolder :()=>{},
     onFileDetail :()=>{},
     setFiles:()=>{},
-    selectedFileDelete :()=>{}
+    selectedFileDelete :()=>{},
+    setSearchContents:()=>{}
 })
 
 const  CloudViewer =(props) =>{
@@ -34,11 +36,10 @@ const  CloudViewer =(props) =>{
             break;
         case "image":
             title = "사진 모아보기"
-        break;
+            break;
         case "video":
             title = "동영상 모아보기"
-        break;
-    
+            break;
         default:
             break;
     }
@@ -55,10 +56,12 @@ const  CloudViewer =(props) =>{
     const [skip, setSkip] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [total, setTotal]= useState(1);
+    // 검색
+    const [searchContents, setSearchContents] = useState({})
 
     useEffect(() => {
         selectFileList(1);
-    }, [theme,folderPath])
+    }, [theme,folderPath,searchContents])
 
     //파일 상세
     const onFileDetail = (file)=>{
@@ -81,7 +84,9 @@ const  CloudViewer =(props) =>{
             limit : limit,
             skip : (page-1)*limit,
             cloudpath : folderPath, //폴더 경로
+            searchContents : searchContents //검색항목
         };
+        console.log(body)
         axios.post(`${CLOUD_API}/files/list`,body)
         .then(response => {
             if(response.data.success){
@@ -113,11 +118,10 @@ const  CloudViewer =(props) =>{
         }
       })
     }
-    
-
-    
+    //파일 검색
     const contextValue = {
         refreshFileList //파일 새로고침 용도
+        ,searchContents //검색항목
         ,SelectionMode //선택모드
         ,Files
         ,setSelectionMode 
@@ -125,6 +129,7 @@ const  CloudViewer =(props) =>{
         ,onFileDetail
         ,setFiles
         ,selectedFileDelete
+        ,setSearchContents
     }
     
     return (

@@ -18,7 +18,7 @@ const Logins = (props) => {
   const [password,setPassword] = useState("")
   const [selected, setSelected] = useState("firebase");
   const [Email, setEmail] = useState(initialEmail)
-  const [RememberMe, setRememberMe] = useState(false);
+  const [RememberMe, setRememberMe] = useState(rememberMeChecked);
 
   const onEmailChangeHandle=(e)=>{
     setEmail(e.currentTarget.value);
@@ -82,14 +82,14 @@ const Logins = (props) => {
                       </FormGroup>
                       <FormGroup>
                         <Label className="col-form-label">{Password}</Label>
-                        <Input className="form-control" type={togglePassword ?  "text" : "password" } name="login[password]" value={password} onChange={(e) => handleChange(e)} required="" placeholder="*********"/>
+                        <Input className="form-control" type={togglePassword ?  "text" : "password" } name="login[password]" value={password} onChange={(e) => handleChange(e)} required="" placeholder="비밀번호를 입력해주세요"/>
                         <div className="show-hide" onClick={() => HideShowPassword(togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
                       </FormGroup>
                       <div className="form-group mb-0">
                         {/* 이메일 기억하는 거 */}
                         <div className="checkbox ml-3">
-                          <Input id="checkbox1" type="checkbox" onClick={onEmailRememberHandler}/>
-                          <Label className="text-muted" for="checkbox1">{RememberPassword}</Label>
+                          <Input id="checkbox1" type="checkbox" onClick={onEmailRememberHandler} checked={RememberMe}/>
+                          <Label className="text-muted" for="checkbox1">아이디 기억하기</Label>
                         </div>
                         {/* 비밀번호 찾기 */}
                         <a className="link" href="#javascript">{ForgotPassword}</a>

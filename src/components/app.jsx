@@ -11,7 +11,7 @@ const App = ({children}) => {
   return (
     <Fragment>
       <Loader/>
-      <div className="page-wrapper compact-wrapper" id="pageWrapper">
+      <div className="page-wrapper compact-wrapper" id="pageWrapper" style={{fontFamily:'twayair'}}>
       <Header/>
       <div className="page-body-wrapper sidebar-icon">
         <Sidebar/>

@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { memo, useContext, useState } from 'react'
+import { Search } from 'react-feather';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Collapse,
@@ -13,19 +13,23 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    NavbarText
+    NavbarText,
+    Form,
+    FormGroup,
+    Input,
   } from 'reactstrap';
 import { setFolderRoute } from '../../../../../redux/folder/_actions/folder_actions';
 import { CloudBoardContext } from '../CloudViewer';
 import FolderCreateModal from './Sections/Folder/FolderCreateModal';
 import PictureUploadModal from './Sections/Picture/PictureUploadModal';
 import VideoUploadModal from './Sections/Video/VideoUploadModal';
-
-
-
+import DatePicker from "react-datepicker";
+import { Button, Tooltip } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
+import CloudSearch from './Sections/Search/CloudSearch';
 
 const BoardNavbar= memo(()=> {
-    const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete} = useContext(CloudBoardContext);
+    const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents} = useContext(CloudBoardContext);
     const dispatch = useDispatch(null);
     const [isOpen, setIsOpen] = useState(false);
     // 사진 모달
@@ -36,6 +40,9 @@ const BoardNavbar= memo(()=> {
     const [videoModal, setVideoModal] = useState(false);
     // 현재 폴더 상 경로
     const folderPath = useSelector(state => state.folder.path)
+    // 검색 모드
+    const [searchModal, setSearchModal] = useState(false);
+    
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -48,7 +55,9 @@ const BoardNavbar= memo(()=> {
     const onCreateNewFolderModalOpen=(flag)=>{ // 새폴더 모달
       setFolderModal(flag)
     }
-
+    const onSearchModalOpen=(flag)=>{ //검색모달
+      setSearchModal(flag)
+    }
     const onMoveToPrevFolder =()=>{ //이전 폴더 가기
       let splitedPath = folderPath.split("/");
 
@@ -94,6 +103,7 @@ const BoardNavbar= memo(()=> {
       setFiles(selectedFiles);
       setSelectionMode(true);
     }
+
 
     return (
         <div>
@@ -156,17 +166,20 @@ const BoardNavbar= memo(()=> {
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
-                    독자적으로
-                  </DropdownItem>
-                  <DropdownItem>
-                    움직이는건가
-                  </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
+                    공유 기능은 기획 중입니다.
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
+              <NavItem>
+                <NavLink onClick={()=>onSearchModalOpen(true)}>파일 검색</NavLink>
+              </NavItem>
+              {
+              Object.keys(searchContents).length > 0 &&
+              <NavItem>
+                <NavLink onClick={()=>setSearchContents({})}>검색 초기화</NavLink>
+              </NavItem>
+              }
+              
             </Nav>
             <NavbarText>경로 : {`${folderPath}/`}</NavbarText>
           </Collapse>
@@ -174,6 +187,7 @@ const BoardNavbar= memo(()=> {
         {pictureModal && <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>}
         {folderModal && <FolderCreateModal ModalHandler = {onCreateNewFolderModalOpen} isOpen={folderModal}/>}
         {videoModal && <VideoUploadModal ModalHandler = {onVideoUploadModalOpen} isOpen={videoModal}/>}
+        {searchModal && <CloudSearch ModalHandler = {onSearchModalOpen} isOpen={searchModal}/> }
       </div>
     )
 })

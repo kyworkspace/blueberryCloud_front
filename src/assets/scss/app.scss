@@ -15,12 +15,18 @@
 @import "vendors/animate/animate";
 @import "vendors/sticky/sticky";
 @import "vendors/todo/todo";
+@font-face {
+    font-family: 'twayair';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 // @import "custom/cardImage.scss";
 
 
 
-// // Datepicker
-// @import "~react-datepicker/dist/react-datepicker.css";
+// Datepicker
+@import "~react-datepicker/dist/react-datepicker.css";
 
 // // Timepicker
 // @import "~react-times/css/material/default.css";
