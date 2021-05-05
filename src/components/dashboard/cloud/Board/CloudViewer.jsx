@@ -86,7 +86,6 @@ const  CloudViewer =(props) =>{
             cloudpath : folderPath, //폴더 경로
             searchContents : searchContents //검색항목
         };
-        console.log(body)
         axios.post(`${CLOUD_API}/files/list`,body)
         .then(response => {
             if(response.data.success){

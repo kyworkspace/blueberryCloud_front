@@ -1,7 +1,8 @@
 import { notification } from "antd";
 import axios from "axios";
 import { CLOUD_API } from "../route/Apis";
-
+import url from '../route/DevUrl';
+const FileDownloadlib = require('js-file-download');
 /**
  * 사진을 드랍존에 떨어뜨릴 경우.
  * 루트 파일에 업로드함
@@ -64,16 +65,45 @@ export const uploadVideo = (body) => {
     })
 
 }
+/**
+ * 파일 업로드
+ * **/
 
-//알림창?
-export const openNotification = ({ title, desc, event, placement }) => {
-    notification.open({
-        message: title,
-        description: desc,
-        onClick: event,
-        placement
+export const FileUpload = (files) => {
+    let formData = new FormData;
+    const config = {
+        header: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    formData.append("file", files[0])
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/file/upload/document`, formData, config).then(response => {
+            resolve(response)
+        })
+    })
+}
+export const FileSave = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/document/save`, body)
+            .then(response => {
+                resolve(response);
+            })
+    })
+}
+/**
+ * 파일 다운로드
+ * **/
+
+export const FileDownload = (file) => {
+    axios({
+        url: `${url}/${file.originalpath}`,
+        method: 'GET',
+        responseType: 'blob',
+    }).then((response) => {
+        FileDownloadlib(response.data, file.originalname);
     });
-};
+}
 
 /**
  * @name 날짜변환

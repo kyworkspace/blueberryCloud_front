@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react'
+import React, { memo, useContext, useRef, useState } from 'react'
 import { Search } from 'react-feather';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -23,15 +23,15 @@ import { CloudBoardContext } from '../CloudViewer';
 import FolderCreateModal from './Sections/Folder/FolderCreateModal';
 import PictureUploadModal from './Sections/Picture/PictureUploadModal';
 import VideoUploadModal from './Sections/Video/VideoUploadModal';
-import DatePicker from "react-datepicker";
-import { Button, Tooltip } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
 import CloudSearch from './Sections/Search/CloudSearch';
+import {dateToString, FileSave, FileUpload} from '../../../../../utils/commonMethod'
+import SweetAlert from 'sweetalert2';
 
 const BoardNavbar= memo(()=> {
-    const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents} = useContext(CloudBoardContext);
+    const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents,refreshFileList} = useContext(CloudBoardContext);
     const dispatch = useDispatch(null);
     const [isOpen, setIsOpen] = useState(false);
+    const user = useSelector(state => state.user);
     // 사진 모달
     const [pictureModal, setPictureModal] = useState(false);
     // 폴더 모달
@@ -42,7 +42,8 @@ const BoardNavbar= memo(()=> {
     const folderPath = useSelector(state => state.folder.path)
     // 검색 모드
     const [searchModal, setSearchModal] = useState(false);
-    
+    // 파일 업로드
+    const fileUploadRef = useRef();
 
     const toggle = () => setIsOpen(!isOpen);
 
@@ -79,10 +80,9 @@ const BoardNavbar= memo(()=> {
       setSelectionMode(!SelectionMode);
       
     }
-    const onSelectedFileDelete=()=>{
+    const onSelectedFileDelete=()=>{ //파일 삭제
       
       let selectedFiles = Files.filter((item)=>item.selected);
-      selectedFiles = selectedFiles.map(file=>file._id);
       let count = selectedFiles.length;
       if(count===0){
           alert("선택된 파일이 없습니다.");
@@ -93,7 +93,7 @@ const BoardNavbar= memo(()=> {
       }
       selectedFileDelete(body);
     }
-    const onAllFileSelection=()=>{
+    const onAllFileSelection=()=>{ //전체 파일 선택
       let selectedFiles = [...Files];
       selectedFiles.forEach((item)=>{
         if(item.mimetype !=="Folder"){
@@ -102,6 +102,35 @@ const BoardNavbar= memo(()=> {
       })
       setFiles(selectedFiles);
       setSelectionMode(true);
+    }
+    const onFileuploadOpen =()=>{
+      fileUploadRef.current.click();
+    }
+    const onFileuploadHandler=(e)=>{
+      FileUpload(e.target.files)
+      .then(res=>{
+        if(res.data.success){
+
+          let fileInfo = {...res.data.fileInfo};
+          fileInfo.writer = user.userData._id;
+          let newPath =  folderPath.split("/");
+          newPath[0] = user.userData._id;
+          fileInfo.originalpath = `${newPath.join("/")}/${dateToString(new Date(),false)}`;
+          fileInfo.cloudpath = folderPath;
+          let body = fileInfo;
+          FileSave(body)
+          .then(res=>{
+            if(res.data.success){
+              SweetAlert.fire({icon:'success',text:'업로드 성공'})    
+              refreshFileList();
+            }else{
+              SweetAlert.fire({icon:'error',text:'업로드 실패했어요.'})    
+            }
+          });
+        }else{
+          SweetAlert.fire({icon:'error',text:'업로드 실패했어요.'})
+        }
+      })
     }
 
 
@@ -149,7 +178,7 @@ const BoardNavbar= memo(()=> {
                     비디오 업로드
                   </DropdownItem>
                   <DropdownItem/>
-                  <DropdownItem>
+                  <DropdownItem onClick={onFileuploadOpen}>
                     파일 업로드
                   </DropdownItem>
                 </DropdownMenu>
@@ -184,6 +213,13 @@ const BoardNavbar= memo(()=> {
             <NavbarText>경로 : {`${folderPath}/`}</NavbarText>
           </Collapse>
         </Navbar>
+        <div
+          style={{visibility:'hidden'}}
+        >
+          <input type="file" ref={fileUploadRef} onChange={onFileuploadHandler}/>
+        </div>
+        
+        
         {pictureModal && <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>}
         {folderModal && <FolderCreateModal ModalHandler = {onCreateNewFolderModalOpen} isOpen={folderModal}/>}
         {videoModal && <VideoUploadModal ModalHandler = {onVideoUploadModalOpen} isOpen={videoModal}/>}

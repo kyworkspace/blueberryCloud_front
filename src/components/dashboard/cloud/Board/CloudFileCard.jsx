@@ -1,10 +1,11 @@
 import { Checkbox } from 'antd';
 import React, { memo, useContext, useState } from 'react'
-import folderImage from '../../../../assets/images/dashboard/folder.png'
+import folderImage from '../../../../assets/images/thumbnails/docx.png'
 import { CloudBoardContext } from './CloudViewer';
 import url from '../../../../route/DevUrl';
-import { dateToString } from '../../../../utils/commonMethod';
+import { dateToString, FileDownload } from '../../../../utils/commonMethod';
 import { calcUnit } from '../../../../utils/fileSizeUnit';
+import { mimeTypeFinder } from '../../../../utils/mimeTypeAsset';
 
 const CloudFileCard = memo((props) =>{
     const {openFolder,onFileDetail,SelectionMode,Files,setFiles} = useContext(CloudBoardContext)
@@ -23,70 +24,42 @@ const CloudFileCard = memo((props) =>{
     let cardImage; //파일 이미지
     let cardText; //파일 설명
     let cardEvent; // 클릭 이벤트
-    let type = item.mimetype.split("/");
-    switch (type[0]) {
+    let {type,image} = mimeTypeFinder(item);
+    cardImage =(
+        <div 
+            className="file-top"
+            style={{
+                backgroundImage:image
+                , height:'200px' 
+                , backgroundSize:'70%'
+                , backgroundPosition:'center'
+                , backgroundRepeat:'no-repeat'
+                }}
+            >
+                {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
+        </div>
+        );
+    let typeMainCategory = item.mimetype.split("/");
+    switch (typeMainCategory[0]) {
         case "Folder":
-            cardImage = (
-                <div
-                    className="file-top"
-                    style = {{
-                        height : '200px',
-                        backgroundImage:`url(${folderImage})`,
-                        backgroundSize:'70%',
-                        backgroundPosition:'center',
-                        backgroundRepeat:'no-repeat'
-                    }}
-                >
-                   {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox /></i>}
-                </div>
-            );
             cardText = "폴더";
             cardEvent = ()=>{openFolder(`${item.cloudpath}/${item.filename}`)}
             break;
         case "image":
-            cardImage =(
-                <div 
-                    className="file-top"
-                    style={{
-                        backgroundImage:`url(${url}/${item.originalpath.replace(/\\/g, "/")})`
-                        , height:'200px' 
-                        , backgroundSize:'70%'
-                        , backgroundPosition:'center'
-                        , backgroundRepeat:'no-repeat'
-                        }}
-                    >
-                        {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
-                </div>
-                    );
-                cardText = dateToString(item.createdAt,true)
-                cardEvent = ()=>{onFileDetail(item)};
-                break;
-            case "video":
-                cardImage =(
-                    <div 
-                        className="file-top"
-                        style={{
-                            backgroundImage:`url(${url}/${item.thumbnailpath})`
-                            , height:'200px' 
-                            , backgroundSize:'70%'
-                            , backgroundPosition:'center'
-                            , backgroundRepeat:'no-repeat'
-                            }}
-                        >
-                            {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
-                    </div>
-                        );
-                    cardText = dateToString(item.createdAt,true)
-                    cardEvent = ()=>{onFileDetail(item)};
-                break;
+            cardText = dateToString(item.createdAt,true)
+            cardEvent = ()=>{onFileDetail(item)};
+            break;
+        case "video":
+            cardText = dateToString(item.createdAt,true)
+            cardEvent = ()=>{onFileDetail(item)};
+            break;
+        case "audio":
+            cardText = dateToString(item.createdAt,true)
+            cardEvent = ()=>{onFileDetail(item)};
+            break;
         default:
-            cardImage = (
-                <div  className="file-top" style={{height:'200px' }}>
-                    {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
-                </div>
-                );
             cardText = dateToString(item.createdAt,true);
-            cardEvent = ()=>{alert("오류가 발생한 파일입니다.")}
+            cardEvent = ()=>{ FileDownload(item);}
             break;
     }
     return (

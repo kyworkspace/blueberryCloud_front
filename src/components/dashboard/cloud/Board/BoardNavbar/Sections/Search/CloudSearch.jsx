@@ -130,11 +130,10 @@ const CloudSearch=memo((props) =>{
                     </Col>
                     <Col sm={24} md={18}>
                         <Select style={{ width: 120 }} onChange={onTypeSelect} value={type} disabled={!typeFlag}>
-                            <Option value="document">문서</Option>
                             <Option value="image">그림</Option>
                             <Option value="video">동영상</Option>
                             <Option value="music">음악</Option>
-                            <Option value="zip">압축</Option>
+                            <Option value="application">기타</Option>
                         </Select>
                     </Col>
                     <Divider/>

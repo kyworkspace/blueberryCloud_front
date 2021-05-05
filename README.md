@@ -39,7 +39,7 @@
 
 
 ### 화면 구성
-![image](https://user-images.githubusercontent.com/45280952/111332400-18e81e80-86b5-11eb-97f1-b5ff7c1246bb.png)
+![image](https://user-images.githubusercontent.com/45280952/117133640-79572a80-addf-11eb-9375-065830973f31.png)
 
 #### 모든 파일 뷰어
 ![image](https://user-images.githubusercontent.com/45280952/111907073-157adb80-8a97-11eb-8dbb-226ba8f57c4f.png)
@@ -60,4 +60,6 @@
 
 ### 영상 이슈 해결
 - ffmpeg로 converting이 생각보다 오래걸렸음.
-- 영상 플레이시 최대 가로 800 세로 450 으로 설정함
+- 영상 플레이시 최대 가로 750 세로 400 으로 설정함
+
+### 일반 파일 업로드 구성. mimetype별 이미지 연결 완료
