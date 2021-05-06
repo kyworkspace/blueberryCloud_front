@@ -11,10 +11,16 @@ import {routes} from './route';
 import ConfigDB from './data/customizer/config'
 import Auth from './hoc/auth'
 //Login-page
-import LoginPage from './components/page/Login/login';
-import RegisterPage from './components/page/Login/register';
-import CloudDashBoard from './components/dashboard/cloud/Dashboard/CloudDashBoard';
-import CloudViewer from './components/dashboard/cloud/Board/CloudViewer';
+import LoginPage from './components/Login/login';
+import RegisterPage from './components/Login/register';
+
+//cloud
+import CloudDashBoard from './components/cloud/Dashboard/CloudDashBoard';
+import CloudViewer from './components/cloud/Board/CloudViewer';
+
+//sns
+import SNSTimeline from './components/SNS/index';
+import UserInformation from './components/Account/UserInfomation./UserInformation';
 
 
 const Root = (props) =>  {
@@ -47,6 +53,8 @@ const Root = (props) =>  {
           <TransitionGroup>
           <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,null)}/>
           <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
+          <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline`} component={Auth(SNSTimeline,true)}/>
+          <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo`} component={Auth(UserInformation,true)}/>
             {/* {routes.map(({ path, Component }) => (
                 <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>
                     {({ match }) => (

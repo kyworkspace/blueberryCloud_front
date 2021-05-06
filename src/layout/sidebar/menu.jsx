@@ -20,11 +20,9 @@ export const MENUITEMS = [
         menucontent:"Check Your Friend's TimeLine",
         Items:[
             {
-                title: '모아보기', icon: Anchor , type: 'sub', active: false, children: [
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '게시물 전체', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '사진', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '동영상', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '날짜', type: 'link' },
+                title: 'SNS HOME', icon: Anchor , type: 'sub', active: false, children: [
+                    { path: `${process.env.PUBLIC_URL}/sns/timeline`, title: '타임라인', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/sns/userinfo`, title: '나의 이야기', type: 'link' },
                 ]
             },
             {

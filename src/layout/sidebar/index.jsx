@@ -90,7 +90,7 @@ const Sidebar = (props) => {
     if(window.innerWidth <= 991){
       document.querySelector(".page-header").className = "page-header close_icon";
       document.querySelector(".sidebar-wrapper").className = "sidebar-wrapper close_icon "
-      document.querySelector(".mega-menu-container").classList.remove("d-block")
+      // document.querySelector(".mega-menu-container").classList.remove("d-block")
       if(item.type === "sub"){
         document.querySelector(".page-header").className = "page-header ";
         document.querySelector(".sidebar-wrapper").className = "sidebar-wrapper "

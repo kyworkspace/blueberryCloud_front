@@ -36,7 +36,7 @@ const Leftbar = (props) => {
         setSidebartoggle(!toggle);
         document.querySelector(".page-header").className = "page-header close_icon";
         document.querySelector(".sidebar-wrapper").className = "sidebar-wrapper close_icon "
-        document.querySelector(".mega-menu-container").classList.remove("d-block")
+        // document.querySelector(".mega-menu-container").classList.remove("d-block")
       } else {
         setSidebartoggle(!toggle);
         document.querySelector(".page-header").className = "page-header";
