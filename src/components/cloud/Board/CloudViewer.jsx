@@ -15,13 +15,16 @@ export const CloudBoardContext=createContext({
     SelectionMode : false,
     searchContents :{},
     Files:[],
+    DetailModal : false,
+    UpdateModal : false,
+    SelectedFile : {},
     setSelectionMode :()=>{},
     refreshFileList :()=>{},
     openFolder :()=>{},
     onFileDetail :()=>{},
     setFiles:()=>{},
     selectedFileDelete :()=>{},
-    setSearchContents:()=>{}
+    setSearchContents:()=>{},
 })
 
 const  CloudViewer =(props) =>{
@@ -42,7 +45,8 @@ const  CloudViewer =(props) =>{
     }
     const [Files, setFiles] = useState([]);
     const [SelectedFile, setSelectedFile] = useState({});
-    const [DetailModal, setDetailModal] = useState(false);
+    const [DetailModal, setDetailModal] = useState(false); //상세보기
+    const [UpdateModal, setUpdateModal] = useState(false);
     const [SelectionMode, setSelectionMode] = useState(false); //선택 모드
 
     //폴더 경로 state
@@ -65,6 +69,7 @@ const  CloudViewer =(props) =>{
         setDetailModal(true);
         setSelectedFile(file);
     }
+    
     //폴더일때 상세 -> 상세 폴더로 경로 이동
     const openFolder = (path)=>{
         dispatch(setFolderRoute(path))
@@ -120,6 +125,7 @@ const  CloudViewer =(props) =>{
         ,searchContents //검색항목
         ,SelectionMode //선택모드
         ,Files
+        ,SelectedFile
         ,setSelectionMode 
         ,openFolder 
         ,onFileDetail

@@ -4,21 +4,26 @@ import CKEditors from "react-ckeditor-component";
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
 import { calcUnit } from '../../../../../../utils/fileSizeUnit';
 import url from '../../../../../../route/DevUrl'
-
+import { Select } from 'antd';
+const {Option} = Select;
 const PictureInfomationModal=memo((props)=> {
 
     const {buttonLabel,className,picture,ModalHandler,isOpen,pictureHandler} = props
     const [description, setDescription] = useState(picture.desc ? picture.desc:"");
+    const [openrating, setOpenrating] = useState(2)
     const onCloseModal = () => {
         ModalHandler(false)
     };
     const onConfirmModal = () => {
-        pictureHandler(picture,description)
+        pictureHandler(picture,description,openrating)
         ModalHandler(false)
     };
     const onDescHandler =(evt)=>{
         const newContent = evt.editor.getData();
         setDescription(newContent);
+    }
+    const onRatingHandler=(value)=>{
+        setOpenrating(value);
     }
     return (
     <Modal isOpen={isOpen} className={className} style={{minWidth:'600px'}}>
@@ -40,7 +45,13 @@ const PictureInfomationModal=memo((props)=> {
                 </tr>
                 <tr>
                     <td>태그 추가</td>
-                    <td colSpan="3">{picture.mimetype}</td>
+                    <td colSpan="3">
+                        <Select value={openrating} onChange={onRatingHandler} style={{width:'200px'}}>
+                            <Option value={2}>비공개</Option>
+                            <Option value={1}>친구에게만</Option>
+                            <Option value={0}>전체 공개</Option>
+                        </Select>
+                    </td>
                 </tr>
                 <tr>
                     <td>설명</td>

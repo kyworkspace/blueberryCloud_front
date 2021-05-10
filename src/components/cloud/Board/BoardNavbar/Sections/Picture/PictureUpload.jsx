@@ -42,10 +42,11 @@ const PictureUpload=(props) =>{
         setFileInformation(item)
         setinformationModalViewer(true);
     }
-    const onPictureDescriptionHandler=(item,desc)=>{
+    const onPictureDescriptionHandler=(item,desc,openrating)=>{
         const currentIndex = Files.indexOf(item);
         let newImages = [...Files];
-        newImages[currentIndex].description = desc
+        newImages[currentIndex].description = desc; //설명
+        newImages[currentIndex].openrating = openrating; //공개 등급
         setFiles(newImages)
         props.refreshFunction(newImages);
     }

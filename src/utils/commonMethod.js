@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
-import { CLOUD_API } from "../route/Apis";
+import { CLOUD_API, PROFILE_API, USER_API } from "../route/Apis";
 import url from '../route/DevUrl';
 const FileDownloadlib = require('js-file-download');
 /**
@@ -104,6 +104,17 @@ export const FileDownload = (file) => {
         FileDownloadlib(response.data, file.originalname);
     });
 }
+/**
+ * 파일 정보 수정
+ * **/
+export const FileUpdate = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/file/update`, body)
+            .then(response => {
+                resolve(response);
+            })
+    })
+}
 
 /**
  * @name 날짜변환
@@ -121,4 +132,34 @@ export const dateToString = (dateTime, Hyphen) => {
     } else {
         return year + month + day;
     }
+}
+
+/*******************************개인정보 관리******************************/
+// 프로필 사진 업로드 
+export const profileInsert = (files) => {
+    let formData = new FormData;
+    const config = {
+        header: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    formData.append("file", files[0])
+    return new Promise((resolve, reject) => {
+        axios.post(`${PROFILE_API}/image/upload`, formData, config).then(response => {
+            resolve(response)
+        })
+    })
+}
+
+// 프로필 사진 변경
+export const changeProfileImage = (file, flag) => {
+    let body = {
+        file, flag
+    };
+    return new Promise((resolve, reject) => {
+        axios.post(`${PROFILE_API}/image/save`, body)
+            .then(response => {
+                resolve(response);
+            })
+    })
 }

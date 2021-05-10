@@ -5,6 +5,7 @@ import { ArrowRight, ArrowLeft, Grid } from 'react-feather';
 import { Link } from 'react-router-dom'
 import { translate } from 'react-switch-lang';
 import configDB from '../../data/customizer/config';
+import LogoComponent from '../header/LeftBarSection/LogoComponent';
 
 const Sidebar = (props) => {
 
@@ -170,17 +171,13 @@ const Sidebar = (props) => {
     <Fragment>
       <div className="sidebar-wrapper">
         <div className="logo-wrapper">
-          <Link to={`${process.env.PUBLIC_URL}/cloud/dashboard`}>
-            {/* 어떤 로고를 넣을까요 */}
-            <div>BLUBERRY CLOUD</div>
-            {/* <img className="img-fluid for-light" src={require("../../assets/images/logo/logo.png")} alt="" />
-            <img className="img-fluid for-dark" src={require("../../assets/images/logo/logo_dark.png")} alt="" /> */}
-          </Link>
+          <LogoComponent/>
           <div className="back-btn" onClick={() => responsiveSidebar()}><i className="fa fa-angle-left"></i></div>
           <div className="toggle-sidebar" onClick={() => openCloseSidebar(sidebartoogle)}><Grid className="status_toggle middle sidebar-toggle" /></div>
         </div>
+        {/* 화면 접었을때의 로고 */}
         <div className="logo-icon-wrapper">
-          <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}><img className="img-fluid" src={require("../../assets/images/logo/logo-icon.png")} alt="" /></Link>
+          <Link to={`${process.env.PUBLIC_URL}/dashboard/default`}><img className="img-fluid" src={require("../../assets/images/logo/logo-icon.png")} alt="" style={{width:'32px', height:'25px'}}/></Link>
         </div>
         <nav className="sidebar-main">
             <div className="left-arrow" onClick={scrollToLeft}><ArrowLeft /></div>
