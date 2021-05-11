@@ -43,7 +43,7 @@ const Register = (props) => {
         email: Email,
         password: password,
         name: Name,
-        image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
+        profileImage: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
       }
       dispatch(registerUser(body))
       .then(response=>{

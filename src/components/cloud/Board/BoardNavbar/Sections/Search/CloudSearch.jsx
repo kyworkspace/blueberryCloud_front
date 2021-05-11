@@ -4,8 +4,8 @@ import React, { memo, useContext, useState } from 'react'
 import { Search } from 'react-feather';
 import { useSelector } from 'react-redux';
 import { Button, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { infoMessage } from '../../../../../../utils/alertMethod';
 import { decodeUnit, judgeUnit } from '../../../../../../utils/fileSizeUnit';
-import SweetAlert from 'sweetalert2'
 import { CloudBoardContext } from '../../../CloudViewer';
 const {RangePicker} = DatePicker;
 
@@ -75,7 +75,7 @@ const CloudSearch=memo((props) =>{
         }
          
         if(Object.keys(body).length === 0){
-            SweetAlert.fire({title:'검색 항목이 없어요'});
+            infoMessage('검색 항목이 없어요')
             return false;
         }
         setSearchContents(body);
