@@ -20,7 +20,7 @@ import CloudViewer from './components/cloud/Board/CloudViewer';
 
 //sns
 import SNSTimeline from './components/SNS/index';
-import UserInformation from './components/Account/UserInfomation./UserInformation';
+import UserInformation from './components/Account/UserInfomation/UserInformation';
 
 
 const Root = (props) =>  {

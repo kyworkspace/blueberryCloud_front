@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Col, Row } from 'reactstrap';
-import {Mail} from 'react-feather';
+import {Mail, Users} from 'react-feather';
 
 function UserInfoFirst(props) {
 
-    const {email,bod,telNo,location,name,job} = props;
+    const {email,bod,phoneNumber,name,job,friends} = props;
     const [iconSize, setIconSize] = useState('13px');
     
     return (
@@ -33,12 +33,12 @@ function UserInfoFirst(props) {
                 <Row>
                 <Col md="6">
                     <div className="ttl-info text-left ttl-xs-mt">
-                    <h6><i className="fa fa-phone"></i>   연락처</h6><span>{ telNo ? telNo : '비공개'}</span>
+                    <h6><i className="fa fa-phone"></i>   연락처</h6><span>{ phoneNumber ? phoneNumber : '비공개'}</span>
                     </div>
                 </Col>
                 <Col md="6">
-                    <div className="ttl-info text-left ttl-sm-mb-0">
-                    <h6><i className="fa fa-location-arrow"></i>   거주지</h6><span>{location ? location : '비공개' }</span>
+                    <div className="ttl-info text-left">
+                        <h6><Users size={iconSize}/> 친구</h6><span>{friends ? friends+" 명" : '비공개'}</span>
                     </div>
                 </Col>
                 </Row>

@@ -5,6 +5,7 @@ import {
     REGISTER_USER,
     AUTH_USER,
     LOGOUT_USER,
+    UPDATE_USER,
 } from './types';
 
 
@@ -45,5 +46,12 @@ export function logoutUser() {
     return {
         type: LOGOUT_USER,
         payload: request
+    }
+}
+
+export function updateUserProfile(body) {
+    return {
+        type: UPDATE_USER,
+        payload: body
     }
 }

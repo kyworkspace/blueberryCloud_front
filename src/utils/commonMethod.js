@@ -163,4 +163,18 @@ export const changeProfileImage = (file, flag) => {
             })
     })
 }
+//프로필 정보 변경
+export const profileUpdate = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${PROFILE_API}/info/update`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response);
+                } else {
+                    reject(response);
+                }
+
+            })
+    })
+}
 
