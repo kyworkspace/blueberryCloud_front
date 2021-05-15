@@ -1,29 +1,29 @@
 import React, { Fragment, useState } from 'react';
 import { Col, Card, CardHeader, CardBody, Button, Media, Collapse } from 'reactstrap';
 
-import one from "../../assets/images/user/1.jpg";
-import three from "../../assets/images/user/3.jpg";
-import five from "../../assets/images/user/5.jpg";
-import two from "../../assets/images/user/2.png";
-import eight from "../../assets/images/user/8.jpg";
-import eleven from "../../assets/images/user/11.png";
-import timeline4 from "../../assets/images/social-app/timeline-4.png";
-import ten from "../../assets/images/user/10.jpg";
-import six from "../../assets/images/user/6.jpg";
-import fourteen from "../../assets/images/user/14.png";
-import four from "../../assets/images/user/4.jpg";
+import one from "../../../assets/images/user/1.jpg";
+import three from "../../../assets/images/user/3.jpg";
+import five from "../../../assets/images/user/5.jpg";
+import two from "../../../assets/images/user/2.png";
+import eight from "../../../assets/images/user/8.jpg";
+import eleven from "../../../assets/images/user/11.png";
+import timeline4 from "../../../assets/images/social-app/timeline-4.png";
+import ten from "../../../assets/images/user/10.jpg";
+import six from "../../../assets/images/user/6.jpg";
+import fourteen from "../../../assets/images/user/14.png";
+import four from "../../../assets/images/user/4.jpg";
 
-import post9 from "../../assets/images/social-app/post-9.png";
-import post8 from "../../assets/images/social-app/post-8.png";
-import post7 from "../../assets/images/social-app/post-7.png";
-import post6 from "../../assets/images/social-app/post-6.png";
-import post5 from "../../assets/images/social-app/post-5.png";
-import post4 from "../../assets/images/social-app/post-4.png";
-import post3 from "../../assets/images/social-app/post-3.png";
-import post2 from "../../assets/images/social-app/post-2.png";
-import post1 from "../../assets/images/social-app/post-1.png";
+import post9 from "../../../assets/images/social-app/post-9.png";
+import post8 from "../../../assets/images/social-app/post-8.png";
+import post7 from "../../../assets/images/social-app/post-7.png";
+import post6 from "../../../assets/images/social-app/post-6.png";
+import post5 from "../../../assets/images/social-app/post-5.png";
+import post4 from "../../../assets/images/social-app/post-4.png";
+import post3 from "../../../assets/images/social-app/post-3.png";
+import post2 from "../../../assets/images/social-app/post-2.png";
+import post1 from "../../../assets/images/social-app/post-1.png";
 
-import {ProfileIntro,SocialNetworks,Dribbble,BuckyBarnes,JasonBorne,SarahLoren,AndewJon,AddFriend,ComerenDiaz,Friends ,Facebooks,Twitters,AboutMe,FavouriteMusicBands,Follower,Following,LatestPhotos } from "../../constant";
+import {ProfileIntro,SocialNetworks,Dribbble,BuckyBarnes,JasonBorne,SarahLoren,AndewJon,AddFriend,ComerenDiaz,Friends ,Facebooks,Twitters,AboutMe,FavouriteMusicBands,Follower,Following,LatestPhotos } from "../../../constant";
 
 const RightBar = () => {
     const [isIntro, setisIntro] = useState(true);

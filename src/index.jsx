@@ -51,7 +51,7 @@ const Root = (props) =>  {
                 return (<Redirect to={`${process.env.PUBLIC_URL}/cloud/dashboard`} />)
             }} />
           <TransitionGroup>
-          <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,null)}/>
+          <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,true)}/>
           <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
           <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline`} component={Auth(SNSTimeline,true)}/>
           <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo`} component={Auth(UserInformation,true)}/>

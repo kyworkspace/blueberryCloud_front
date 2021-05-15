@@ -12,7 +12,7 @@ const ShareGraph=memo(() =>{
                 <CardHeader>
                 <Row>
                     <Col xs="9">
-                    <h5>OrderStatus</h5>
+                    <h5>이용 중인 CLOUD PLAN</h5>
                     </Col>
                     <Col xs="3" className="text-right"><ShoppingBag className="text-muted" /></Col>
                 </Row>
@@ -21,18 +21,6 @@ const ShareGraph=memo(() =>{
                 <div className="chart-container">
                     <div id="progress1">
                     <Chart options={progress1.options} series={progress1.series} height="70" type="bar" />                  
-                    </div>
-                    <div id="progress2">
-                    <Chart options={progress2.options} series={progress2.series} height="70" type="bar" /> 
-                    </div>
-                    <div id="progress3">
-                    <Chart options={progress3.options} series={progress3.series} height="70" type="bar" /> 
-                    </div>
-                    <div id="progress4">
-                    <Chart options={progress4.options} series={progress4.series} height="70" type="bar" /> 
-                    </div>
-                    <div id="progress5">
-                    <Chart options={progress5.options} series={progress5.series} height="70" type="bar" /> 
                     </div>
                 </div>
                 </CardBody>

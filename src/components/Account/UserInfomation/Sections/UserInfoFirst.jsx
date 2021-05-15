@@ -4,7 +4,7 @@ import {Mail, Users} from 'react-feather';
 
 function UserInfoFirst(props) {
 
-    const {email,bod,phoneNumber,name,job,friends} = props;
+    const {email,bod,phoneNumber,name,friends,greeting} = props;
     const [iconSize, setIconSize] = useState('13px');
     
     return (
@@ -26,7 +26,7 @@ function UserInfoFirst(props) {
             <Col sm="12" lg="4" className="order-sm-0 order-xl-1">
                 <div className="user-designation">
                 <div className="title"><a target="_blank" href="#javascript">{name}</a></div>
-                <div className="desc mt-2">{job}</div>
+                <div className="desc mt-2">{greeting}</div>
                 </div>
             </Col>
             <Col sm="6" lg="4" className="order-sm-2 order-xl-2">

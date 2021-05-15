@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { memo, useState } from 'react'
 import { Media } from 'reactstrap';
 import emptyUser from '../../../../assets/images/dashboard/emptyProfile.png'
-import { PROFILE_API } from '../../../../route/Apis';
 import { errorMessage } from '../../../../utils/alertMethod';
 import { changeProfileImage, profileInsert } from '../../../../utils/commonMethod';
 import url from '../../../../route/DevUrl';

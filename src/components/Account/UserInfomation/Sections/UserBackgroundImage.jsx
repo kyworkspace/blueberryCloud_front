@@ -8,7 +8,6 @@ const UserBackgroundImage=memo((props) =>{
     const {imageUrl} = props
     const [backgroundStyle, setBackgroundStyle] = useState({
         background:imageUrl ? `url(${url}/${imageUrl}) center/cover no-repeat`:`url(https://picsum.photos/1600/470)` ,
-        backgroundSize : 'cover',
         padding:'0px',
         height: '470px',
     })

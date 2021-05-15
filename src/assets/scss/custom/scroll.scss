@@ -1,0 +1,6 @@
+
+div {
+    .withoutScroll ::-webkit-scrollbar {
+        display: none;
+    }
+}

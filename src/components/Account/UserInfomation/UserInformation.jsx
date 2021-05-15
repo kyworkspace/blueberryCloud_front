@@ -34,7 +34,7 @@ const UserInformation = (props) => {
                   <UserBackgroundImage imageUrl={userInfo.backgroundImage}/>
                   <UserProfileImage imageUrl={userInfo.profileImage}/>
                   <div className="info">
-                    <UserInfoFirst name={userInfo.name} email={userInfo.email} phoneNumber = {userInfo.phoneNumber} bod={userInfo.birthDay}/>
+                    <UserInfoFirst name={userInfo.name} email={userInfo.email} phoneNumber = {userInfo.phoneNumber} bod={userInfo.birthDay} greeting={userInfo.greeting}/>
                     <hr />
                     <UserInfoSecond/>
                   </div>

@@ -7,8 +7,8 @@ import ten from "../../assets/images/user/10.jpg";
 import fourteen from "../../assets/images/user/14.png";
 import four from "../../assets/images/user/4.jpg";
 import { MoreVertical, ThumbsUp, UserPlus, MessageSquare } from 'react-feather';
-import RightBar from './rightBar';
-import LeftBar from './leftBar';
+import RightBar from './SideBar/rightBar';
+import LeftBar from './SideBar/leftBar';
 import {AddFriend,ActivityLog,AnnaMull,DionCast,KarleneLex,WaiSchalk,Hobbies,VellaChism, JasonBorne, } from "../../constant";
 
 

@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
-import { CLOUD_API, PROFILE_API, USER_API } from "../route/Apis";
+import { CLOUD_API, PROFILE_API, SNS_API, USER_API } from "../route/Apis";
 import url from '../route/DevUrl';
 const FileDownloadlib = require('js-file-download');
 /**
@@ -17,7 +17,11 @@ export const pictureInsert = (file) => {
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/file/upload/pictures`, formData, config)
             .then(response => {
-                resolve(response);
+                if (response.data.success) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
             })
     })
 }
@@ -39,7 +43,11 @@ export const videoInsert = (files) => {
 
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/file/upload/video`, formData, config).then(response => {
-            resolve(response)
+            if (response.data.success) {
+                resolve(response)
+            } else {
+                reject(response)
+            }
         })
     })
 }
@@ -50,7 +58,11 @@ export const makeThumbnail = (varibale) => {
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/file/upload/video/thumbnail`, varibale) //매개변수를 통해 res를 받음
             .then(response => {
-                resolve(response);
+                if (response.data.success) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
             })
     })
 }
@@ -60,7 +72,11 @@ export const makeThumbnail = (varibale) => {
 export const uploadVideo = (body) => {
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/video/save`, body).then(response => {
-            resolve(response);
+            if (response.data.success) {
+                resolve(response)
+            } else {
+                reject(response)
+            }
         })
     })
 
@@ -79,7 +95,11 @@ export const FileUpload = (files) => {
     formData.append("file", files[0])
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/file/upload/document`, formData, config).then(response => {
-            resolve(response)
+            if (response.data.success) {
+                resolve(response)
+            } else {
+                reject(response)
+            }
         })
     })
 }
@@ -87,7 +107,11 @@ export const FileSave = (body) => {
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/document/save`, body)
             .then(response => {
-                resolve(response);
+                if (response.data.success) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
             })
     })
 }
@@ -111,9 +135,22 @@ export const FileUpdate = (body) => {
     return new Promise((resolve, reject) => {
         axios.post(`${CLOUD_API}/file/update`, body)
             .then(response => {
-                resolve(response);
+                if (response.data.success) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
             })
     })
+}
+
+const timeConvert = (number) => {
+    if (number === "" || number === "0") {
+        number = "00";
+    } else if (number < 10) {
+        number = "0" + number;
+    }
+    return number;
 }
 
 /**
@@ -123,14 +160,46 @@ export const FileUpdate = (body) => {
  * ***/
 export const dateToString = (dateTime, Hyphen) => {
     let date = new Date(dateTime)
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
-    const day = date.getDate() > 10 ? date.getDate() : "0" + (date.getDate());;
+    const year = timeConvert(date.getFullYear());
+    const month = timeConvert(date.getMonth() + 1)
+    const day = timeConvert(date.getDate());
 
     if (Hyphen) { //하이폰 넣어줌
         return year + "-" + month + "-" + day;
     } else {
         return year + month + day;
+    }
+}
+/**
+ * @name 날짜시간변환
+ * @param 날짜객체
+ * @param 표현 범위 ['yy','mm','dd','hh','mi','ss']
+ * ***/
+export const dateTimeToString = (arg, limit) => {
+    let date = new Date(arg);
+    date.setHours(date.getHours() - 9);
+    let year = date.getFullYear();
+    let month = timeConvert(date.getMonth() + 1);
+    let day = timeConvert(date.getDate());
+    let hour = timeConvert(date.getHours())
+    let min = timeConvert(date.getMinutes())
+    let sec = timeConvert(date.getSeconds())
+
+    switch (limit) {
+        case 'yy':
+            return year;
+        case 'mm':
+            return year + "-" + month;
+        case 'dd':
+            return year + "-" + month + "-" + day;
+        case 'hh':
+            return year + "-" + month + "-" + day + " " + hour
+        case 'mi':
+            return year + "-" + month + "-" + day + " " + hour + ":" + min
+        case 'ss':
+            return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
+        default:
+            return year + "-" + month + "-" + day;
     }
 }
 
@@ -146,7 +215,11 @@ export const profileInsert = (files) => {
     formData.append("file", files[0])
     return new Promise((resolve, reject) => {
         axios.post(`${PROFILE_API}/image/upload`, formData, config).then(response => {
-            resolve(response)
+            if (response.data.success) {
+                resolve(response)
+            } else {
+                reject(response)
+            }
         })
     })
 }
@@ -159,7 +232,11 @@ export const changeProfileImage = (file, flag) => {
     return new Promise((resolve, reject) => {
         axios.post(`${PROFILE_API}/image/save`, body)
             .then(response => {
-                resolve(response);
+                if (response.data.success) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
             })
     })
 }
@@ -176,5 +253,19 @@ export const profileUpdate = (body) => {
 
             })
     })
+}
+//타임 라인 목록 가져옴
+export const getTimeLineList = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${SNS_API}/timeline/list`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response)
+                } else {
+                    reject(response)
+                }
+            })
+    })
+
 }
 

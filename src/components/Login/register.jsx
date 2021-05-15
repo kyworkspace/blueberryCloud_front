@@ -4,6 +4,7 @@ import {SignIn, CreateAccount, PrivacyPolicy} from '../../constant';
 import { Twitter, Facebook,GitHub } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/user/_actions/user_actions';
+import emptyUser from '../../assets/images/dashboard/emptyProfile.png'
 import moment from "moment";
 
 const Register = (props) => {
@@ -43,7 +44,7 @@ const Register = (props) => {
         email: Email,
         password: password,
         name: Name,
-        profileImage: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
+        profileImage: `${emptyUser}`
       }
       dispatch(registerUser(body))
       .then(response=>{

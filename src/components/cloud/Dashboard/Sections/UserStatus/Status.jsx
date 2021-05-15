@@ -1,11 +1,15 @@
 import React, { memo, useEffect, useState } from 'react'
 import { Card, Col } from 'react-bootstrap'
 import { Clock } from 'react-feather'
-import { CardBody } from 'reactstrap'
+import { useSelector } from 'react-redux'
+import { CardBody } from 'reactstrap';
+import url from '../../../../../route/DevUrl';
+import {withRouter} from 'react-router-dom'
 
 const Status=memo((props) => {
     
-  const [daytimes,setDayTimes] = useState()
+  const [daytimes,setDayTimes] = useState();
+  const user = useSelector(state => state.user);
   const today = new Date()
   const curHr = today.getHours()
   const curMi = today.getMinutes()
@@ -36,14 +40,21 @@ const Status=memo((props) => {
       }else{
         setMeridiem('AM')
       }
-
   }, [])
+
+  useEffect(() => {
+    if(user.userData){
+      setProfileBackground(user.userData.backgroundImage);
+      setProfileAvatar(user.userData.profileImage);
+      setProfileGreetings(user.userData.greeting);
+    }
+  }, [user])
 
 
     return (
         <Col xl="4 xl-50" lg="12" className="morning-sec box-col-12">
             {/* 배경이미지는 Card backgroundImage로 조정 , 있을때는 표현 없을때는 lorem picsum */}
-            <Card className="o-hidden profile-greeting" style={{backgroundImage:`${profileBackground ? 'url(https://picsum.photos/id/237/467/480)' : 'url(https://picsum.photos/467/480?grayscale)'}`}}>
+            <Card className="o-hidden profile-greeting" style={{backgroundImage:`${profileBackground ? `url(${url}/${profileBackground})` : 'url(https://picsum.photos/467/480?grayscale)'}`}}>
                 <CardBody>
                     <div className="media">
                             {/* 시계 */}
@@ -52,7 +63,7 @@ const Status=memo((props) => {
                             <Clock style={{width:"16px" ,height:"16px"}} className="mr-1"/>
                             <span id="txt">{curHr}:{curMi < 10 ? "0"+curMi :curMi} {meridiem}</span>
                             </div>
-                            <div className="badge f-12"><i className="fa fa-spin fa-cog f-14"></i></div>
+                            <div className="badge f-12" onClick={()=>{props.history.push('/sns/userinfo')}} style={{cursor:'pointer'}}><i className="fa fa-spin fa-cog f-14"></i></div>
                         </div>
 
                         </div>
@@ -61,7 +72,7 @@ const Status=memo((props) => {
                         <div className="profile-vector" >
                           {
                             profileAvatar ?
-                            <img className="img-fluid" src={'https://picsum.photos/100/100'} alt="메인 화면 아바타" style={{width:'100px', height:'100px',borderRadius:'30px'}}/>
+                            <img className="img-fluid" src={`${url}/${profileAvatar}`} alt="메인 화면 아바타" style={{width:'100px', height:'100px',borderRadius:'30px'}}/>
                             :
                             <img className="img-fluid" src={'https://picsum.photos/100/100'} alt="메인 화면 아바타" style={{width:'100px', height:'100px',borderRadius:'30px'}}/>
                           }
@@ -78,7 +89,7 @@ const Status=memo((props) => {
                           }
                         </p>
                         
-                        <div className="whatsnew-btn"><a className="btn btn-primary" href="#javascript">파일 보러가기</a></div>
+                        <div className="whatsnew-btn"><a className="btn btn-primary" onClick={()=>{props.history.push('/cloud/viewer/all')}}>파일 보러가기</a></div>
                         {/* 왼쪽하단 종 */}
                         <div className="left-icon"><i className="fa fa-bell"> </i></div>
                     </div>
@@ -88,4 +99,4 @@ const Status=memo((props) => {
     )
 })
 
-export default Status
+export default withRouter(Status);

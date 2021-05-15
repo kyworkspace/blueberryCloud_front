@@ -13,6 +13,7 @@ const UserInfoEditModal=memo((props) =>{
     const [email, setEmail] = useState(item.email);
     const [birthDay, setBirthDay] = useState(item.birthDay);
     const [phoneNumber, setPhoneNumber] = useState(item.phoneNumber);
+    const [greeting, setGreeting] = useState(item.greeting)
 
     const onCloseModal=()=>{
         ModalHandler(false);
@@ -22,7 +23,8 @@ const UserInfoEditModal=memo((props) =>{
         let body={
             email,
             birthDay,
-            phoneNumber
+            phoneNumber,
+            greeting
         };
         profileUpdate(body)
         .then(response=>{
@@ -44,6 +46,14 @@ const UserInfoEditModal=memo((props) =>{
             </ModalHeader>
             <ModalBody>
                 <Space size={10} direction="vertical">
+                    <Space size={20}>
+                        <div>
+                            인사말
+                        </div>
+                        <div>
+                            <Input style={{width:'400px'}} value={greeting} onChange={(e)=>setGreeting(e.currentTarget.value)} maxLength={50}/>
+                        </div>
+                    </Space>
                     <Space size={20}>
                         <div>
                             E-mail
