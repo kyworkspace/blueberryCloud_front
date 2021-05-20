@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
-import { CLOUD_API, PROFILE_API, SNS_API, USER_API } from "../route/Apis";
+import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API } from "../route/Apis";
 import url from '../route/DevUrl';
 const FileDownloadlib = require('js-file-download');
 /**
@@ -266,6 +266,40 @@ export const getTimeLineList = (body) => {
                 }
             })
     })
-
 }
-
+// 사람 목록 가져옴
+export const getUserList = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${USER_API}/list`, body)
+            .then(response => {
+                resolve(response);
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+// 친구 신청
+export const setFriendAdd = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${FRIEND_API}/add`, body)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+//친구 요청 목록
+export const getFriendReceiveList = () => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${FRIEND_API}/receive/list`)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}

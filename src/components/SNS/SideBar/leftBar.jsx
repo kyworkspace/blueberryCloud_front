@@ -12,6 +12,7 @@ import six from "../../../assets/images/user/6.jpg";
 import fourteen from "../../../assets/images/user/14.png";
 import four from "../../../assets/images/user/4.jpg";
 import url from '../../../route/DevUrl'
+import emptyUser from '../../../assets/images/dashboard/emptyProfile.png';
 
 import {MyProfile,BuckyBarnes,JasonBorne,SarahLoren,AndewJon,JohnyWaston,JohnyWilliam,ComerenDiaz,MyPage,View,MutualFriends,ActivityFeed,Messages,Likes,Notification } from "../../../constant";
 import { SNSContext } from '../index';
@@ -38,7 +39,7 @@ const LeftBar = () => {
                         </CardHeader>
                         <Collapse isOpen={isProfile}>
                             <CardBody className="socialprofile filter-cards-view">
-                                <Media><Media className="img-50 img-fluid m-r-20 rounded-circle" src={`${url}/${userInfo.profileImage}`} alt="" style={{height:'50px'}}/>
+                                <Media><Media className="img-50 img-fluid m-r-20 rounded-circle" src={userInfo.profileImage ? `${url}/${userInfo.profileImage}`:`${emptyUser}`} alt="" style={{height:'50px'}}/>
                                     <Media body>
                                         <h6 className="font-primary f-w-600">
                                             {userInfo.name}

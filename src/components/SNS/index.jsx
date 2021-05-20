@@ -3,13 +3,14 @@ import Breadcrumb from '../../layout/breadcrumb'
 import { Container, Row, Col, Card, Media, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import TimelineTab from './Timeline/timelineTab';
 import AboutTab from './aboutTab';
-import FriendsTab from './friendsTab';
+import FriendsTab from './Friends/friendsTab';
 import PhotosTab from './photosTab';
 import { useSelector } from 'react-redux';
 import url from '../../route/DevUrl';
 import SNSNavbar from './Sections/SNSNavbar';
 import { getTimeLineList } from '../../utils/commonMethod';
 import { errorMessage } from '../../utils/alertMethod';
+import emptyUser from '../../assets/images/dashboard/emptyProfile.png';
 
 
 export const SNSContext = createContext({
@@ -87,7 +88,7 @@ const SocialApp = memo(() => {
                                         <div style={profileBackground}></div>
                                         <div className="user-image">
                                             <div className="avatar">
-                                                <Media body alt="user" src={profileImage?`${url}/${profileImage}`:'https://picsum.photos/100/100'} />
+                                                <Media body alt="user" src={profileImage?`${url}/${profileImage}`:emptyUser} />
                                             </div>
                                         </div>
                                         <div className="info market-tabs p-0">
