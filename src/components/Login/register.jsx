@@ -44,8 +44,6 @@ const Register = (props) => {
         email: Email,
         password: password,
         name: Name,
-        // profileImage: `${emptyUser}`
-        profileImage: null
       }
       dispatch(registerUser(body))
       .then(response=>{

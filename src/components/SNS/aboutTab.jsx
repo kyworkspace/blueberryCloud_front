@@ -10,6 +10,7 @@ import { MoreVertical, ThumbsUp, UserPlus, MessageSquare } from 'react-feather';
 import RightBar from './SideBar/rightBar';
 import LeftBar from './SideBar/leftBar';
 import {AddFriend,ActivityLog,AnnaMull,DionCast,KarleneLex,WaiSchalk,Hobbies,VellaChism, JasonBorne, } from "../../constant";
+import maintenance from '../../assets/images/other-images/maintenance-bg.jpg'
 
 
 const AboutTab = () => {
@@ -25,6 +26,11 @@ const AboutTab = () => {
                     </div>
                 </Col>
                 <Col xl="6 xl-60 box-col-8" lg="12" md="7">
+                <div style={{width:'100%',height:'600px', backgroundImage:`url(${maintenance})`, display:'flex', justifyContent:'center', alignItems:'center', fontSize:'30px'}}>
+                    개발 중입니다. :)
+                </div>
+                </Col>
+                {/* <Col xl="6 xl-60 box-col-8" lg="12" md="7">
                     <Row>
                         <Col sm="12">
                             <Card>
@@ -297,7 +303,7 @@ const AboutTab = () => {
                             </Card>
                         </Col>
                     </Row>
-                </Col>
+                </Col> */}
                 <div className="col-xl-3 xl-100 box-col-12">
                     <div className="default-according style-1 faq-accordion job-accordion" id="accordionoc3">
                         <Row>

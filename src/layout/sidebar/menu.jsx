@@ -25,12 +25,12 @@ export const MENUITEMS = [
                     { path: `${process.env.PUBLIC_URL}/sns/userinfo`, title: '나의 이야기', type: 'link' },
                 ]
             },
-            {
-                title: '친구 관리', icon: Anchor , type: 'sub', active: false, children: [
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '친구 관리', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '그룹 관리', type: 'link' },
-                ]
-            }
+            // {
+            //     title: '친구 관리', icon: Anchor , type: 'sub', active: false, children: [
+            //         { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '친구 관리', type: 'link' },
+            //         { path: `${process.env.PUBLIC_URL}/starter-kits/sample-page`, title: '그룹 관리', type: 'link' },
+            //     ]
+            // }
         ]
     },
     {
@@ -39,12 +39,8 @@ export const MENUITEMS = [
         Items:[
             {
                 title: '개발자 정보', icon: Headphones, type: 'sub',active: false, children: [
-                        { title: 'Contact Me', type: 'exteral_link', path: 'http://support.pixelstrap.com/help-center' },
-                ]
-            },
-            {
-                title: 'Raise Support', icon: Headphones, type: 'sub',active: false, children: [
-                    { title: 'Raise Ticket', type: 'exteral_link', path: 'http://support.pixelstrap.com/help-center' },
+                        { title: 'Contact Me', type: 'link', path: `${process.env.PUBLIC_URL}/support/developerInfo` },
+                        { title: '건의함', type: 'link', path: `${process.env.PUBLIC_URL}/support/suggestion` },
                 ]
             }
         ]          

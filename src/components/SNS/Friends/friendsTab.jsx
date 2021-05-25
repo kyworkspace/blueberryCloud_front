@@ -1,11 +1,12 @@
-import React, { Fragment,useState,useEffect } from 'react';
+import React, { Fragment,useState,useEffect, useCallback } from 'react';
 import { Row, Col, Card, CardHeader, CardFooter, Media, Input, CardBody } from 'reactstrap';
 import { Button, Space, Tooltip } from 'antd';
 import Search from 'antd/lib/input/Search';
-import { getFriendReceiveList, getUserList, setFriendAdd } from '../../../utils/commonMethod';
+import { getFriendReceiveList, getUserList, getFriendsList } from '../../../utils/commonMethod';
 import { errorMessage, successMessage } from '../../../utils/alertMethod';
-import url from '../../../route/DevUrl';
-import {SmileOutlined, UserAddOutlined} from '@ant-design/icons'
+import AllFriends from './Sections/AllFriends';
+import ReceivedFriends from './Sections/ReceivedFriends';
+import { useSelector } from 'react-redux';
 
 
 const FriendsTab = () => {
@@ -14,15 +15,16 @@ const FriendsTab = () => {
     const [userList, setUserList] = useState([])
     const [limit, setLimit] = useState(8);
     const [skip, setSkip] = useState(0);
+    const [tabType, setTabType] = useState(0);
+    const user = useSelector(state => state.user);
+
     useEffect(() => {
-        getFriendList()
+        getFriendList();
       },[])
 
     const getFriendList = ()=>{
         let body={
             searchTerm,
-            limit,
-            skip,
         }
         getUserList(body)
         .then(response=>{
@@ -36,33 +38,62 @@ const FriendsTab = () => {
             errorMessage("회원 정보를 불러오는데 오류가 발생하였습니다.")
         })
     }
-    const onFriendAdd =(target)=>{
-        let body = {
-            target
+    const onFriendReceiveList = useCallback(
+        () => {
+            getFriendReceiveList()
+            .then(response=>{
+                if(response.data.success){
+                    let userFromList = response.data.list.map(item=>(item.userFrom));
+                    setUserList(userFromList);
+                }
+            })
+            .catch(err=>{
+                errorMessage("통신 중 오류가 발생하였습니다. 새로고침 후 다시 시도해 주세요");
+            })
+        },
+        [],
+    )
+    const onFriendsList = useCallback(
+        (level) => {
+            getFriendsList(level)
+            .then(response=>{
+                if(response.data.success){
+                    setUserList(response.data.list);
+                }
+            })
+            .catch(err=>{
+                errorMessage("통신 중 오류가 발생하였습니다. 새로고침 후 다시 시도해 주세요");
+            })
+        },
+        [],
+    )
+    
+    const onTabTypeHandler=(num)=>{
+        setTabType(num)
+        switch (num) {
+            case 0: return getFriendList(); //전체 목록
+            case 1: onFriendsList(3); break; //친구 목록
+            case 2: break; //친구 신청 목록
+            case 3: return onFriendReceiveList(); //친구 요청 목록
+            case 4: return onFriendsList(1); //팔로워 목록
+            case 5: break;
+            default:
+                setTabType(0)
+                break;
         }
-        setFriendAdd(body)
-        .then(response=>{
-            if(response.data.success){
-                successMessage('친구 신청을 완료 했습니다.')
-            }
-        })
-        .catch(err=>{
-            errorMessage("친구 신청중 오류가 발생하였습니다.")
-        })
     }
-    const onFriendReceiveList =()=>{
-        getFriendReceiveList()
-        .then(response=>{
-            if(response.data.success){
-                setUserList(response.data.list);
-            }
-        })
-        .catch(err=>{
-            errorMessage("친구요청을 불러오던중 오류가 발생하였습니다.")
-        })
-
+    const renderUserCard =(user)=>{
+        switch (tabType) {
+            case 0: return <AllFriends user={user} key={user._id}/>
+            case 1: return <AllFriends user={user} key={user._id}/>
+            case 2: return <AllFriends user={user} key={user._id}/>
+            case 3: return <ReceivedFriends user={user} key={user._id} onFriendReceiveList={onFriendReceiveList}/>
+            case 4: return <AllFriends user={user} key={user._id}/>
+            case 5: return <AllFriends user={user} key={user._id}/>
+            default:
+                return <AllFriends user={user} key={user._id}/>
+        }
     }
-
 
     return (
         <Fragment>
@@ -82,80 +113,19 @@ const FriendsTab = () => {
                     onChange={(e)=>{setSearchTerm(e.currentTarget.value)}}
                     style={{width:'30vw'}}
                     />
-                    <Button size="large">친구 신청 목록</Button>
-                    <Button size="large" onClick={onFriendReceiveList}>친구 요청</Button>
-                    <Button size="large" >팔로잉 목록</Button>
+                    <Button size="large" onClick={()=>onTabTypeHandler(0)}>전체</Button>
+                    <Button size="large" onClick={()=>onTabTypeHandler(1)}>친구 목록</Button>
+                    <Button size="large" onClick={()=>onTabTypeHandler(2)}>친구 신청 목록</Button>
+                    <Button size="large" onClick={()=>onTabTypeHandler(3)}>친구 요청</Button>
+                    <Button size="large" onClick={()=>onTabTypeHandler(4)}>팔로워 목록</Button>
+                    <Button size="large" onClick={()=>onTabTypeHandler(5)}>팔로잉 목록</Button>
             </Space>
             </CardHeader>
             <CardBody>
                 <Row>
+                    {renderUserCard}
                     {userList.map((user, i) => 
-                    <Col md="6" xl="4 box-col-6 xl-50" key={i}>
-                        <Card className="custom-card">
-                            <CardHeader>
-                                <Media body className="img-fluid" src={ user.backgroundImage && `${url}/${user.backgroundImage}`} alt="" />
-                            </CardHeader>
-                            <div className="card-profile">
-                                <Media body className="rounded-circle" src={user.profileImage && `${url}/${user.profileImage}`} alt="" />
-                            </div>
-                            <ul className="card-social">
-                                <li>
-                                    <a >
-                                        <i className="fa fa-facebook">
-                                        </i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <i className="fa fa-google-plus">
-                                        </i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <i className="fa fa-twitter">
-                                        </i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <i >
-                                            <Tooltip title={<span>팔로잉</span>}>
-                                                <SmileOutlined />
-                                            </Tooltip>
-                                        </i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a >
-                                        <i >
-                                            <Tooltip title={<span>친구 신청</span>}>
-                                                <UserAddOutlined onClick={()=>onFriendAdd(user._id)}/>
-                                            </Tooltip>
-                                        </i>
-                                    </a>
-                                </li>
-                            </ul>
-                            <div className="text-center profile-details">
-                                <h4>{user.name}</h4>
-                                <h6>{user.post}</h6>
-                            </div>
-                            <CardFooter className="row">
-                                <Col sm="4 col-4">
-                                <h6>팔로워</h6>
-                                <h3 className="counter">{user.follower}</h3>
-                                </Col>
-                                <Col sm="4 col-4">
-                                <h6>친구수</h6>
-                                <h3><span className="counter">{user.following}</span>K</h3>
-                                </Col>
-                                <Col sm="4 col-4">
-                                <h6>공유중인 파일</h6>
-                                <h3><span className="counter">{user.totalPost}</span></h3>
-                                </Col>
-                            </CardFooter>
-                        </Card>
-                    </Col>
+                        renderUserCard(user)
                     )}
                 </Row>
             </CardBody>

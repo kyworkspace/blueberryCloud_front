@@ -303,3 +303,35 @@ export const getFriendReceiveList = () => {
             })
     })
 }
+/**
+ * @async
+ * @function getFriendsList
+ * @param level
+ * **/
+export const getFriendsList = (level) => {
+    let body = {
+        level
+    }
+    return new Promise((resolve, reject) => {
+        axios.post(`${FRIEND_API}/list`, body)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+//친구요청 수락 | 거절
+export const friendHadler = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${FRIEND_API}/handler`, body)
+            .then(response => {
+                resolve(response)
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+
+}

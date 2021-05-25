@@ -3,7 +3,7 @@ import {Col,Row,Card,CardBody,Media} from 'reactstrap'
 import Lightbox from "react-image-lightbox";
 import axios from 'axios'
 import { PortfolioTitle } from "../../constant";
-
+import maintenance from '../../assets/images/other-images/maintenance-bg.jpg'
 
 
 const PhotosTab = () => {
@@ -38,6 +38,9 @@ const PhotosTab = () => {
     
     return (
         <Fragment>
+            <div style={{width:'100%',height:'600px', backgroundImage:`url(${maintenance})`, display:'flex', justifyContent:'center', alignItems:'center', fontSize:'30px'}}>
+                    개발 중입니다. :)
+                </div>
             <Row>
                 {smallImages.length > 0 ?
                 <Col sm="12">
