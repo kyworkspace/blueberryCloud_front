@@ -25,28 +25,14 @@ export const CloudBoardContext=createContext({
     setFiles:()=>{},
     selectedFileDelete :()=>{},
     setSearchContents:()=>{},
+    selectFileList : ()=>{}
 })
 
 const  CloudViewer =(props) =>{
     const theme = props.match.params.theme;
-    let title = "";
-    switch (theme) {
-        case "all":
-            title = "모든 파일"
-            break;
-        case "image":
-            title = "사진 모아보기"
-            break;
-        case "video":
-            title = "동영상 모아보기"
-            break;
-        default:
-            break;
-    }
     const [Files, setFiles] = useState([]);
     const [SelectedFile, setSelectedFile] = useState({});
     const [DetailModal, setDetailModal] = useState(false); //상세보기
-    const [UpdateModal, setUpdateModal] = useState(false);
     const [SelectionMode, setSelectionMode] = useState(false); //선택 모드
 
     //폴더 경로 state
@@ -132,8 +118,23 @@ const  CloudViewer =(props) =>{
         ,setFiles
         ,selectedFileDelete
         ,setSearchContents
+        ,selectFileList
     }
-    
+    let title = "";
+    switch (theme) {
+        case "all":
+            title = "모든 파일"
+            break;
+        case "image":
+            title = "사진 모아보기"
+            break;
+        case "video":
+            title = "동영상 모아보기"
+            break;
+        default:
+            break;
+    }
+
     return (
         <Fragment>
         <CloudBoardContext.Provider value={contextValue}>

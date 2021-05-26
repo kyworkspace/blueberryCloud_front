@@ -9,3 +9,18 @@ export const errorMessage = (msg) => {
 export const infoMessage = (msg) => {
     SweetAlert.fire({ icon: "info", text: msg })
 }
+export const confirmMessage = (msg, okText, cancelText, cb) => {
+    SweetAlert.fire({
+        text: msg,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: okText,
+        cancelButtonText: cancelText
+    }).then((result) => {
+        if (result.isConfirmed) {
+            cb();
+        }
+    })
+}

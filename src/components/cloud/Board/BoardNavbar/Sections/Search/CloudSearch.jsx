@@ -137,7 +137,7 @@ const CloudSearch=memo((props) =>{
                         </Select>
                     </Col>
                     <Divider/>
-                    <Col sm={24} md={6} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                    {/* <Col sm={24} md={6} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
                         <Label className="d-block" for="chk-ani">
                             <Input className="checkbox_animated" id="chk-ani" type="checkbox" checked={pathFlag} onChange={(e)=>setPathFlag(e.target.checked)}/> 검색 위치
                         </Label>
@@ -149,8 +149,8 @@ const CloudSearch=memo((props) =>{
                         <Label className="d-block" for="edo-ani1">
                             <Input className="radio_animated" id="edo-ani1" type="radio" name="rdo-ani" disabled={!pathFlag}/>직접선택
                         </Label>
-                        <Input className="form-control" type="text" placeholder="폴더 경로" value={term} onChange={onSearchTermHandler} value={path}/>
-                    </Col>
+                        <Input className="form-control" type="text" placeholder="폴더 경로" onChange={(e)=>setPath(e.currentTarget.value)} value={path}/>
+                    </Col> */}
                 </Row>
                 
                 

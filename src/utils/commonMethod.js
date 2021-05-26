@@ -118,7 +118,6 @@ export const FileSave = (body) => {
 /**
  * 파일 다운로드
  * **/
-
 export const FileDownload = (file) => {
     axios({
         url: `${url}/${file.originalpath}`,
@@ -143,7 +142,14 @@ export const FileUpdate = (body) => {
             })
     })
 }
-
+/**
+ * 비디오 파일 컨버팅
+ * **/
+export const videoConvert = (body) => {
+    axios.post(`${CLOUD_API}/file/video/convert`, body)
+}
+/*******************************시간 및 날짜***************************************/
+//시간 포맷
 const timeConvert = (number) => {
     if (number === "" || number === "0") {
         number = "00";

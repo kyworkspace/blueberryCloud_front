@@ -28,7 +28,7 @@ import {dateToString, FileSave, FileUpload} from '../../../../utils/commonMethod
 import SweetAlert from 'sweetalert2';
 
 const BoardNavbar= memo(()=> {
-    const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents,refreshFileList} = useContext(CloudBoardContext);
+    const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents,refreshFileList,selectFileList} = useContext(CloudBoardContext);
     const dispatch = useDispatch(null);
     const [isOpen, setIsOpen] = useState(false);
     const user = useSelector(state => state.user);

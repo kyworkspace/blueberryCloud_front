@@ -30,8 +30,8 @@ const VideoUpload=memo((props) =>{
                         // setDuration(response.data.fileDuration); //안에 들어가 있는건 동영상 길이 현재 안씀
                         setThumbnailPath(response.data.url); //썸네일로 나온 파일 패스
                         onThumbnailHandler(url,filenames[0]); //썸네일 경로 => 저장할때 변경되는 정보
-                        let convertedFileInfo = {...fileInfo, path : newFilePath}
-                        onFileInfoHandler(convertedFileInfo);
+                        //let convertedFileInfo = {...fileInfo, path : newFilePath}
+                        onFileInfoHandler(fileInfo);
                         setFileUploading(false);
                     } else {
                         alert("썸네일 생성에 실패 했습니다.");

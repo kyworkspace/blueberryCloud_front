@@ -52,9 +52,6 @@ const VideoUploadModal=memo((props) =>{
             }
         })
     }
-    const onFileInfoHandler=(fileInfo)=>{
-        setFileInfo(fileInfo);
-    }
     const onThumbnailHandler=(path,name)=>{
         setThumbnailPath(path);
         setThumbnailName(name);
@@ -69,7 +66,7 @@ const VideoUploadModal=memo((props) =>{
         <Modal isOpen={isOpen} className={className} style={{minWidth:'600px'}}>
             <ModalHeader toggle={onCloseModal}>동영상 업로드</ModalHeader>
             <ModalBody>
-            <VideoUpload onFileInfoHandler={onFileInfoHandler} onThumbnailHandler={onThumbnailHandler}/>
+            <VideoUpload onFileInfoHandler={setFileInfo} onThumbnailHandler={onThumbnailHandler}/>
             <Table responsive="md">
                 <tr>
                     <td>제목</td>

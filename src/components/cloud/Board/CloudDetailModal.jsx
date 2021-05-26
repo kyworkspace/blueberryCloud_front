@@ -1,15 +1,17 @@
-import { Descriptions, Select, Space } from 'antd';
+import { Descriptions, Select, Space, Tooltip } from 'antd';
 import React, { memo, useContext, useState } from 'react'
 import { Image } from 'react-bootstrap';
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
 import url from '../../../route/DevUrl'
 import htmlParser from 'html-react-parser';
 import { calcUnit } from '../../../utils/fileSizeUnit';
-import { FileDownload, FileUpdate } from '../../../utils/commonMethod';
+import { FileDownload, FileUpdate, videoConvert } from '../../../utils/commonMethod';
 import { CloudBoardContext } from './CloudViewer';
 import CKEditors from "react-ckeditor-component";
-import { errorMessage, successMessage } from '../../../utils/alertMethod';
-
+import { confirmMessage, errorMessage, successMessage } from '../../../utils/alertMethod';
+import { toast } from 'react-toastify';
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import maintenance from '../../../assets/images/other-images/maintenance-bg.jpg'
 const {Option} = Select;
 const openratingConvert =(number)=>{
     switch (number) {
@@ -62,18 +64,26 @@ const CloudDetailModal=memo((props)=> {
     }
     // 프로필 사진으로 설정
     const onChangeProfileImage = ()=>{
-
+        alert('구현 준비중입니다.')
     }
     //프로필 배경으로 설정
     const onChangeBackgroundImage =()=>{
-
+        alert('구현 준비중입니다.')
     }
     
     const renderItemContents =()=>{
         let component = "";
         switch (typeMainCategory[0]) {
             case "video":
-                component = <video style={{maxWidth:'700px', maxHeight:'450px'}} src={`${url}/${originalpath}`} controls />;
+                if(SelectedFile.converting){
+                    component = 
+                        <div style={{width:'100%',height:'600px', backgroundImage:`url(${maintenance})`, display:'flex', justifyContent:'center', alignItems:'center', fontSize:'30px'}}>
+                            서버에서 열심히 컨버팅 중입니다. :)
+                        </div>;
+                }else{
+                    component = <video style={{maxWidth:'700px', maxHeight:'450px'}} src={`${url}/${originalpath}`} controls />;
+                }
+                
                 break;
             case "image":
                 component = <Image src={`${url}/${originalpath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}} onClick={onImageView}/>;
@@ -115,13 +125,29 @@ const CloudDetailModal=memo((props)=> {
             errorMessage('수정실패.\n 오류가 반복될시 관리자에게 문의해주세요')
         })
     }
-    //
     const onOpenRatingHandler =(value)=>{
         setUpdatedOpenrating(value);
     }
     const onDescHandler =(evt)=>{
         const newContent = evt.editor.getData();
         setUpdatedDescription(newContent);
+    }
+    const onClipBoardCopy =()=>{
+        const tmp = document.createElement('textarea');
+        document.body.appendChild(tmp);
+        tmp.value = `${url}/${originalpath}`;
+        tmp.select();
+        document.execCommand('copy');
+        document.body.removeChild(tmp);
+        toast.success("클립보드로 복사 되었습니다.", {position: toast.POSITION.BOTTOM_CENTER,autoClose:1500})
+    }
+    const onVideoConvert =()=>{
+        confirmMessage('컨버팅을 하는 경우 파일 용량이 올라갈수도 있습니다.','실행','취소',()=>{
+            let body={
+                SelectedFile
+            }
+            videoConvert(body);
+        });
     }
     return (
         <Modal isOpen={isOpen} style={{maxWidth:'1600px',maxHeight:'1000px'}} toggle={onCloseModal}>
@@ -138,7 +164,20 @@ const CloudDetailModal=memo((props)=> {
                         <Descriptions.Item label="제목" span={2}>{originalname}</Descriptions.Item>
                         <Descriptions.Item label="확장자">{mimetype}</Descriptions.Item>
                         <Descriptions.Item label="용량" span={3}>{calcUnit(size)}</Descriptions.Item>
-                        <Descriptions.Item label="공유 URL" span={3}>{`${url}/${originalpath}`}</Descriptions.Item>
+                        {typeMainCategory[0] === 'video' &&
+                        <Descriptions.Item label="동영상이 보이지 않을때" span={3}>
+                            <Space size={10}>
+                                <Tooltip title="파일은 정상적으로 등록되었으나, 브라우저에서 지원하는 인코딩 방식이 아닌경우 동영상이 소리만 나올수도 있습니다. 오른쪽의 버튼을 클릭하여 컨버팅을 해주세요">
+                                    <span><QuestionCircleOutlined /></span>
+                                </Tooltip>
+                                <Button onClick={onVideoConvert} outline color="warning">h.264 컨버팅</Button>
+                            </Space>
+                            
+                        </Descriptions.Item>
+                        }
+                        <Descriptions.Item label="공유 URL" span={3}>
+                            <Button onClick={onClipBoardCopy} outline color="primary">주소 복사</Button>
+                        </Descriptions.Item>
                         {
                             updateFlag ? 
                             <>
@@ -164,7 +203,7 @@ const CloudDetailModal=memo((props)=> {
                                 <Descriptions.Item label="공개" span={3}>{openratingConvert(openrating)}</Descriptions.Item>
                                 <Descriptions.Item label="설명" span={3}>{htmlParser(description)}</Descriptions.Item>
                                 <Descriptions.Item label="다운로드" span={3}>
-                                    <Button onClick={onDownloadHandler} >클릭!</Button>
+                                    <Button onClick={onDownloadHandler} outline color="primary">다운로드</Button>
                                 </Descriptions.Item>
                             </>
                         }
@@ -172,8 +211,8 @@ const CloudDetailModal=memo((props)=> {
                         {typeMainCategory[0] === 'image' && 
                             <Descriptions.Item label="사진설정" span={3}>
                                 <Space size={15}>
-                                    <Button onClick={onChangeProfileImage} color="primary">프로필 사진으로 설정</Button>
-                                    <Button onClick={onChangeBackgroundImage} color="secondary">배경 사진으로 설정</Button>
+                                    <Button onClick={onChangeProfileImage} outline color="primary">프로필 사진으로 설정</Button>
+                                    <Button onClick={onChangeBackgroundImage} outline color="primary">배경 사진으로 설정</Button>
                                 </Space>
                             </Descriptions.Item>
                         }
