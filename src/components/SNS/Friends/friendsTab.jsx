@@ -29,7 +29,6 @@ const FriendsTab = () => {
         getUserList(body)
         .then(response=>{
             if(response.data.success){
-                console.log(response.data.list)
                 setUserList(response.data.list)
                 setSkip(skip+limit);
             }

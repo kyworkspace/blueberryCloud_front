@@ -25,10 +25,10 @@ const ReceivedFriends=memo((props) =>{
         <Col md="6" xl="4 box-col-6 xl-50" >
             <Card className="custom-card">
                 <CardHeader>
-                    <Media body className="img-fluid" src={ user.backgroundImage ? `${url}/${user.backgroundImage}`:`https://picsum.photos/1600/470`} alt="" />
+                    <Media body className="img-fluid" src={ user.backgroundImage && `${url}/${user.backgroundImage}`} alt="" />
                 </CardHeader>
                 <div className="card-profile">
-                    <Media body className="rounded-circle" src={user.profileImage ? `${url}/${user.profileImage}`:`https://picsum.photos/100/100`} alt="" />
+                    <Media body className="rounded-circle" src={`${url}/${user.profileImage}`} alt="" />
                 </div>
                 <div style={{display:'flex',justifyContent:'center', marginTop:'10px', marginBottom:'10px'}}>
                     <Space size={10}>

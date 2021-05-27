@@ -8,118 +8,73 @@ import PhotosTab from './photosTab';
 import { useSelector } from 'react-redux';
 import url from '../../route/DevUrl';
 import SNSNavbar from './Sections/SNSNavbar';
-import { getTimeLineList } from '../../utils/commonMethod';
-import { errorMessage } from '../../utils/alertMethod';
-import emptyUser from '../../assets/images/dashboard/emptyProfile.png';
-
 
 export const SNSContext = createContext({
     activeTab : '0',
     userInfo :null,
-    timeLineList:[],
     setActiveTab:()=>{},
 })
 
-const SocialApp = memo(() => {
+const SocialApp = memo((props) => {
+    const {user} = props;
+    if(Object.keys(user).length === 0) return (<></>);
     const [activeTab, setActiveTab] = useState('1');
-    const user = useSelector(state => state.user);
     const [profileBackground, setProfileBackground] = useState({
         padding:'0px',
         height: '470px',
+        background : `url(${url}/${user.userData.backgroundImage}) center/cover no-repeat`,
     })
-    const [profileImage, setprofileImage] = useState();
-    const [userInfo, setUserInfo] = useState();
-    const [limit, setLimit] = useState(10);
-    const [skip, setSkip] = useState(0);
-    const [timeLineList, setTimeLineList] = useState([])
-
-    useEffect(() => {
-        if(user.userData){
-            setUserInfo(user.userData);
-        }
-    }, [user.userData]);
-
-    useEffect(() => {
-        if(userInfo){
-            setProfileBackground({
-                ...profileBackground,
-                background : userInfo.backgroundImage ? `url(${url}/${userInfo.backgroundImage}) center/cover no-repeat`:`url(https://picsum.photos/1600/470)`,
-            });
-            setprofileImage(userInfo.profileImage);
-            getSNSList();
-        }
-    }, [userInfo])
-
-    const getSNSList = useCallback(
-        (id) => {
-            let body = {
-                limit,
-                skip,
-                userId : userInfo._id
-            }
-            getTimeLineList(body)
-            .then(response=>{
-                console.log(response.data.list);
-                setTimeLineList(response.data.list)
-            }).catch(err=>{
-                errorMessage('타임라인을 불러오는데 오류가 발생하였습니다.');
-            })
-        },
-        [userInfo],
-    )
+    const [profileImage, setprofileImage] = useState(user.userData.profileImage);
+    const [userInfo, setUserInfo] = useState(user.userData);
 
     const contextValue = {
         activeTab,
         setActiveTab,
         userInfo,
-        timeLineList,
     }
 
-    if(user.userData){
-        return (
-            <SNSContext.Provider value={contextValue}>
-                <Fragment>
-                    <Breadcrumb parent="SNS" title="BLUEBERRY TIME LINE" />
-                    <Container fluid={true}>
-                        <div className="user-profile social-app-profile">
-                            <Row>
-                                <Col sm="12">
-                                    <Card className="hovercard text-center">
-                                        <div style={profileBackground}></div>
-                                        <div className="user-image">
-                                            <div className="avatar">
-                                                <Media body alt="user" src={profileImage?`${url}/${profileImage}`:emptyUser} />
-                                            </div>
+    return (
+        <SNSContext.Provider value={contextValue}>
+            <Fragment>
+                <Breadcrumb parent="SNS" title="BLUEBERRY TIME LINE" />
+                <Container fluid={true}>
+                    <div className="user-profile social-app-profile">
+                        <Row>
+                            <Col sm="12">
+                                <Card className="hovercard text-center">
+                                    <div style={profileBackground}></div>
+                                    <div className="user-image">
+                                        <div className="avatar">
+                                            <Media body alt="user" src={`${url}/${profileImage}`}/>
                                         </div>
-                                        <div className="info market-tabs p-0">
-                                            {/* 상부 나브텝 */}
-                                            <SNSNavbar/>
-                                        </div>
-                                    </Card>
-                                </Col>
-                            </Row>
-                            <TabContent activeTab={activeTab} className="tab-content">
-                                <TabPane tabId="1">
-                                    <TimelineTab />
-                                </TabPane>
-                                <TabPane tabId="2">
-                                    <AboutTab />
-                                </TabPane>
-                                <TabPane tabId="3">
-                                    <FriendsTab />
-                                </TabPane>
-                                <TabPane tabId="4">
-                                    <PhotosTab />
-                                </TabPane>
-                            </TabContent>
-                        </div>
-                    </Container>
-                </Fragment>
-            </SNSContext.Provider>
-        );
-    }else{
-        return ( <div>로딩중</div>)
-    }
+                                    </div>
+                                    <div className="info market-tabs p-0">
+                                        {/* 상부 나브텝 */}
+                                        <SNSNavbar/>
+                                    </div>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <TabContent activeTab={activeTab} className="tab-content">
+                            <TabPane tabId="1">
+                                <TimelineTab />
+                            </TabPane>
+                            <TabPane tabId="2">
+                                <AboutTab />
+                            </TabPane>
+                            <TabPane tabId="3">
+                                <FriendsTab />
+                            </TabPane>
+                            <TabPane tabId="4">
+                                <PhotosTab />
+                            </TabPane>
+                        </TabContent>
+                    </div>
+                </Container>
+            </Fragment>
+        </SNSContext.Provider>
+    );
+
 
 });
 

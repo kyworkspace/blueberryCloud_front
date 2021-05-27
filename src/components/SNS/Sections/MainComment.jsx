@@ -1,11 +1,13 @@
 import React, { memo } from 'react'
 import { Media } from 'reactstrap'
-import emptyUser from '../../../assets/images/dashboard/emptyProfile.png'
+import url from '../../../route/DevUrl';
+
 const MainComment=memo((props) =>{
+    const {user} = props;
     return (
         <div className="your-msg">
             <Media>
-                <Media className="img-50 img-fluid m-r-20 rounded-circle" alt="" src={emptyUser} />
+                <Media className="img-50 img-fluid m-r-20 rounded-circle" alt="" src={`${url}/${user.profileImage}`} />
                 <Media body>
                     <span className="f-w-600">JasonBorne 
                         <span>

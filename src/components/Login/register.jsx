@@ -7,6 +7,22 @@ import { registerUser } from '../../redux/user/_actions/user_actions';
 import emptyUser from '../../assets/images/dashboard/emptyProfile.png'
 import moment from "moment";
 
+const backgroundImageList =[
+  "basicBackground/basicImage1.jpg"
+  ,"basicBackground/basicImage2.jpg"
+  ,"basicBackground/basicImage3.jpg"
+  ,"basicBackground/basicImage4.jpg"
+  ,"basicBackground/basicImage5.jpg"
+  ,"basicBackground/basicImage6.jpg"
+  ,"basicBackground/basicImage7.jpg"
+  ,"basicBackground/basicImage8.jpg"
+  ,"basicBackground/basicImage9.jpg"
+  ,"basicBackground/basicImage10.jpg"
+  ,"basicBackground/basicImage11.jpg"
+  ,"basicBackground/basicImage12.jpg"
+]
+
+
 const Register = (props) => {
 
     const dispatch = useDispatch();
@@ -44,6 +60,8 @@ const Register = (props) => {
         email: Email,
         password: password,
         name: Name,
+        backgroundImage : backgroundImageList[Math.floor(Math.random()*backgroundImageList.length)],
+        profileImage : 'basicBackground/emptyProfile.png'
       }
       dispatch(registerUser(body))
       .then(response=>{

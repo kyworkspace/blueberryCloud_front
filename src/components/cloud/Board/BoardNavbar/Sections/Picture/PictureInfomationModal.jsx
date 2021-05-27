@@ -44,7 +44,7 @@ const PictureInfomationModal=memo((props)=> {
                     <td colSpan="3">{calcUnit(picture.size)}</td>
                 </tr>
                 <tr>
-                    <td>태그 추가</td>
+                    <td>공개 여부</td>
                     <td colSpan="3">
                         <Select value={openrating} onChange={onRatingHandler} style={{width:'200px'}}>
                             <Option value={2}>비공개</Option>
