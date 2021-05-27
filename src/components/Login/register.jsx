@@ -4,7 +4,6 @@ import {SignIn, CreateAccount, PrivacyPolicy} from '../../constant';
 import { Twitter, Facebook,GitHub } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/user/_actions/user_actions';
-import emptyUser from '../../assets/images/dashboard/emptyProfile.png'
 import moment from "moment";
 
 const backgroundImageList =[
