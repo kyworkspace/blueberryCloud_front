@@ -1,7 +1,5 @@
-import axios from 'axios';
 import React, { memo, useState } from 'react'
 import { Media } from 'reactstrap';
-import emptyUser from '../../../../assets/images/dashboard/emptyProfile.png'
 import { errorMessage } from '../../../../utils/alertMethod';
 import { changeProfileImage, profileInsert } from '../../../../utils/commonMethod';
 import url from '../../../../route/DevUrl';
@@ -31,7 +29,7 @@ const UserProfileImage=memo((props) =>{
       }
     return (
         <div className="user-image">
-            <div className="avatar"><Media body alt="" src={profileUrl ? `${url}/${profileUrl}` : emptyUser} /></div>
+            <div className="avatar"><Media body alt="" src={`${url}/${profileUrl}`}/></div>
             <div className="icon-wrapper">
             <i className="icofont icofont-pencil-alt-5">
                 <input className="upload" type="file" onChange={(e) => readProfileUrl(e)} />
