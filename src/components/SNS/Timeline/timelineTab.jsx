@@ -12,12 +12,15 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { SNSContext } from '..';
 import { getTimeLineList } from '../../../utils/commonMethod';
 import { errorMessage } from '../../../utils/alertMethod';
+import { useSelector } from 'react-redux';
 
 const TimelineTab = () => {
     const [timeLineList, setTimeLineList] = useState([])
     const limitRef = useRef(10);
     const skipRef = useRef(0);
     const [hasMoreItem, setHasMoreItem] = useState(true);
+    const user = useSelector(state => state.user);
+
     useEffect(() => {
         getSNSList();
     }, [])
@@ -27,7 +30,6 @@ const TimelineTab = () => {
             limit : limitRef.current,
             skip : skipRef.current,
         }
-        console.log(timeLineList)
         getTimeLineList(body)
         .then(response=>{
             let newList = [...timeLineList,...response.data.list]
@@ -71,7 +73,7 @@ const TimelineTab = () => {
                         timeLineList.length > 0
                         ?
                             timeLineList.map(item=>{
-                                return <TimeLineContents contents ={item} key={item._id}/>;
+                                return <TimeLineContents contents ={item} key={item._id} userId={user.userData._id}/>;
                             })
                         :
                             <div>

@@ -33,7 +33,7 @@ function UserInfoSecond(props) {
                 </Col>
                 <Col md="6">
                     <div className="ttl-info text-left ttl-sm-mb-0">
-                    <h6><ThumbsUp size={iconSize}/>  etc</h6><span>{'기타등등'}</span>
+                    <h6><ThumbsUp size={iconSize}/>  알파</h6><span>{'클라우드 등급'}</span>
                     </div>
                 </Col>
                 </Row>

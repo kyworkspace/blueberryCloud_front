@@ -1,22 +1,111 @@
-import React, { memo, useContext, useState } from 'react'
+import React, { memo, useContext, useEffect, useState } from 'react'
 import { Button, Card, CardBody, Col, Input, InputGroup, InputGroupAddon, Media, Row } from 'reactstrap'
 import MainComment from './MainComment'
 import SubComment from './SubComment'
-import { MessageSquare, MoreVertical, ThumbsUp } from 'react-feather';
+import { MessageSquare, MoreVertical, ThumbsDown, ThumbsUp } from 'react-feather';
 import url from '../../../route/DevUrl'
-import { dateTimeToString } from '../../../utils/commonMethod';
+import { dateTimeToString,getDisLike,getLikes, unDislike, unLike, upDisLike, upLike } from '../../../utils/commonMethod';
 import htmlParser from 'html-react-parser'
 import { Divider } from 'antd';
 import { SNSContext } from '..';
+import { errorMessage } from '../../../utils/alertMethod';
 
-const TimeLineContents=memo((props) =>{
+function TimeLineContents(props){
     const {userInfo} = useContext(SNSContext)
     const {contents} = props;
     const {writer} = contents;
     const [replyState, setReplyState] = useState(false);
 
+    const [Likes, setLikes] = useState(0);
+    const [Dislikes, setDislikes] = useState(0)
+    const [LikeAction, setLikeAction] = useState(null);
+    const [DislikeAction, setDislikeAction] = useState(null);
+
+    let body={ 
+        contentsId : contents._id,
+        userId : props.userId
+    };
+
+    useEffect(() => {
+         //좋아요 정보
+         getLikes(body).then(list=>{
+             //  1. 좋아요 숫자
+             setLikes(list.length) //좋아요 갯수
+             //  2. 내가 좋아요 눌렀는지 안눌렀는지
+             list.map(like=>{
+                 if(like.userId === props.userId){
+                     setLikeAction('liked');
+                 }
+             })
+         })
+         .catch(err=>{
+             errorMessage('좋아요 정보를 가져오지 못했습니다.')
+         })
+         getDisLike(body).then(list=>{
+            setDislikes(list.length) 
+            list.map(like=>{
+                if(like.userId === props.userId){
+                    setDislikeAction('disliked');
+                }
+            })
+        })
+        .catch(err=>{
+            errorMessage('싫어요 정보를 가져오지 못했습니다.')
+        })
+    }, [Likes,Dislikes])
+
     const onReplyHandler =()=>{
         setReplyState(true);
+    }
+    const onLikeHandler = ()=>{
+        if(LikeAction===null){ //좋아요가 눌러져 있지 않는 경우
+            upLike(body)
+            .then(data=>{
+                setLikes(Likes+1);
+                setLikeAction('liked');
+                if(DislikeAction !==null){ //싫어요가 눌러져 있는 경우
+                    setDislikeAction(null);
+                    setDislikes(Dislikes-1);
+                }
+            })
+            .catch(err=>{
+                errorMessage("서버와 통신 중 오류가 발생하였습니다.")
+            })
+        }else{
+            unLike(body)
+            .then(data=>{
+                setLikes(Likes-1);
+                setLikeAction(null);
+            })
+            .catch(err=>{
+                errorMessage("서버와 통신 중 오류가 발생하였습니다.")
+            })
+        }
+    }
+    const onDisLikeHandler= ()=>{
+        if(DislikeAction === null){
+            upDisLike(body)
+            .then(data=>{
+                setDislikes(Dislikes+1);
+                setDislikeAction(null);
+                if(LikeAction !==null){
+                    setLikeAction(null);
+                    setLikes(Likes-1);
+                }
+            })
+            .catch(err=>{
+                errorMessage("서버와 통신 중 오류가 발생하였습니다.")
+            })
+        }else{
+            unDislike(body)
+            .then(data=>{
+                setDislikes(Dislikes-1);
+                setDislikeAction(null);
+            })
+            .catch(err=>{
+                errorMessage("서버와 통신 중 오류가 발생하였습니다.")
+            })
+        }
     }
     return (
         <Col sm="12">
@@ -66,7 +155,7 @@ const TimeLineContents=memo((props) =>{
                             <span>
                                 <i className="fa fa-heart font-danger"></i>
                                 <span style={{marginLeft:'2px'}}>
-                                    123
+                                    {Likes}
                                 </span>
                             </span>
                             
@@ -92,16 +181,33 @@ const TimeLineContents=memo((props) =>{
                         </div>
                         <Divider/>
                         <Row>
-                            <Col sm={6}>
+                            <Col sm={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
-                                    <Button color="transparent">
+                                    <Button color="transparent" onClick={onLikeHandler}>
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                            <ThumbsUp/>좋아요
+                                            <ThumbsUp 
+                                                fill={LikeAction ==="liked" ? "blue" :"none"}
+                                                fillOpacity = {0.5}
+                                                color="blue"
+                                            />좋아요
                                         </div>
                                     </Button>
                                 </div>
                             </Col>
-                            <Col sm={6}>
+                            <Col sm={4}>
+                                <div style={{display:'flex',justifyContent:'center'}}>
+                                    <Button color="transparent" onClick={onDisLikeHandler}>
+                                        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                            <ThumbsDown
+                                                fill={DislikeAction ==="disliked" ? "red" :"none"}
+                                                fillOpacity = {0.5}
+                                                color="red"
+                                            />싫어요
+                                        </div>
+                                    </Button>
+                                </div>
+                            </Col>
+                            <Col sm={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onReplyHandler}>
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -139,6 +245,5 @@ const TimeLineContents=memo((props) =>{
             </Card>
         </Col>
     )
-})
-
+}
 export default TimeLineContents

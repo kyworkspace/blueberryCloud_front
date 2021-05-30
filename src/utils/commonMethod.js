@@ -341,3 +341,99 @@ export const friendHadler = (body) => {
     })
 
 }
+/*************** 좋아요 , 싫어요 *********************/
+
+export const getLikes = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/like/getLikes', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list);
+
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+
+export const getDisLike = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/like/getDislikes', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list);
+
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+export const upLike = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post("/api/like/upLike", body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const unLike = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post("/api/like/unLike", body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject({ success: false })
+            })
+    })
+}
+
+export const upDisLike = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/like/upDisLike', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject({ success: false })
+            })
+    })
+}
+export const unDislike = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/like/unDislike', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject({ success: false })
+            })
+    })
+}

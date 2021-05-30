@@ -69,4 +69,7 @@
  - 팔로잉
  - 친구
  각 단게별로 파일을 공유로 볼수 있도록 단계 세분화 할예정
- 
+
+
+### SNS 타임라인
+![image](https://user-images.githubusercontent.com/45280952/120104601-25e2bd00-c190-11eb-9bbb-e6591e741b0d.png)
