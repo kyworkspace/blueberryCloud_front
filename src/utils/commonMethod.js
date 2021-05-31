@@ -437,3 +437,35 @@ export const unDislike = (body) => {
             })
     })
 }
+/************** 댓글 ******************/
+export const getCommentList = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/comment/list', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const commentPost = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/comment/post', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.success);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+
+}

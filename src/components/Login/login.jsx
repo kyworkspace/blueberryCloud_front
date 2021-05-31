@@ -44,7 +44,6 @@ const Logins = (props) => {
         dispatch(loginUser(body))
         .then(response=>{
           if(response.payload.loginSuccess){
-            window.localStorage.setItem('userId',response.payload.userId);
             if (RememberMe === true) {
               window.localStorage.setItem('bluberryRememberMe', Email);
             } else {

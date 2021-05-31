@@ -1,20 +1,23 @@
 import React, { memo, useContext, useEffect, useState } from 'react'
-import { Button, Card, CardBody, Col, Input, InputGroup, InputGroupAddon, Media, Row } from 'reactstrap'
+import { Button, Card, CardBody, Col, Form, Input, InputGroup, InputGroupAddon, Media, Row } from 'reactstrap'
 import MainComment from './MainComment'
 import SubComment from './SubComment'
-import { MessageSquare, MoreVertical, ThumbsDown, ThumbsUp } from 'react-feather';
+import { MessageSquare, MoreVertical, Send, ThumbsDown, ThumbsUp } from 'react-feather';
 import url from '../../../route/DevUrl'
-import { dateTimeToString,getDisLike,getLikes, unDislike, unLike, upDisLike, upLike } from '../../../utils/commonMethod';
+import { dateTimeToString,getDisLike,getLikes, commentPost, unDislike, unLike, upDisLike, upLike,getCommentList } from '../../../utils/commonMethod';
 import htmlParser from 'html-react-parser'
 import { Divider } from 'antd';
 import { SNSContext } from '..';
-import { errorMessage } from '../../../utils/alertMethod';
+import { errorMessage, infoMessage } from '../../../utils/alertMethod';
 
 function TimeLineContents(props){
     const {userInfo} = useContext(SNSContext)
     const {contents} = props;
     const {writer} = contents;
-    const [replyState, setReplyState] = useState(false);
+    const [commentState, setCommentState] = useState(false);
+    const [commentList, setCommentList] = useState([])
+    const [commentContents, setCommentContents] = useState();
+    const [commentCount, setCommentCount] = useState(3)
 
     const [Likes, setLikes] = useState(0);
     const [Dislikes, setDislikes] = useState(0)
@@ -25,7 +28,6 @@ function TimeLineContents(props){
         contentsId : contents._id,
         userId : props.userId
     };
-
     useEffect(() => {
          //좋아요 정보
          getLikes(body).then(list=>{
@@ -51,11 +53,13 @@ function TimeLineContents(props){
         })
         .catch(err=>{
             errorMessage('싫어요 정보를 가져오지 못했습니다.')
-        })
+        });
+        //댓글 목록 가져오기
+        callCommentList();
     }, [Likes,Dislikes])
 
     const onReplyHandler =()=>{
-        setReplyState(true);
+        setCommentState(true);
     }
     const onLikeHandler = ()=>{
         if(LikeAction===null){ //좋아요가 눌러져 있지 않는 경우
@@ -106,6 +110,31 @@ function TimeLineContents(props){
                 errorMessage("서버와 통신 중 오류가 발생하였습니다.")
             })
         }
+    }
+    const onReplySubmit =(e)=>{
+        e.preventDefault();
+        body.content = commentContents;
+        commentPost(body)
+        .then(response=>{
+            callCommentList();
+        })
+        .catch(err=>{
+            infoMessage("댓글 작성에 오류가 발생하였습니다.")
+        })
+    }
+
+    const callCommentList =()=>{
+        getCommentList(body)
+        .then(list=>{
+            console.log(list)
+            setCommentList(list)
+        })
+        .catch(err=>{
+            infoMessage("댓글 목록을 불러오는데 오류가 발생하였습니다.");
+        })
+    }
+    const onMoreCommentHandler = ()=>{
+        setCommentCount(commentCount+10);
     }
     return (
         <Col sm="12">
@@ -165,7 +194,7 @@ function TimeLineContents(props){
                                     댓글
                                 </span>
                                 <span style={{margin:'0px, 2px'}}>
-                                    {"20"}
+                                    {commentList.length}
                                 </span>
                                 <span>
                                     개
@@ -181,7 +210,7 @@ function TimeLineContents(props){
                         </div>
                         <Divider/>
                         <Row>
-                            <Col sm={4}>
+                            <Col xs={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onLikeHandler}>
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -194,7 +223,7 @@ function TimeLineContents(props){
                                     </Button>
                                 </div>
                             </Col>
-                            <Col sm={4}>
+                            <Col xs={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onDisLikeHandler}>
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -207,7 +236,7 @@ function TimeLineContents(props){
                                     </Button>
                                 </div>
                             </Col>
-                            <Col sm={4}>
+                            <Col xs={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onReplyHandler}>
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -217,24 +246,35 @@ function TimeLineContents(props){
                                 </div>
                             </Col>
                         </Row>
-                        { replyState &&
+                        { commentState &&
                         <>
                         <Divider/>
                             <div className="social-chat">
-                                {/* <MainComment/> */}
+                                {commentList.map((item,idx)=>
+                                    {
+                                        if(idx < commentCount){
+                                            return <MainComment key = {item._id} item={item}/>
+                                        }
+                                    }
+                                )}
                                 {/* <SubComment/> */}
-                                <div className="text-center"><a href="#javascript">댓글 더보기</a></div>
+                                {commentList.length > commentCount &&
+                                    <div className="text-center"><a href="javascript:void(0)" onClick={onMoreCommentHandler}>댓글 더보기</a></div>
+                                }
+                                
                             </div>
-                            <div className="comments-box">
+                            <div className="comment-box">
                                 <Media>
                                     <Media className="img-50 img-fluid m-r-20 rounded-circle" alt="" src={`${url}/${userInfo.profileImage}`} style={{height:'50px'}}/>
                                     <Media body>
-                                        <InputGroup className="text-box">
-                                            <Input className="form-control input-txt-bx" type="text" name="message-to-send" placeholder="Post Your commnets" />
-                                            <InputGroupAddon addonType="append">
-                                                <Button color="transparent"><i className="fa fa-smile-o">  </i></Button>
-                                            </InputGroupAddon>
-                                        </InputGroup>
+                                        <Form onSubmit={onReplySubmit}>
+                                            <InputGroup className="text-box" >
+                                                <Input className="form-control input-txt-bx" type="text" name="message-to-send" placeholder="댓글을 입력해주세요" value={commentContents} onChange={(e)=>setCommentContents(e.currentTarget.value)}/>
+                                                <InputGroupAddon addonType="append">
+                                                    <Button color="transparent" onClick={onReplySubmit}><Send/></Button>
+                                                </InputGroupAddon>
+                                            </InputGroup>
+                                        </Form>
                                     </Media>
                                 </Media>
                             </div>
