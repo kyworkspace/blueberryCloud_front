@@ -2,6 +2,7 @@ import { notification } from "antd";
 import axios from "axios";
 import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API } from "../route/Apis";
 import url from '../route/DevUrl';
+import { errorMessage } from "./alertMethod";
 const FileDownloadlib = require('js-file-download');
 /**
  * 사진을 드랍존에 떨어뜨릴 경우.
@@ -467,5 +468,34 @@ export const commentPost = (body) => {
                 reject(err)
             })
     })
-
+}
+export const commentDelete = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/comment/delete', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+export const commentUpdate = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/comment/update', body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve()
+                } else {
+                    reject()
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
 }

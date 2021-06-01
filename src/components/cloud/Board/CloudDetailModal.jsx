@@ -81,7 +81,7 @@ const CloudDetailModal=memo((props)=> {
                             서버에서 열심히 컨버팅 중입니다. :)
                         </div>;
                 }else{
-                    component = <video style={{maxWidth:'700px', maxHeight:'450px'}} src={`${url}/${originalpath}`} controls />;
+                    component = <video style={{maxWidth:'100%', maxHeight:'450px'}} src={`${url}/${originalpath}`} controls />;
                 }
                 
                 break;
@@ -147,6 +147,7 @@ const CloudDetailModal=memo((props)=> {
                 SelectedFile
             }
             videoConvert(body);
+            SelectedFile.converting = true;
         });
     }
     return (

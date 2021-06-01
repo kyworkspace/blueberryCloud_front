@@ -6,7 +6,7 @@ import axios from 'axios';
 import { CLOUD_API } from '../../../route/Apis';
 import { toast } from 'react-toastify';
 import CloudDetailModal from './CloudDetailModal';
-import { Pagination } from 'antd';
+import { Empty, Pagination } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFolderRoute } from '../../../redux/folder/_actions/folder_actions';
 import CloudFileCard from './CloudFileCard';
@@ -139,21 +139,30 @@ const  CloudViewer =(props) =>{
         <Fragment>
         <CloudBoardContext.Provider value={contextValue}>
         <Breadcrumb parent="Cloud" title={title}/>
-            <Container fluid={true}>
+            <Container fluid={true} >
                 <Col xl="12" md="12" className="box-col-12">
                     <div className="file-content">
                     <Card>
                     <BoardNavbar/>
-                        <CardBody className="file-manager">
-                            <ul className="files">
-                                {renderFileList}
-                            </ul>
+                    { Files.length > 0 ?
+                        <>
+                            <CardBody className="file-manager">
+                                <ul className="files">
+                                    {renderFileList}
+                                </ul>
+                            </CardBody>
+                            <Col xl="12" className="m-t-30">  
+                                <Nav style={{display:'flex', justifyContent:"center", paddingBottom:'20px'}}>
+                                <Pagination  current={currentPage} onChange={selectFileList} total={total} pageSize={limit} showSizeChanger={false}/>
+                                </Nav>
+                            </Col>
+                        </>
+                        :
+                        <CardBody className="file-manager" style={{height:'700px'}}>
+                                <Empty description="파일이 없어요. 새로운 파일을 등록해주세요"/>
                         </CardBody>
-                        <Col xl="12" className="m-t-30">  
-                            <Nav style={{display:'flex', justifyContent:"center", paddingBottom:'20px'}}>
-                            <Pagination  current={currentPage} onChange={selectFileList} total={total} pageSize={limit} showSizeChanger={false}/>
-                            </Nav>
-                        </Col>
+                    }
+                        
                     </Card>
                     </div>
                 </Col>

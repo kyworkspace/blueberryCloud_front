@@ -26,7 +26,8 @@ function TimeLineContents(props){
 
     let body={ 
         contentsId : contents._id,
-        userId : props.userId
+        userId : props.userId,
+        userTo : writer._id
     };
     useEffect(() => {
          //좋아요 정보
@@ -117,6 +118,7 @@ function TimeLineContents(props){
         commentPost(body)
         .then(response=>{
             callCommentList();
+            setCommentContents("");
         })
         .catch(err=>{
             infoMessage("댓글 작성에 오류가 발생하였습니다.")
@@ -126,7 +128,6 @@ function TimeLineContents(props){
     const callCommentList =()=>{
         getCommentList(body)
         .then(list=>{
-            console.log(list)
             setCommentList(list)
         })
         .catch(err=>{
@@ -253,7 +254,7 @@ function TimeLineContents(props){
                                 {commentList.map((item,idx)=>
                                     {
                                         if(idx < commentCount){
-                                            return <MainComment key = {item._id} item={item}/>
+                                            return <MainComment key = {item._id} item={item} refreshList={callCommentList}/>
                                         }
                                     }
                                 )}
