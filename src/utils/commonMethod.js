@@ -499,3 +499,19 @@ export const commentUpdate = (body) => {
             })
     })
 }
+/*****************대쉬 보드********************/
+export const getInUseSize = () => {
+    return new Promise((resolve, reject) => {
+        axios.post('/api/dashboard/inUseSize')
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.totalSize);
+                } else {
+                    throw response.data;
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
