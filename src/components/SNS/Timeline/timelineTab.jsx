@@ -88,7 +88,7 @@ const TimelineTab = () => {
             <Col xl="3 xl-100 box-col-12">
                     <div className="default-according style-1 faq-accordion job-accordion" id="accordionoc1">
                         <Row>
-                            <RightBar />
+                            {/* <RightBar /> */}
                         </Row>
                     </div>
                 </Col>

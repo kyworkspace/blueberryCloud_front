@@ -32,7 +32,7 @@ const UserProfileImage=memo((props) =>{
             <div className="avatar"><Media body alt="" src={`${url}/${profileUrl}`}/></div>
             <div className="icon-wrapper">
             <i className="icofont icofont-pencil-alt-5">
-                <input className="upload" type="file" onChange={(e) => readProfileUrl(e)} />
+                <input className="upload" type="file" accept="image/*" onChange={(e) => readProfileUrl(e)} />
             </i>
             </div>
         </div>

@@ -113,7 +113,7 @@ const LeftBar = () => {
                         </Collapse>
                     </Card>
                 </Col>
-                <Col xl="12">
+                {/* <Col xl="12">
                     <Card>
                         <CardHeader>
                             <h5 className="mb-0">
@@ -229,8 +229,8 @@ const LeftBar = () => {
                             </CardBody>
                         </Collapse>
                     </Card>
-                </Col>
-                <Col xl="12">
+                </Col> */}
+                {/* <Col xl="12">
                     <Card>
                         <CardHeader>
                             <h5 className="mb-0">
@@ -279,7 +279,7 @@ const LeftBar = () => {
                             </CardBody>
                         </Collapse>
                     </Card>
-                </Col>
+                </Col> */}
             </Fragment>
         );
     }else{
