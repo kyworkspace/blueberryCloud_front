@@ -41,7 +41,6 @@ const VideoUploadModal=memo((props) =>{
             thumbnailpath: ThumbnailPath,
             thumbnailname : ThumbnailName
         }
-        console.log(body);
         uploadVideo(body).then(response=>{
             if(response.data.success){
                 toast.success("업로드 성공 !", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:2000})

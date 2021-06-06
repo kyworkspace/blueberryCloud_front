@@ -1,11 +1,24 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function (app) {
-    app.use(
-        '/api',
-        createProxyMiddleware({
-            target: 'http://192.168.219.88:5000',
-            changeOrigin: true,
-        })
-    );
-};
+if (process.env.NODE_ENV === 'production') {
+    module.exports = function (app) {
+        app.use(
+            '/api',
+            createProxyMiddleware({
+                target: 'http://blueberry.hopto.org:5000',
+                changeOrigin: true,
+            })
+        );
+    };
+} else {
+    module.exports = function (app) {
+        app.use(
+            '/api',
+            createProxyMiddleware({
+                target: 'http://localhost:5000',
+                changeOrigin: true,
+            })
+        );
+    };
+}
+

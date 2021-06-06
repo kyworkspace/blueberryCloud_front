@@ -81,7 +81,7 @@ const PictureUpload=(props) =>{
                     <>
                     
                     <div key={index} style={{margin:'10px'}} >
-                        <Image src = {`${url}/${item.path||item.file_path}`} rounded style={{width:'200px'}}/>
+                        <Image src = {`${url}/${item.hostPath}`} rounded style={{width:'200px'}}/>
                         <Button color="primary" onClick={()=>pictureInfomation(item)}>상세정보</Button>
                         <Button color="secondary" onClick={()=>deleteHandler(item)}>삭제</Button>
                     </div>

@@ -162,14 +162,14 @@ function TimeLineContents(props){
                         <div style={{display:'flex', justifyContent:'center'}}>
                             <Media className="img-fluid" alt="" 
                             // 사진 주소
-                                src={`${url}/${contents.originalpath}`} 
+                                src={`${url}/${contents.logicPath}`} 
                                 style={{maxWidth:'100%', maxHeight:'550px'}}
                             />
                         </div>
                         :
                         <video 
                             style={{maxWidth:'100%', maxHeight:'550px'}}
-                            src={`${url}/${contents.originalpath}`} 
+                            src={`${url}/${contents.logicPath}`} 
                             controls
                         />
                     }

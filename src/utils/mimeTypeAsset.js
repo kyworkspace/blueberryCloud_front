@@ -15,7 +15,7 @@ import url from '../route/DevUrl';
  * mimetype 넣으면 이미지 반환?
  * **/
 export const mimeTypeFinder = (file) => {
-    const { mimetype, originalpath, thumbnailpath } = file
+    const { mimetype, logicPath, thumbnailpath } = file
 
     let type = mimetype.split('/')[0];
     let ret = {};
@@ -26,7 +26,7 @@ export const mimeTypeFinder = (file) => {
             break;
         case 'image':
             ret.type = type[1];
-            ret.image = `url(${url}/${originalpath})`;
+            ret.image = `url(${url}/${logicPath})`;
             break;
         case 'audio':
             ret.type = type[1];

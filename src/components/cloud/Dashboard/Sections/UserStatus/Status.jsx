@@ -76,7 +76,7 @@ const Status=memo((props) => {
                               profileAvatar.indexOf('uploads') > -1 ?
                               `${url}/${profileAvatar}`
                               :
-                              `${profileAvatar}`
+                              `${url}/${profileAvatar}`
                             } alt="메인 화면 아바타" style={{width:'100px', height:'100px',borderRadius:'30px'}}/>
                             :
                             <img className="img-fluid" src={'https://picsum.photos/100/100'} alt="메인 화면 아바타" style={{width:'100px', height:'100px',borderRadius:'30px'}}/>

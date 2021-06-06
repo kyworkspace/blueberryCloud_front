@@ -121,7 +121,7 @@ export const FileSave = (body) => {
  * **/
 export const FileDownload = (file) => {
     axios({
-        url: `${url}/${file.originalpath}`,
+        url: `${url}/${file.logicPath}`,
         method: 'GET',
         responseType: 'blob',
     }).then((response) => {

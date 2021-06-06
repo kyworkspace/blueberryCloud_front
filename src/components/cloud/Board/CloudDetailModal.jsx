@@ -27,7 +27,7 @@ const openratingConvert =(number)=>{
 const CloudDetailModal=memo((props)=> {
     const {SelectedFile,refreshFileList} = useContext(CloudBoardContext)
     const {isOpen, ModalHandler} = props
-    const {mimetype,originalpath,originalname,size,description,openrating} = SelectedFile;
+    const {mimetype,logicPath,originalname,size,description,openrating} = SelectedFile;
     const typeMainCategory = mimetype.split("/");
     // 사진 크게 보기
     const [biggerImageView, setBiggerImageView] = useState(false);
@@ -81,15 +81,15 @@ const CloudDetailModal=memo((props)=> {
                             서버에서 열심히 컨버팅 중입니다. :)
                         </div>;
                 }else{
-                    component = <video style={{maxWidth:'100%', maxHeight:'450px'}} src={`${url}/${originalpath}`} controls />;
+                    component = <video style={{maxWidth:'100%', maxHeight:'450px'}} src={`${url}/${logicPath}`} controls />;
                 }
                 
                 break;
             case "image":
-                component = <Image src={`${url}/${originalpath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}} onClick={onImageView}/>;
+                component = <Image src={`${url}/${logicPath}`} rounded style={{maxWidth:'80%',maxHeight:'80%'}} onClick={onImageView}/>;
                 break;
             case "audio":
-                component = <audio style={{width:'700px'}} controls src={`${url}/${originalpath}`}/>;
+                component = <audio style={{width:'700px'}} controls src={`${url}/${logicPath}`}/>;
                 break;
             default:
                 break;
@@ -135,7 +135,7 @@ const CloudDetailModal=memo((props)=> {
     const onClipBoardCopy =()=>{
         const tmp = document.createElement('textarea');
         document.body.appendChild(tmp);
-        tmp.value = `${url}/${originalpath}`;
+        tmp.value = `${url}/${logicPath}`;
         tmp.select();
         document.execCommand('copy');
         document.body.removeChild(tmp);
@@ -239,7 +239,7 @@ const CloudDetailModal=memo((props)=> {
             <Modal isOpen={biggerImageView} style={{maxWidth:'85vw',maxHeight:'100vh'}} toggle={()=>setBiggerImageView(false)}>
                 <ModalBody>
                     <div style={{display:'flex', justifyContent:'center'}}>
-                        <Image src={`${url}/${originalpath}`} rounded style={{maxWidth:'80vw',maxHeight:'90vh'}} onClick={onImageView}/>
+                        <Image src={`${url}/${logicPath}`} rounded style={{maxWidth:'80vw',maxHeight:'90vh'}} onClick={onImageView}/>
                     </div>
                 </ModalBody>
             </Modal>
