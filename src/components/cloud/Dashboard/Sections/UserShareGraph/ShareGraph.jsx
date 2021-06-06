@@ -68,8 +68,10 @@ const ShareGraph=memo((props) =>{
     const [series, setSeries] = useState([])
     const [option, setOption] = useState(basicOptions);
     useEffect(() => {
-        getInUseSizeHandler();
-    }, [])
+        if(cloudSize){
+            getInUseSizeHandler();
+        }
+    }, [cloudSize])
 
     const onMoveToPlan =()=>{
         infoMessage("기획중입니다. 용량 증량은 관리자에게 문의해주세요");
