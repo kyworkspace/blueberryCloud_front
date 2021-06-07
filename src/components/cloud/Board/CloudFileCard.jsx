@@ -61,7 +61,9 @@ const CloudFileCard = memo((props) =>{
             break;
     }
     return (
-        <li className="file-box" style={{width:`calc(20% - 15px)`,marginTop:'10px',marginLeft:'10px'}} key={item.filename}>
+        <li className="file-box"
+         style={{marginTop:'10px',marginLeft:'10px'}}
+          key={item.filename}>
             {cardImage}
             <div className="file-bottom" onClick={cardEvent} style={{cursor:'pointer'}}>
                 <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>

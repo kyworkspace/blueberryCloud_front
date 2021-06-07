@@ -4,6 +4,46 @@ import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API } from "../route/
 import url from '../route/DevUrl';
 import { errorMessage } from "./alertMethod";
 const FileDownloadlib = require('js-file-download');
+
+//아이디 중복 확인
+export const userEmailDuplicateCheck = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${USER_API}/dupCheck`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.available)
+                } else {
+                    throw { success: false }
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+//인증 메일 보내기
+export const sendAuthCheckMail = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${USER_API}/sendAuthCheckMail`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.number)
+                } else {
+                    throw { success: false }
+                }
+
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+
+}
+
+
+
+
+
 /**
  * 사진을 드랍존에 떨어뜨릴 경우.
  * 루트 파일에 업로드함

@@ -5,13 +5,12 @@ import {VideoCameraAddOutlined} from '@ant-design/icons'
 import url from '../../../../../../route/DevUrl';
 
 const VideoUpload=memo((props) =>{
-    const {onFileInfoHandler,onThumbnailHandler} = props;
+    const {onFileInfoHandler,onThumbnailHandler,loading,setLoading} = props;
     const [ThumbnailPath, setThumbnailPath] = useState("");
     // const [Duration, setDuration] = useState("");
     // const [FilePath, setFilePath] = useState("");
-    const [FileUploading, setFileUploading] = useState(false)
     const onDrop = (files) => {
-        setFileUploading(true);
+        setLoading(true);
         videoInsert(files).then(response=>{
             if (response.data.success) {
                 const fileInfo = response.data.fileInfo;
@@ -31,15 +30,15 @@ const VideoUpload=memo((props) =>{
                         onThumbnailHandler(physicalPath,filenames[0]); //썸네일 물리 경로 => 저장할때 변경되는 정보
                         //let convertedFileInfo = {...fileInfo, path : newFilePath}
                         onFileInfoHandler(fileInfo);
-                        setFileUploading(false);
+                        setLoading(false);
                     } else {
                         alert("썸네일 생성에 실패 했습니다.");
-                        setFileUploading(false);
+                        setLoading(false);
                     }
                 })
             } else {
                 alert('비디오 업로드 실패')
-                setFileUploading(false);
+                setLoading(false);
             }
         })
     }
@@ -70,7 +69,7 @@ const VideoUpload=memo((props) =>{
                         썸네일(Auto)
                         </div>
                         <br/>
-                        {FileUploading ? 
+                        {loading ? 
                             <>
                                 <h6 className="sub-title mb-0 text-center">Upload & Encoding...</h6>
                                 <div className="loader-box">

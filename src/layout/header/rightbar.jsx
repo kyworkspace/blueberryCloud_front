@@ -75,16 +75,16 @@ const Rightbar = (props) => {
           {/* <li className="language-nav">
               <LanguageSelectionComponent/>
           </li> */}
-          <li><span className="header-search"><Search onClick={() => SeacrhResposive(searchresponsive)} /></span></li>
+          {/* <li><span className="header-search"><Search onClick={() => SeacrhResposive(searchresponsive)} /></span></li>
           <li className="onhover-dropdown">
             <NotificationComponent/>
-          </li>
-          <Bookmark/>
+          </li> */}
+          {/* <Bookmark/> */}
           <li>
             <div className="mode" onClick={() => MoonlightToggle(moonlight)}><i className={`fa ${moonlight ? 'fa-lightbulb-o' : 'fa-moon-o'}`}></i></div>
           </li>
-          <ShoppingCart/>
-          <MessageAlarm/>
+          {/* <ShoppingCart/> */}
+          {/* <MessageAlarm/> */}
           <li className="maximize"><a className="text-dark" href="#javascript" onClick={goFull}><Minimize /></a></li>
           <UserDropdown/>
         </ul>

@@ -62,8 +62,8 @@ const UserDropdownComponent= memo((props) => {
             </div>
             <ul className="profile-dropdown onhover-show-div">
               <li onClick={onAccountHandler}><User /><span>{Account} </span></li>
-              <li><Mail /><span>{Inbox}</span></li>
-              <li><FileText /><span>{Taskboard}</span></li>
+              {/* <li><Mail /><span>{Inbox}</span></li>
+              <li><FileText /><span>{Taskboard}</span></li> */}
               <li onClick={onLogoutHandler}><LogIn /><span>{LogOut}</span></li>
             </ul>
           </li>

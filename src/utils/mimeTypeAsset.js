@@ -87,10 +87,6 @@ const appFileFilder = (mimetype) => {
             ret.image = `url(${pdfIcon})`;
             break;
         case 'application/vnd.openxmlformats-officedocument.presentationml.slideshow':
-            ret.type = 'pps';
-            ret.image = `url(${pptIcon})`;
-            break;
-        case 'application/vnd.openxmlformats-officedocument.presentationml.slideshow':
             ret.type = 'ppsx';
             ret.image = `url(${pptIcon})`;
             break;

@@ -19,6 +19,7 @@ const VideoUploadModal=memo((props) =>{
     const [Description, setDescription] = useState(""); //설명
     const [Tags, setTags] = useState([]);
     const [FileInfo, setFileInfo] = useState({});
+    const [FileUploading, setFileUploading] = useState(false);
     const [ThumbnailPath, setThumbnailPath] = useState("")
     const [ThumbnailName, setThumbnailName] = useState('')
 
@@ -65,7 +66,7 @@ const VideoUploadModal=memo((props) =>{
         <Modal isOpen={isOpen} className={className} style={{minWidth:'600px'}}>
             <ModalHeader toggle={onCloseModal}>동영상 업로드</ModalHeader>
             <ModalBody>
-            <VideoUpload onFileInfoHandler={setFileInfo} onThumbnailHandler={onThumbnailHandler}/>
+            <VideoUpload onFileInfoHandler={setFileInfo} onThumbnailHandler={onThumbnailHandler} loading={FileUploading} setLoading={setFileUploading}/>
             <Table responsive="md">
                 <tr>
                     <td>제목</td>
@@ -96,7 +97,7 @@ const VideoUploadModal=memo((props) =>{
             </Table>
             </ModalBody>
             <ModalFooter>
-            <Button color="primary" onClick={onConfirmModal}>저장</Button>{' '}
+            <Button disabled={FileUploading} color="primary" onClick={onConfirmModal}>저장</Button>{' '}
             <Button color="secondary" onClick={onCloseModal}>취소</Button>
             </ModalFooter>
         </Modal>

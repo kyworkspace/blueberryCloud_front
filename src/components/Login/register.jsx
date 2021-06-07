@@ -1,11 +1,14 @@
-import React,{useState} from 'react';
+import React,{useRef, useState} from 'react';
 import {Container,Row,Col,Form,FormGroup,Input,Label,Button} from 'reactstrap'
 import {SignIn, CreateAccount, PrivacyPolicy} from '../../constant';
 import { Twitter, Facebook,GitHub } from 'react-feather';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../redux/user/_actions/user_actions';
 import moment from "moment";
-
+import { errorMessage, infoMessage } from '../../utils/alertMethod';
+import { Space } from 'antd';
+import { sendAuthCheckMail, sendValidCheckMail, userEmailDuplicateCheck } from '../../utils/commonMethod';
+import {Button as AntButton} from 'antd'
 const backgroundImageList =[
   "basicBackground/basicImage1.jpg"
   ,"basicBackground/basicImage2.jpg"
@@ -30,6 +33,10 @@ const Register = (props) => {
     const [passwordCheck, setPasswordCheck] = useState("");
     const [Email, setEmail] = useState("");
     const [Name, setName] = useState("");
+    const [validCheck, setValidCheck] = useState(false);
+    const [authInput, setAuthInput] = useState(false);
+    const [authValue, setAuthValue] = useState("");
+    const authNumberRef = useRef()
 
     const onEmailHandler =(e)=>{
       setEmail(e.currentTarget.value)
@@ -51,8 +58,12 @@ const Register = (props) => {
 
     const onRegisterHandler =(e)=>{
       e.preventDefault();
+      if(!validCheck){
+        infoMessage("이메일 인증 확인이 필요합니다.");
+        return;
+      }
       if(password !== passwordCheck){
-        alert("비밀번호를 확인해주세요")
+        infoMessage("비밀번호를 확인해주세요")
         return;
       }
       let body = {
@@ -73,6 +84,48 @@ const Register = (props) => {
       })
     }
 
+    const onEmailcheck=()=>{
+      if(Email===""){
+        infoMessage("이메일을 입력해주세요");
+        return;
+      }
+      let body ={
+        email: Email,
+      }
+      userEmailDuplicateCheck(body)
+      .then(available=>{
+        if(available){
+          //인증 번호 보내기
+          sendAuthCheckMail(body)
+          .then(number=>{
+            infoMessage("인증 메일을 전송 하였습니다.");
+            authNumberRef.current = number;
+            setAuthInput(true);
+          }).
+          catch(err=>{
+            errorMessage("이메일 인증 중 오류가 발생 하였습니다.")
+          })
+        }else{
+          //이미 가입된 아이디
+          infoMessage("이미 가입된 이메일 주소 입니다.")
+        }
+      })
+      .catch(err=>{
+        errorMessage("오류가 발생하였습니다.")
+      })
+    }
+    const onAuthCheck =()=>{
+      if(Number(authValue) !== authNumberRef.current){
+        infoMessage("인증번호가 다릅니다. 다시 시도해주세요");
+        setAuthInput(false);
+        setAuthValue(0);
+      }else{
+        infoMessage("인증 되었습니다.")
+        setValidCheck(true);
+        setAuthInput(false);
+      }
+    }
+
     return (
       <Container fluid={true} className="p-0">
       <Row>
@@ -88,9 +141,20 @@ const Register = (props) => {
                     <Input className="form-control" type="text" required="" placeholder="Name" value={Name} onChange={onNameHandler}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label className="col-form-label">이메일 주소</Label>
-                    <Input className="form-control" type="email" required="" placeholder="Test@gmail.com" value={Email} onChange={onEmailHandler}/>
+                    <Label className="col-form-label pt-0">이메일 주소</Label>
+                    <Input className="form-control" type="email" required="" placeholder="이메일 입력" value={Email} onChange={onEmailHandler} disabled={validCheck}/>
+                    {
+                      !validCheck && <Button className="btn-block" color="primary" style={{marginTop:'1%'}} onClick={onEmailcheck}>이메일 인증 키 전송</Button>
+                    }
                   </FormGroup>
+                  {authInput &&
+                  <FormGroup>
+                    <Space>
+                      <Input className="form-control" type="text" style={{marginTop:'1%'}} required="" placeholder="인증 번호 입력" value={authValue} onChange={(e)=>setAuthValue(e.currentTarget.value)}/>
+                      <AntButton size="middle" danger type="default" onClick={onAuthCheck}>확인</AntButton>
+                    </Space>
+                  </FormGroup>
+                  }
                   <FormGroup>
                     <Label className="col-form-label">비밀번호</Label>
                     <Input className="form-control" type={togglePassword ?  "text" : "password" } name="login[password]" value={password} onChange={(e) => onPasswordHandler(e)} required="" placeholder="*********"/>
@@ -103,7 +167,7 @@ const Register = (props) => {
                       <Input id="checkbox1" type="checkbox"/>
                       <Label className="text-muted" for="checkbox1">{"Agree with"}<a className="ml-2" href="#javascript">{PrivacyPolicy}</a></Label>
                     </div>
-                    <Button color="primary" className="btn-block" onClick={onRegisterHandler}>{CreateAccount}</Button>
+                    <Button color="primary" className="btn-block" onClick={onRegisterHandler} disabled={!validCheck}>{CreateAccount}</Button>
                   </div>
                   <h6 className="text-muted mt-4 or">{"Or signup with"}</h6>
                   <div className="social mt-4">
