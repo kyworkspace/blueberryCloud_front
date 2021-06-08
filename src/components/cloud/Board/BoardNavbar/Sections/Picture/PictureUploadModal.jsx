@@ -50,7 +50,7 @@ const PictureUploadModal=memo((props)=> {
       setImage(newImages);
   }
     return (
-      <Modal isOpen={props.isOpen} className={className} style={{minWidth:'600px', fontFamily:'twayair'}}>
+      <Modal isOpen={props.isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
         <ModalHeader toggle={onCloseModal}>사진 업로드</ModalHeader>
         <ModalBody>
           <PictureUpload refreshFunction={updateImages}/>

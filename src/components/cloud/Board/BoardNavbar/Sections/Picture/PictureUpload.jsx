@@ -6,6 +6,7 @@ import PictureInfomationModal from './PictureInfomationModal'
 import { useSelector } from 'react-redux'
 import { pictureInsert } from '../../../../../../utils/commonMethod'
 import url from '../../../../../../route/DevUrl';
+import { Col, Row } from 'antd'
 
 const PictureUpload=(props) =>{
     const [Files, setFiles] = useState([])
@@ -53,8 +54,8 @@ const PictureUpload=(props) =>{
 
 
     return (
-        <div>
-            <div style={{ display:'flex'}}>
+        <Row gutter={[50,16]}>
+            <Col xs={24} xl={12}>
             <Dropzone onDrop={onDropHandler}>
             {({getRootProps, getInputProps}) => (
                 <section>
@@ -70,16 +71,15 @@ const PictureUpload=(props) =>{
                     <p>사진을 드래그하여 넣어주세요</p>
                     <br/>
                     <p>확장자는 *.jpg,*.jpeg,*.png 만 가능합니다.</p>
-                    <br/>
-                    <p>목록에서 사진을 클릭하면 삭제됩니다.</p>
                 </div>
                 </section>
             )}
             </Dropzone>
+            </Col>
+            <Col xs={24} xl={12}>
             <div style={{display:'grid', maxWidth:"250px",maxHeight:'280px',overflowY:'scroll'}}>
                 {Files.map((item,index)=>(
                     <>
-                    
                     <div key={index} style={{margin:'10px'}} >
                         <Image src = {`${url}/${item.hostPath}`} rounded style={{width:'200px'}}/>
                         <Button color="primary" onClick={()=>pictureInfomation(item)}>상세정보</Button>
@@ -89,9 +89,9 @@ const PictureUpload=(props) =>{
                     </>
                 ))}
             </div>
-        </div>
+            </Col>
         {informationModalViewer && <PictureInfomationModal isOpen={informationModalViewer} ModalHandler={setinformationModalViewer} picture={fileInformation} pictureHandler={onPictureDescriptionHandler}/>}
-        </div>
+        </Row>
     )
 }
 

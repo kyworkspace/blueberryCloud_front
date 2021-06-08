@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone';
 import {videoInsert,makeThumbnail} from '../../../../../../utils/commonMethod'
 import {VideoCameraAddOutlined} from '@ant-design/icons'
 import url from '../../../../../../route/DevUrl';
+import { Col, Row } from 'antd';
 
 const VideoUpload=memo((props) =>{
     const {onFileInfoHandler,onThumbnailHandler,loading,setLoading} = props;
@@ -45,8 +46,9 @@ const VideoUpload=memo((props) =>{
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    {/* DROP ZONE */}
+        <Row gutter={[50,16]}>
+            <Col xs={24} xl={12}>
+                {/* DROP ZONE */}
                     <Dropzone
                         onDrop={onDrop}
                         multiple={false} /** 한번에 파일을 하나만 할건지 여러개 할건지 **/
@@ -62,10 +64,11 @@ const VideoUpload=memo((props) =>{
                             </div>
                         )}
                     </Dropzone>
-
+            </Col>
+            <Col xs={24} xl={12}>
                     {/* 썸네일 있을때만 렌더링*/}
                     <div style={{width:'18vw'}}>
-                        <div style={{display:'flex',justifyContent : 'center'}}>
+                        <div style={{display:'flex',justifyContent : 'center',maxWidth:"250px",maxHeight:'280px'}}>
                         썸네일(Auto)
                         </div>
                         <br/>
@@ -86,7 +89,8 @@ const VideoUpload=memo((props) =>{
                             </div>
                         }
                     </div>
-                </div>
+            </Col>
+        </Row>
     )
 })
 
