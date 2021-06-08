@@ -21,7 +21,11 @@ import CloudViewer from './components/cloud/Board/CloudViewer';
 //sns
 import SNSTimeline from './components/SNS/index';
 import UserInformation from './components/Account/UserInfomation/UserInformation';
+//axios
+import axios from 'axios';
 
+//axios
+// axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "http://localhost:5000/"
 
 const Root = (props) =>  {
 

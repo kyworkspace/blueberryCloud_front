@@ -46,6 +46,8 @@ const Logins = (props) => {
           if(response.payload.loginSuccess){
             if (RememberMe === true) {
               window.localStorage.setItem('bluberryRememberMe', Email);
+              // console.log(response.payload.token);
+              // document.cookie='x_auth='+response.payload.token;
             } else {
               localStorage.removeItem('bluberryRememberMe');
             }
@@ -81,7 +83,7 @@ const Logins = (props) => {
                       </FormGroup>
                       <FormGroup>
                         <Label className="col-form-label">{Password}</Label>
-                        <Input className="form-control" type={togglePassword ?  "text" : "password" } name="login[password]" value={password} onChange={(e) => handleChange(e)} required="" placeholder="비밀번호를 입력해주세요"/>
+                        <Input className="form-control" type={togglePassword ?  "text" : "password" } name="current-password" value={password} onChange={(e) => handleChange(e)} required="" placeholder="비밀번호를 입력해주세요"/>
                         <div className="show-hide" onClick={() => HideShowPassword(togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
                       </FormGroup>
                       <div className="form-group mb-0">

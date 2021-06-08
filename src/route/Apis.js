@@ -4,3 +4,6 @@ export const FOLDER_API = '/api/folder';
 export const PROFILE_API = '/api/profile';
 export const SNS_API = '/api/sns';
 export const FRIEND_API = '/api/friends';
+export const LIKE_API = '/api/like';
+export const COMMENT_API = '/api/comment';
+export const DASHBOARD_API = '/api/dashboard';

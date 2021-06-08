@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
-import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API } from "../route/Apis";
+import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API, LIKE_API, COMMENT_API, DASHBOARD_API } from "../route/Apis";
 import url from '../route/DevUrl';
 import { errorMessage } from "./alertMethod";
 const FileDownloadlib = require('js-file-download');
@@ -386,7 +386,7 @@ export const friendHadler = (body) => {
 
 export const getLikes = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/like/getLikes', body)
+        axios.post(`${LIKE_API}/getLikes`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data.list);
@@ -403,7 +403,7 @@ export const getLikes = (body) => {
 
 export const getDisLike = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/like/getDislikes', body)
+        axios.post(`${LIKE_API}/getDislikes`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data.list);
@@ -419,7 +419,7 @@ export const getDisLike = (body) => {
 }
 export const upLike = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post("/api/like/upLike", body)
+        axios.post(`${LIKE_API}/upLike`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data);
@@ -434,7 +434,7 @@ export const upLike = (body) => {
 }
 export const unLike = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post("/api/like/unLike", body)
+        axios.post(`${LIKE_API}/like/unLike`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data);
@@ -450,7 +450,7 @@ export const unLike = (body) => {
 
 export const upDisLike = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/like/upDisLike', body)
+        axios.post(`${LIKE_API}/upDisLike`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data);
@@ -465,7 +465,7 @@ export const upDisLike = (body) => {
 }
 export const unDislike = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/like/unDislike', body)
+        axios.post(`${LIKE_API}/unDislike`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data);
@@ -481,7 +481,7 @@ export const unDislike = (body) => {
 /************** 댓글 ******************/
 export const getCommentList = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/comment/list', body)
+        axios.post(`${COMMENT_API}/list`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data.list);
@@ -496,7 +496,7 @@ export const getCommentList = (body) => {
 }
 export const commentPost = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/comment/post', body)
+        axios.post(`${COMMENT_API}/post`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data.success);
@@ -511,7 +511,7 @@ export const commentPost = (body) => {
 }
 export const commentDelete = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/comment/delete', body)
+        axios.post(`${COMMENT_API}/delete`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data);
@@ -526,7 +526,7 @@ export const commentDelete = (body) => {
 }
 export const commentUpdate = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/comment/update', body)
+        axios.post(`${COMMENT_API}/update`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve()
@@ -542,7 +542,7 @@ export const commentUpdate = (body) => {
 /*****************대쉬 보드********************/
 export const getInUseSize = () => {
     return new Promise((resolve, reject) => {
-        axios.post('/api/dashboard/inUseSize')
+        axios.post(`${DASHBOARD_API}/inUseSize`)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data.totalSize);
