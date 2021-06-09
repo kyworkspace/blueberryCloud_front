@@ -13,8 +13,10 @@ const PictureUploadModal=memo((props)=> {
     const user = useSelector(state => state.user)
     const folderPath = useSelector(state => state.folder.path)
     const {refreshFileList} = useContext(CloudBoardContext)
-    const {buttonLabel,className} = props
+    const {buttonLabel,className} = props;
+    
     const [Image, setImage] = useState([]);
+    const [Loading, setLoading] = useState(false);
     
     const onCloseModal = () => {
         props.ModalHandler(false)
@@ -53,10 +55,10 @@ const PictureUploadModal=memo((props)=> {
       <Modal isOpen={props.isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
         <ModalHeader toggle={onCloseModal}>사진 업로드</ModalHeader>
         <ModalBody>
-          <PictureUpload refreshFunction={updateImages}/>
+          <PictureUpload refreshFunction={updateImages} loading={Loading} setLoading={setLoading}/>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={onConfirmModal}>저장</Button>{' '}
+          <Button color="primary" onClick={onConfirmModal} disabled={Loading}>저장</Button>{' '}
           <Button color="secondary" onClick={onCloseModal}>취소</Button>
         </ModalFooter>
       </Modal>

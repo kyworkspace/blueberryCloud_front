@@ -4,7 +4,7 @@ import CKEditors from "react-ckeditor-component";
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button} from 'reactstrap'
 import { calcUnit } from '../../../../../../utils/fileSizeUnit';
 import url from '../../../../../../route/DevUrl'
-import { Select } from 'antd';
+import { Divider, Select } from 'antd';
 const {Option} = Select;
 const PictureInfomationModal=memo((props)=> {
 
@@ -26,22 +26,12 @@ const PictureInfomationModal=memo((props)=> {
         setOpenrating(value);
     }
     return (
-    <Modal isOpen={isOpen} className={className} style={{minWidth:'600px'}}>
+    <Modal isOpen={isOpen} className={className} style={{width:'600px', maxWidth:'90%', maxHeight:'90%'}}>
         <ModalHeader toggle={onCloseModal}>사진 상세 정보</ModalHeader>
         <ModalBody>
             <Table responsive="md">
                 <tr>
-                    <th colSpan="4" style={{textAlign:'center'}}> <Image src={`${url}/${picture.path}`} rounded style={{width:'300px'}}/></th>
-                </tr>
-                <tr>
-                    <td>파일제목</td>
-                    <td>{picture.originalname}</td>
-                    <td>확장자</td>
-                    <td>{picture.mimetype}</td>
-                </tr>
-                <tr>
-                    <td>용량</td>
-                    <td colSpan="3">{calcUnit(picture.size)}</td>
+                    <th colSpan="4" style={{textAlign:'center'}}><Image src={`${url}/${picture.logicPath}`} rounded style={{width:'300px'}}/></th>
                 </tr>
                 <tr>
                     <td>공개 여부</td>
@@ -53,21 +43,17 @@ const PictureInfomationModal=memo((props)=> {
                         </Select>
                     </td>
                 </tr>
-                <tr>
-                    <td>설명</td>
-                    <td colSpan="3">
-                        <CKEditors
-                            activeclassName="p10"
-                            content={description}
-                            events={{
-                                "change": onDescHandler
-                            }}
-                        />
-                        {/* <TextArea rows={4} style={{width:'100%'}} value={description} onChange={onDescHandler}/> */}
-                    </td>
-                </tr>
-                
             </Table>
+            <Divider orientation="left" plain>
+                설명입력
+            </Divider>
+            <CKEditors
+                activeclassName="p10"
+                content={description}
+                events={{
+                    "change": onDescHandler
+                }}
+            />
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={onConfirmModal}>확인</Button>{' '}

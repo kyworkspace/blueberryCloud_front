@@ -8,6 +8,8 @@ import { Table } from 'react-bootstrap';
 import { calcUnit } from '../../../../../../utils/fileSizeUnit';
 import { dateToString, uploadVideo } from '../../../../../../utils/commonMethod';
 import { toast } from 'react-toastify';
+import { Select } from 'antd';
+const {Option} = Select;
 
 const VideoUploadModal=memo((props) =>{
 
@@ -22,6 +24,7 @@ const VideoUploadModal=memo((props) =>{
     const [FileUploading, setFileUploading] = useState(false);
     const [ThumbnailPath, setThumbnailPath] = useState("")
     const [ThumbnailName, setThumbnailName] = useState('')
+    const [openrating, setOpenrating] = useState(2)
 
     const onCloseModal = () => {
         ModalHandler(false)
@@ -40,7 +43,8 @@ const VideoUploadModal=memo((props) =>{
             originalpath : `${originalpath.join("/")}/${dateToString(new Date(),false)}`,
             cloudpath : folderPath,
             thumbnailpath: ThumbnailPath,
-            thumbnailname : ThumbnailName
+            thumbnailname : ThumbnailName,
+            openrating
         }
         uploadVideo(body).then(response=>{
             if(response.data.success){
@@ -59,6 +63,9 @@ const VideoUploadModal=memo((props) =>{
     const onDescHandler =(evt)=>{
         const newContent = evt.editor.getData();
         setDescription(newContent);
+    }
+    const onRatingHandler=(value)=>{
+        setOpenrating(value);
     }
 
     return (
@@ -79,8 +86,14 @@ const VideoUploadModal=memo((props) =>{
                     <td colSpan="3">{calcUnit(FileInfo.size ? FileInfo.size : 0)}</td>
                 </tr>
                 <tr>
-                    <td>태그 추가</td>
-                    <td colSpan="3">{FileInfo.mimetype}</td>
+                    <td>공개</td>
+                    <td colSpan="3">
+                        <Select value={openrating} onChange={onRatingHandler} style={{width:'200px'}}>
+                                <Option value={2}>비공개</Option>
+                                <Option value={1}>친구에게만</Option>
+                                <Option value={0}>전체 공개</Option>
+                        </Select>    
+                    </td>
                 </tr>
                 <tr>
                     <td colSpan="4">

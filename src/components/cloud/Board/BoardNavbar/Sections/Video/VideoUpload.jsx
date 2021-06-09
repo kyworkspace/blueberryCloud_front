@@ -67,7 +67,7 @@ const VideoUpload=memo((props) =>{
             </Col>
             <Col xs={24} xl={12}>
                     {/* 썸네일 있을때만 렌더링*/}
-                    <div style={{width:'18vw'}}>
+                    <div>
                         <div style={{display:'flex',justifyContent : 'center',maxWidth:"250px",maxHeight:'280px'}}>
                         썸네일(Auto)
                         </div>

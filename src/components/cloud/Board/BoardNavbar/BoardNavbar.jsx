@@ -26,6 +26,7 @@ import VideoUploadModal from './Sections/Video/VideoUploadModal';
 import CloudSearch from './Sections/Search/CloudSearch';
 import {dateToString, FileSave, FileUpload} from '../../../../utils/commonMethod'
 import SweetAlert from 'sweetalert2';
+import { errorMessage, infoMessage } from '../../../../utils/alertMethod';
 
 const BoardNavbar= memo(()=> {
     const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents,refreshFileList,selectFileList} = useContext(CloudBoardContext);
@@ -107,10 +108,10 @@ const BoardNavbar= memo(()=> {
       fileUploadRef.current.click();
     }
     const onFileuploadHandler=(e)=>{
+      infoMessage('파일 업로드가 진행중입니다. 용량이 큰 경우 시간이 소요 될수 있습니다.')
       FileUpload(e.target.files)
       .then(res=>{
         if(res.data.success){
-
           let fileInfo = {...res.data.fileInfo};
           fileInfo.writer = user.userData._id;
           let newPath =  folderPath.split("/");
@@ -124,11 +125,11 @@ const BoardNavbar= memo(()=> {
               SweetAlert.fire({icon:'success',text:'업로드 성공'})    
               refreshFileList();
             }else{
-              SweetAlert.fire({icon:'error',text:'업로드 실패했어요.'})    
+              errorMessage('업로드 실패했어요.')
             }
           });
         }else{
-          SweetAlert.fire({icon:'error',text:'업로드 실패했어요.'})
+          errorMessage('업로드 실패했어요.')
         }
       })
     }

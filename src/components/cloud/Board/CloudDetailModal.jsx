@@ -1,4 +1,4 @@
-import { Descriptions, Select, Space, Tooltip } from 'antd';
+import { Descriptions, Divider, Select, Space, Tooltip } from 'antd';
 import React, { memo, useContext, useState } from 'react'
 import { Image } from 'react-bootstrap';
 import { Button, Col, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap';
@@ -189,20 +189,10 @@ const CloudDetailModal=memo((props)=> {
                                         <Option value={0}>전체 공개</Option>
                                     </Select>
                                 </Descriptions.Item>
-                                <Descriptions.Item label="설명" span={3}>
-                                <CKEditors
-                                        activeclassName="p10"
-                                        content={updatedDescription}
-                                        events={{
-                                            "change": onDescHandler
-                                        }}
-                                    />
-                                </Descriptions.Item>
                             </>
                             :
                             <>
                                 <Descriptions.Item label="공개" span={3}>{openratingConvert(openrating)}</Descriptions.Item>
-                                <Descriptions.Item label="설명" span={3}>{htmlParser(description)}</Descriptions.Item>
                                 <Descriptions.Item label="다운로드" span={3}>
                                     <Button onClick={onDownloadHandler} outline color="primary">다운로드</Button>
                                 </Descriptions.Item>
@@ -218,6 +208,20 @@ const CloudDetailModal=memo((props)=> {
                             </Descriptions.Item>
                         }
                     </Descriptions>
+                    <Divider orientation="left" plain>설명</Divider>
+                    { updateFlag ?
+                        <CKEditors
+                            activeclassName="p10"
+                            content={updatedDescription}
+                            events={{
+                                "change": onDescHandler
+                            }}
+                        />
+                    :
+                        <div style={{width:'100%' ,maxHeight:'200px' ,overflowY:'auto', border:'5px solid', borderColor:'#fafafa'}}>
+                            {htmlParser(description)}
+                        </div>
+                    }
                 </Col>
             </Row>
         </ModalBody>
