@@ -17,11 +17,13 @@ const CloudUseGraph=memo((props) =>{
   // const [commentsWidth, setCommentsWidth] = useState('100%');
 
   useEffect(() => {
-    getMainCommentsHandler();
-    // getMainFriendsListHandler();
-    getMainLikeHandler();
-    getMainNoticeHandler();
-  }, [])
+    if(user.isAuth){
+      getMainCommentsHandler();
+      // getMainFriendsListHandler();
+      getMainLikeHandler();
+      getMainNoticeHandler();
+    }
+  }, [user])
 
     //좋아요 가져오기
     const getMainLikeHandler=()=>{
