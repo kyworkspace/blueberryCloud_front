@@ -129,7 +129,7 @@ const ShareGraph=memo((props) =>{
                     <h5>이용 중인 CLOUD PLAN</h5>
                     </Col>
                     <Col xs="3" className="text-right">
-                        <Button onClick={onMoveToPlan}>PLAN 변경하기</Button>
+                        <Button onClick={onMoveToPlan}>PLAN</Button>
                     </Col>
                 </Row>
                 </CardHeader>

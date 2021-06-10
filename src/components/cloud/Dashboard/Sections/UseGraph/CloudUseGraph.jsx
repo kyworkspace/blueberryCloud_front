@@ -1,98 +1,152 @@
-import React, { memo } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import {Card, Col, Row, CardBody } from 'reactstrap'
-import ApexCharts from 'react-apexcharts'
-import { Currentlysale, Marketvalue } from './chartsData/apex-charts-data'
+import {LikeOutlined, MessageOutlined, ToolOutlined, UserOutlined} from '@ant-design/icons'
+import { getFriendsList, getMainCommentList, getMainLikeList } from '../../../../../utils/commonMethod';
+import { errorMessage } from '../../../../../utils/alertMethod';
+import { Empty, Space, Tooltip } from 'antd';
+import url from '../../../../../route/DevUrl';
 
 
-const CloudUseGraph=memo(() =>{
+const CloudUseGraph=memo((props) =>{
+  const {user} = props;
+  const [likeList, setLikeList] = useState([]);
+  const [friendsList, setFriendsList] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
+  const [noticeList, setNoticeList] = useState([]);
+
+  // const [commentsWidth, setCommentsWidth] = useState('100%');
+
+  useEffect(() => {
+    getMainCommentsHandler();
+    // getMainFriendsListHandler();
+    getMainLikeHandler();
+    getMainNoticeHandler();
+  }, [])
+
+    //좋아요 가져오기
+    const getMainLikeHandler=()=>{
+      getMainLikeList()
+      .then(list=>{
+        setLikeList(list)
+      })
+      .catch(err=>{
+        errorMessage('좋아요 정보를 불러오는데 실패하였습니다.');
+      })
+
+
+    }
+    // 댓글 가져오기
+    const getMainCommentsHandler=()=>{
+      getMainCommentList()
+      .then(list=>{
+        setCommentsList(list);
+      })
+      .catch(err=>{
+        errorMessage("댓글을 불러오던 중 오류가 발생하였습니다.")
+      })
+      
+    }
+
+    //친구 목록 가져오기
+    const getMainFriendsListHandler = ()=>{
+      getFriendsList(3).then(list=>{
+        setFriendsList(list)
+      })
+      .catch(err=>{
+        errorMessage('친구목록을 불러오는데 실패하였습니다.')
+      })
+    }
+    //공지사항 목록 가져오기
+    const getMainNoticeHandler =()=>{
+
+    }
+    //댓글쪽 부모 노트 크기 구하기 ref에 넣으면 됨
+    // const comDiv = useCallback(
+    //   (node) => {
+    //     console.log(node.getBoundingClientRect().width)
+    //     setCommentsWidth(node.getBoundingClientRect().width)
+    //   },
+    //   [],
+    // )
+  
     return (
         <Col xl="8 xl-100" className="dashboard-sec box-col-12">
             <Card className="earning-card">
               <CardBody className="p-0">
                 <Row className="m-0">
-                  <Col xl="3" className="earning-content p-0">
-                    <Row className="m-0 chart-left">
-                      <Col xl="12" className="p-0 left_side_earning">
-                        <h5>Dashboard</h5>
-                        <p className="font-roboto">{"Overview of last month"}</p>
-                      </Col>
-                      <Col xl="12" className="p-0 left_side_earning">
-                        <h5>{"$4055.56"} </h5>
-                        <p className="font-roboto">{"This Month Earning"}</p>
-                      </Col>
-                      <Col xl="12" className="p-0 left_side_earning">
-                        <h5>{"$1004.11"}</h5>
-                        <p className="font-roboto">{"This Month Profit"}</p>
-                      </Col>
-                      <Col xl="12" className="p-0 left_side_earning">
-                        <h5>{"90%"}</h5>
-                        <p className="font-roboto">{"This Month Sale"}</p>
-                      </Col>
-                      <Col xl="12" className="p-0 left-btn"><a className="btn btn-gradient" href="#javascript">Summary</a></Col>
-                    </Row>
-                  </Col>
-                  <Col xl="9" className="p-0">
-                    <div className="chart-right">
-                      <Row className="m-0 p-tb">
-                        <Col xl="8" md="8" sm="8" className="col-12 p-0">
-                          <div className="inner-top-left">
-                            <ul className="d-flex list-unstyled">
-                              <li>Daily</li>
-                              <li className="active">Weekly</li>
-                              <li>Monthly</li>
-                              <li>Yearly</li>
-                            </ul>
-                          </div>
-                        </Col>
-                        <Col xl="4" md="4" sm="4" className="col-12 p-0 justify-content-end">
-                          <div className="inner-top-right">
-                            <ul className="d-flex list-unstyled justify-content-end">
-                              <li>Online</li>
-                              <li>Store</li>
-                            </ul>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col xl="12">
-                          <CardBody className="p-0">
-                            <div className="current-sale-container">
-                              <ApexCharts id="chart-currently" options={Currentlysale.options} series={Currentlysale.series} type='area' height={240} />
-                            </div>
-                          </CardBody>
-                        </Col>
-                      </Row>
+                  <Col xl="4" className="earning-content p-0">
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
+                      <h3 className="font-primary" ><ToolOutlined /> 공지사항</h3>
                     </div>
-                    <Row className="border-top m-0">
-                      <Col xl="4" md="6" sm="6" className="pl-0">
-                        <div className="media p-0">
-                          <div className="media-left"><i className="icofont icofont-crown"></i></div>
-                          <div className="media-body">
-                            <h6>ReferralEarning</h6>
-                            <p>$5,000.20</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col xl="4" md="6" sm="6">
-                        <div className="media p-0">
-                          <div className="media-left bg-secondary"><i className="icofont icofont-heart-alt"></i></div>
-                          <div className="media-body">
-                            <h6>CashBalance</h6>
-                            <p>{"$2,657.21"}</p>
-                          </div>
-                        </div>
-                      </Col>
-                      <Col xl="4" md="12" className="pr-0">
-                        <div className="media p-0">
-                          <div className="media-left"><i className="icofont icofont-cur-dollar"></i></div>
-                          <div className="media-body">
-                            <h6>SalesForcasting</h6>
-                            <p>{"$9,478.50"}</p>
-                          </div>
-                        </div>
-                      </Col>
-                    </Row>
                   </Col>
+                  <Col xl="4" className="earning-content p-0">
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
+                      <h3 className="font-primary"><LikeOutlined /> 좋아요</h3>
+                    </div>
+                    <div style={{height:'430px'}}>
+                      { likeList.length > 0 ?
+                      <Space size={10} direction="vertical" className="p-10">
+                        {likeList.map((item,index)=>{
+                            return (
+                              <Space key={item.id}>
+                                <div style={{width:'50px', height:'50px'}}>
+                                  {item.file.mimetype.indexOf('video')>-1?
+                                  <img src={`${url}/${item.file.thumbnailpath}`} style={{width:'100%', height:'100%', borderRadius:'100%'}}/>
+                                  :
+                                  <img src={`${url}/${item.file.logicPath}`} style={{width:'100%', height:'100%',borderRadius:'100%'}} />
+                                  }
+                                </div>
+                                {item.user.name}님이 좋아요를 눌러주셨습니다.
+                              </Space>
+                            )
+                        })}
+                      </Space>
+                      :
+                      <div style={{height:'100%'}}>
+                        <Empty description="기록이 없습니다"/>
+                      </div>
+                      }
+                    </div>
+                  </Col>
+                  <Col xl="4" className="earning-content p-0">
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
+                      <h3 className="font-primary"><MessageOutlined /> 최근 댓글</h3>
+                    </div>
+                    <div style={{height:'430px',width:'100%'}}>
+                      { commentsList.length > 0 ?
+                      <Space size={10} direction="vertical" className="p-10">
+                        {commentsList.map((item,index)=>{
+                            return (
+                              <Space key={item.id}>
+                                <div style={{width:'50px', height:'50px'}}>
+                                  {item.file.mimetype.indexOf('video')>-1?
+                                  <img src={`${url}/${item.file.thumbnailpath}`} style={{width:'100%', height:'100%', borderRadius:'100%'}}/>
+                                  :
+                                  <img src={`${url}/${item.file.logicPath}`} style={{width:'100%', height:'100%',borderRadius:'100%'}} />
+                                  }
+                                </div>
+                                <Tooltip title={item.content}>
+                                  {item.user.name}님이 댓글을 작성해주셨습니다.
+                                </Tooltip>
+                              </Space>
+                            )
+                        })}
+                      </Space>
+                      :
+                      <div style={{height:'100%'}}>
+                        <Empty description="기록이 없습니다"/>
+                      </div>
+                      }
+                    </div>
+                  </Col>
+                  {/* <Col xl="3" className="earning-content p-0">
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
+                      <h3><UserOutlined /> 친구</h3>
+                    </div>
+                    <div>
+
+                    </div>
+                  </Col> */}
                 </Row>
               </CardBody>
             </Card>

@@ -9,7 +9,7 @@ const SNSNavbar=memo((props) =>{
             <Nav tabs className="border-tab tabs-scoial">
                 <NavItem className="nav" id="myTab" role="tablist">
                     <NavLink tag="a" href="#javascript" className={activeTab === '1' ? 'active' : ''} onClick={() => setActiveTab('1')}>
-                        Timline
+                        TimeLine
                 </NavLink>
                 </NavItem>
                 <NavItem className="nav" id="myTab" role="tablist">

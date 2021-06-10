@@ -5,7 +5,7 @@ export const MENUITEMS = [
         menucontent:"Save Your Memories",
         Items:[
             {
-                title: 'Dashboard', icon: Home, type: 'sub', active: false, children: [
+                title: 'CLOUD', icon: Home, type: 'sub', active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/cloud/dashboard`, title: 'CLOUD PLAN', type: 'link' },
                     { path: `${process.env.PUBLIC_URL}/cloud/viewer/all`, title: '모든 파일', type: 'link' },
                     { path: `${process.env.PUBLIC_URL}/cloud/viewer/image`, title: 'Pictures', type: 'link' },
@@ -38,9 +38,10 @@ export const MENUITEMS = [
         menucontent:"If you need Technical Support or want to change Plan, Click this",
         Items:[
             {
-                title: '개발자 정보', icon: Headphones, type: 'sub',active: false, children: [
+                title: '개발 정보', icon: Headphones, type: 'sub',active: false, children: [
                         { title: 'Contact Me', type: 'link', path: `${process.env.PUBLIC_URL}/support/developerInfo` },
                         { title: '건의함', type: 'link', path: `${process.env.PUBLIC_URL}/support/suggestion` },
+                        { title: '공지사항', type: 'link', path: `${process.env.PUBLIC_URL}/support/notice` },
                 ]
             }
         ]          

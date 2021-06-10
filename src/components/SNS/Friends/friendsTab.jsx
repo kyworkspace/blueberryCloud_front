@@ -55,10 +55,8 @@ const FriendsTab = () => {
     const onFriendsList = useCallback(
         (level) => {
             getFriendsList(level)
-            .then(response=>{
-                if(response.data.success){
-                    setUserList(response.data.list);
-                }
+            .then(list=>{
+                setUserList(list);
             })
             .catch(err=>{
                 errorMessage("통신 중 오류가 발생하였습니다. 새로고침 후 다시 시도해 주세요");
@@ -71,8 +69,8 @@ const FriendsTab = () => {
         setTabType(num)
         switch (num) {
             case 0: return getFriendList(); //전체 목록
-            case 1: onFriendsList(3); break; //친구 목록
-            case 2: break; //친구 신청 목록
+            case 1: return onFriendsList(3); //친구 목록
+            case 2: return onFriendsList(2); //친구 신청 목록
             case 3: return onFriendReceiveList(); //친구 요청 목록
             case 4: return onFriendsList(1); //팔로워 목록
             case 5: break;
@@ -83,12 +81,12 @@ const FriendsTab = () => {
     }
     const renderUserCard =(user)=>{
         switch (tabType) {
-            case 0: return <AllFriends user={user} key={user._id}/>
-            case 1: return <AllFriends user={user} key={user._id}/>
-            case 2: return <AllFriends user={user} key={user._id}/>
+            case 0: return <AllFriends user={user} key={user._id}/> //전체
+            case 1: return <AllFriends user={user} key={user._id}/> //친구목록
+            case 2: return <AllFriends user={user} key={user._id}/> //친구신청 목록
             case 3: return <ReceivedFriends user={user} key={user._id} onFriendReceiveList={onFriendReceiveList}/>
-            case 4: return <AllFriends user={user} key={user._id}/>
-            case 5: return <AllFriends user={user} key={user._id}/>
+            case 4: return <AllFriends user={user} key={user._id}/> //팔로워 목록
+            case 5: return <AllFriends user={user} key={user._id}/> //팔로잉 목록
             default:
                 return <AllFriends user={user} key={user._id}/>
         }

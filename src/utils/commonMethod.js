@@ -224,7 +224,7 @@ export const dateToString = (dateTime, Hyphen) => {
  * ***/
 export const dateTimeToString = (arg, limit) => {
     let date = new Date(arg);
-    date.setHours(date.getHours() - 9);
+    date.setHours(date.getHours());
     let year = date.getFullYear();
     let month = timeConvert(date.getMonth() + 1);
     let day = timeConvert(date.getDate());
@@ -362,7 +362,11 @@ export const getFriendsList = (level) => {
     return new Promise((resolve, reject) => {
         axios.post(`${FRIEND_API}/list`, body)
             .then(response => {
-                resolve(response)
+                if (response.data.success) {
+                    resolve(response.data.list)
+                } else {
+                    throw { success: false }
+                }
             })
             .catch(err => {
                 reject(err);
@@ -390,7 +394,6 @@ export const getLikes = (body) => {
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data.list);
-
                 } else {
                     reject({ success: false })
                 }
@@ -478,6 +481,7 @@ export const unDislike = (body) => {
             })
     })
 }
+
 /************** 댓글 ******************/
 export const getCommentList = (body) => {
     return new Promise((resolve, reject) => {
@@ -548,6 +552,38 @@ export const getInUseSize = () => {
                     resolve(response.data.totalSize);
                 } else {
                     throw response.data;
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+//메인 화면 최근 좋아요 가져옴
+export const getMainLikeList = () => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${LIKE_API}/main/list`)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject({ success: false })
+            })
+    })
+}
+// 최근 댓글 가져오기
+export const getMainCommentList = () => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${COMMENT_API}/main/list`)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list);
+                } else {
+                    reject({ success: false })
                 }
             })
             .catch(err => {

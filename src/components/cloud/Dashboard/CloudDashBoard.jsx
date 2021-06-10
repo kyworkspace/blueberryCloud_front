@@ -17,7 +17,7 @@ const CloudDashBoard = memo((props) =>{
           <Container fluid={true}>
             <Row className="second-chart-list third-news-update">
               <Status/>
-              <CloudUseGraph/>
+              <CloudUseGraph user = {user.userData}/>
               <ShareGraph cloudSize = {user.userData.cloudSize}/>
             </Row>
           </Container>   
