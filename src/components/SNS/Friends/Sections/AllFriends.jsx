@@ -3,10 +3,10 @@ import { Row, Col, Card, CardHeader, CardFooter, Media, Input, CardBody } from '
 import { Button, Space, Tooltip } from 'antd';
 import url from '../../../../route/DevUrl';
 import { SmileOutlined, UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons';
-import { setFriendAdd } from '../../../../utils/commonMethod';
-import { errorMessage, successMessage } from '../../../../utils/alertMethod';
+import { setFriendAdd,setFriendDelete } from '../../../../utils/commonMethod';
+import { confirmMessage, errorMessage, successMessage } from '../../../../utils/alertMethod';
 const AllFriends=memo((props) =>{
-    const {user} = props;
+    const {user,refreshList} = props;
 
     const onFriendAdd =(target)=>{
         let body = {
@@ -23,18 +23,19 @@ const AllFriends=memo((props) =>{
         })
     }
     const onFriendDelete =(target)=>{
-        let body = {
-            target
-        }
-        // setFriendAdd(body)
-        // .then(response=>{
-        //     if(response.data.success){
-        //         successMessage('친구 신청을 완료 했습니다.')
-        //     }
-        // })
-        // .catch(err=>{
-        //     errorMessage("친구 신청중 오류가 발생하였습니다.")
-        // })
+        confirmMessage("해당 친구를 목록에서 삭제합니다.","실행","취소",()=>{
+            let body = {
+                target
+            }
+            setFriendDelete(body)
+            .then(success=>{
+                successMessage('친구 목록에서 삭제 됩니다.')
+                refreshList();
+            })
+            .catch(err=>{
+                errorMessage("통신 중 오류가 발생하였습니다.");
+            })
+        })
     }
 
     return (

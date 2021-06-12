@@ -55,7 +55,6 @@ const TimelineTab = () => {
             </Col>
             <Col xl="6 xl-60 box-col-8" lg="12" md="7">
                 <Row >
-                
                     <div className="withoutScroll">
                     <InfiniteScroll
                         dataLength = {20}
@@ -68,6 +67,7 @@ const TimelineTab = () => {
                             <b>모든 목록을 불러왔습니다.</b>
                         </p>
                         }
+                        style={{maxWidth:'100%'}}
                     >
                     {
                         timeLineList.length > 0

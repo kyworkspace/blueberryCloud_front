@@ -50,7 +50,7 @@ const FolderCreateModal=memo((props) =>{
     }
     return (
         <>
-        <Modal isOpen={isOpen} style={{minWidth:'600px'}}>
+        <Modal isOpen={isOpen} style={{width:'600px',maxWidth:'90%'}}>
         <ModalHeader toggle={onCloseModal}>새폴더 생성</ModalHeader>
         <ModalBody>
                     <Label >폴더명</Label>

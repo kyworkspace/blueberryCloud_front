@@ -48,11 +48,7 @@ const MainComment=memo((props) =>{
                 <Media className="img-50 img-fluid m-r-20 rounded-circle" alt="" src={`${url}/${writer.profileImage}`} style={{height:'50px'}}/>
                 <Media body>
                     <span className="f-w-600">{writer.name} 
-                        <span style={{marginLeft:'1%'}}>
-                            {dateTimeToString(item.createdAt,'ss') }
-                            {/* <i className="fa fa-reply font-primary"></i> */}
-                        </span>
-                        {
+                    {
                             !updateState && writer._id === user.userData._id && (
                                 <>
                                 <span style={{marginLeft:'1%'}}>
@@ -85,7 +81,10 @@ const MainComment=memo((props) =>{
                             </>
                             )
                         }
-                        
+                        <span style={{marginLeft:'1%'}} className="d-none d-sm-block d-md-block">
+                            {dateTimeToString(item.createdAt,'ss') }
+                            {/* <i className="fa fa-reply font-primary"></i> */}
+                        </span>
                      </span>
                      {
                          updateState ? 

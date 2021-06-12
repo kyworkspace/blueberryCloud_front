@@ -338,6 +338,22 @@ export const setFriendAdd = (body) => {
             })
     })
 }
+// 친구 삭제
+export const setFriendDelete = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${FRIEND_API}/delete`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.success)
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
 //친구 요청 목록
 export const getFriendReceiveList = () => {
     return new Promise((resolve, reject) => {

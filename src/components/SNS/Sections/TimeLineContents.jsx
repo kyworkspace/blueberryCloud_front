@@ -163,22 +163,20 @@ function TimeLineContents(props){
                             <Media className="img-fluid" alt="" 
                             // 사진 주소
                                 src={`${url}/${contents.logicPath}`} 
-                                style={{maxWidth:'100%', maxHeight:'550px'}}
+                                style={{maxWidth:'100%'}}
                             />
                         </div>
                         :
                         <video 
-                            style={{maxWidth:'100%', maxHeight:'550px'}}
+                            style={{maxWidth:'100%'}}
                             src={`${url}/${contents.logicPath}`} 
                             controls
                         />
                     }
                     
                     <div className="timeline-content">
-                        <div style={{width:'100%', maxHeight:'200px', whiteSpace:'nowrap', overflow:'auto'}} className="withoutScroll">
-                            <p>
+                        <div style={{maxHeight:'200px', overflow:'auto'}} className="withoutScroll">
                                 {htmlParser(contents.description)}
-                            </p>
                         </div>
                         <Divider/>
                         <div className="like-content">
@@ -214,35 +212,56 @@ function TimeLineContents(props){
                             <Col xs={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onLikeHandler}>
+                                        <Row>
                                         <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                            <Col>
                                             <ThumbsUp 
                                                 fill={LikeAction ==="liked" ? "blue" :"none"}
                                                 fillOpacity = {0.5}
                                                 color="blue"
-                                            />좋아요
+                                            />
+                                            </Col>
+                                            <Col md={{hidden:true}} className="d-none d-sm-block d-md-block" >
+                                                좋아요
+                                            </Col>
                                         </div>
+                                        </Row>
                                     </Button>
                                 </div>
                             </Col>
                             <Col xs={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onDisLikeHandler}>
-                                        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                            <ThumbsDown
-                                                fill={DislikeAction ==="disliked" ? "red" :"none"}
-                                                fillOpacity = {0.5}
-                                                color="red"
-                                            />싫어요
-                                        </div>
+                                        <Row>
+                                            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                                <Col>
+                                                    <ThumbsDown
+                                                        fill={DislikeAction ==="disliked" ? "red" :"none"}
+                                                        fillOpacity = {0.5}
+                                                        color="red"
+                                                    />
+                                                </Col>
+                                                <Col md={{hidden:true}} className="d-none d-sm-block d-md-block" >
+                                                    싫어요
+                                                </Col>
+                                            </div>
+                                        </Row>
                                     </Button>
                                 </div>
                             </Col>
                             <Col xs={4}>
                                 <div style={{display:'flex',justifyContent:'center'}}>
                                     <Button color="transparent" onClick={onReplyHandler}>
-                                        <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                                            <MessageSquare/>댓글 달기
-                                        </div>
+                                        <Row>
+                                            <div style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
+                                                <Col>
+                                                    <MessageSquare/>
+                                                </Col>
+                                                <Col md={{hidden:true}} className="d-none d-sm-block d-md-block" >
+                                                댓글 달기
+                                                </Col>
+                                            </div>
+                                        </Row>
                                     </Button>
                                 </div>
                             </Col>

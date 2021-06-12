@@ -24,10 +24,14 @@ const ReceivedFriends=memo((props) =>{
     return (
         <Col md="6" xl="4 box-col-6 xl-50" >
             <Card className="custom-card">
-                <CardHeader>
+                {/* <CardHeader>
                     <Media body className="img-fluid" src={ user.backgroundImage && `${url}/${user.backgroundImage}`} alt="" />
-                </CardHeader>
-                <div className="card-profile">
+                </CardHeader> */}
+                <div className="card-profile"style={{
+                    backgroundImage:`url(${url}/${user.backgroundImage})` , backgroundPosition:"center", backgroundSize:'cover', backgroundRepeat:'no-repeat'
+                    , height:'200px'
+                    , display:'grid', alignItems:'flex-end', justifyContent:'center'
+                    }}>
                     <Media body className="rounded-circle" src={`${url}/${user.profileImage}`} alt="" />
                 </div>
                 <div style={{display:'flex',justifyContent:'center', marginTop:'10px', marginBottom:'10px'}}>

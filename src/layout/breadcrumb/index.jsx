@@ -9,10 +9,10 @@ const Breadcrumbs = (props) => {
       <Container fluid={true}>
         <div className="page-title">
           <Row>
-            <Col xs="6">
+            <Col xs="4">
               <h3>{props.title}</h3>
             </Col>
-            <Col xs="6">
+            <Col xs="8">
               <Breadcrumb>
                 <BreadcrumbItem><Link to={`${process.env.PUBLIC_URL}/dashboard/default`}><Home /></Link></BreadcrumbItem>
                 <BreadcrumbItem>{props.parent}</BreadcrumbItem>

@@ -1,4 +1,4 @@
-import React, { createContext, Fragment, useContext, useEffect, useRef, useState } from 'react'
+import React, { createContext, Fragment, memo, useContext, useEffect, useRef, useState } from 'react'
 import BoardNavbar from './BoardNavbar/BoardNavbar'
 import Breadcrumb from '../../../layout/breadcrumb'
 import {Container,Col,Card,CardBody,Nav} from 'reactstrap';
@@ -28,7 +28,7 @@ export const CloudBoardContext=createContext({
     selectFileList : ()=>{}
 })
 
-const  CloudViewer =(props) =>{
+const  CloudViewer =memo((props) =>{
     const theme = props.match.params.theme;
     const [Files, setFiles] = useState([]);
     const [SelectedFile, setSelectedFile] = useState({});
@@ -45,6 +45,8 @@ const  CloudViewer =(props) =>{
     const [total, setTotal]= useState(1);
     // 검색
     const [searchContents, setSearchContents] = useState({})
+    //로딩중
+    const [Loading, setLoading] = useState(false)
 
     useEffect(() => {
         selectFileList(1);
@@ -59,7 +61,6 @@ const  CloudViewer =(props) =>{
     //폴더일때 상세 -> 상세 폴더로 경로 이동
     const openFolder = (path)=>{
         dispatch(setFolderRoute(path))
-        selectFileList(1)
     }
     //목록 리로딩
     const refreshFileList=()=>{
@@ -67,6 +68,7 @@ const  CloudViewer =(props) =>{
     }
     //페이징
     const selectFileList =(page)=>{
+        setLoading(true);
         let body ={
             theme : theme,
             limit : limit,
@@ -86,6 +88,14 @@ const  CloudViewer =(props) =>{
             }else{
                 toast.error("불러오기 실패ㅠㅠ", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
             }
+            setLoading(false);
+        })
+        .catch(()=>{
+            toast.error("불러오기 실패ㅠㅠ", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
+            setLoading(false);
+        })
+        .finally(()=>{
+            setLoading(false);
         })
     }
     //파일목록 그리기
@@ -144,7 +154,15 @@ const  CloudViewer =(props) =>{
                     <div className="file-content">
                     <Card>
                     <BoardNavbar/>
-                    { Files.length > 0 ?
+                    {Loading ? 
+                        <CardBody className="file-manager" style={{height:'700px'}}>
+                            <h6 className="sub-title mb-0 text-center">파일 목록을 가져오는 중 입니다.</h6>
+                            <div className="loader-box">
+                                <div className="loader-4"></div>
+                            </div>
+                        </CardBody>
+                    :
+                        Files.length > 0 ?
                         <>
                             <CardBody className="file-manager">
                                 <ul className="files">
@@ -162,7 +180,6 @@ const  CloudViewer =(props) =>{
                                 <Empty description="파일이 없어요. 새로운 파일을 등록해주세요"/>
                         </CardBody>
                     }
-                        
                     </Card>
                     </div>
                 </Col>
@@ -171,6 +188,6 @@ const  CloudViewer =(props) =>{
         </CloudBoardContext.Provider>
         </Fragment>
     )
-}
+})
 
 export default CloudViewer

@@ -7,6 +7,7 @@ import { errorMessage, successMessage } from '../../../utils/alertMethod';
 import AllFriends from './Sections/AllFriends';
 import ReceivedFriends from './Sections/ReceivedFriends';
 import { useSelector } from 'react-redux';
+import FriendNavbar from './Sections/FriendNavbar';
 
 
 const FriendsTab = () => {
@@ -19,12 +20,13 @@ const FriendsTab = () => {
     const user = useSelector(state => state.user);
 
     useEffect(() => {
-        getFriendList();
+        getFriendList(null);
       },[])
 
-    const getFriendList = ()=>{
+    const getFriendList = (value)=>{
+        setSearchTerm(value)
         let body={
-            searchTerm,
+            searchTerm : value,
         }
         getUserList(body)
         .then(response=>{
@@ -81,12 +83,12 @@ const FriendsTab = () => {
     }
     const renderUserCard =(user)=>{
         switch (tabType) {
-            case 0: return <AllFriends user={user} key={user._id}/> //전체
-            case 1: return <AllFriends user={user} key={user._id}/> //친구목록
-            case 2: return <AllFriends user={user} key={user._id}/> //친구신청 목록
+            case 0: return <AllFriends user={user} key={user._id} refreshList={()=>getFriendList()}/> //전체
+            case 1: return <AllFriends user={user} key={user._id} refreshList={()=>onFriendsList(3)}/> //친구목록
+            case 2: return <AllFriends user={user} key={user._id} refreshList={()=>onFriendsList(2)}/> //친구신청 목록
             case 3: return <ReceivedFriends user={user} key={user._id} onFriendReceiveList={onFriendReceiveList}/>
-            case 4: return <AllFriends user={user} key={user._id}/> //팔로워 목록
-            case 5: return <AllFriends user={user} key={user._id}/> //팔로잉 목록
+            case 4: return <AllFriends user={user} key={user._id} refreshList={()=>onFriendsList(1)}/> //팔로워 목록
+            case 5: return <AllFriends user={user} key={user._id} refreshList={()=>{}}/> //팔로잉 목록
             default:
                 return <AllFriends user={user} key={user._id}/>
         }
@@ -96,7 +98,8 @@ const FriendsTab = () => {
         <Fragment>
             <Card>
             <CardHeader>
-            <Space>
+                <FriendNavbar getFriendList={getFriendList} listHandler={onTabTypeHandler} setSearchTerm={setSearchTerm}/>
+            {/* <Space>
                 <div>
                     친구 찾기
                 </div>
@@ -116,7 +119,7 @@ const FriendsTab = () => {
                     <Button size="large" onClick={()=>onTabTypeHandler(3)}>친구 요청</Button>
                     <Button size="large" onClick={()=>onTabTypeHandler(4)}>팔로워 목록</Button>
                     <Button size="large" onClick={()=>onTabTypeHandler(5)}>팔로잉 목록</Button>
-            </Space>
+            </Space> */}
             </CardHeader>
             <CardBody>
                 <Row>
