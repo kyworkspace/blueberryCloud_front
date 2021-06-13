@@ -1,15 +1,9 @@
 import React, { Fragment, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import {Row,Col,Card,CardBody,Button,Media,InputGroup, InputGroupAddon,Input} from 'reactstrap';
-import one from "../../../assets/images/user/1.jpg";
-import timeline1 from "../../../assets/images/social-app/timeline-1.png";
-import timeline2 from "../../../assets/images/social-app/timeline-2.png";
-import { MoreVertical } from 'react-feather';
 import LeftBar from '../SideBar/leftBar';
 import RightBar from '../SideBar/rightBar';
-import { ELANA,JasonBorne,AlexendraDhadio,OliviaJon,IssaBell,MoreCommnets } from "../../../constant";
 import TimeLineContents from '../Sections/TimeLineContents';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { SNSContext } from '..';
 import { getTimeLineList } from '../../../utils/commonMethod';
 import { errorMessage } from '../../../utils/alertMethod';
 import { useSelector } from 'react-redux';
@@ -57,15 +51,19 @@ const TimelineTab = () => {
                 <Row >
                     <div className="withoutScroll">
                     <InfiniteScroll
-                        dataLength = {20}
+                        dataLength = {timeLineList.length}
                         next={getSNSList}
                         hasMore={hasMoreItem}
-                        loader={<h4>다음 목록을 가져오는 중입니다.</h4>}
+                        loader={
+                            <div style={{width:'100%',display:'grid',justifyContent:'center'}}>
+                                <h4>다음 목록을 가져오는 중입니다.</h4>
+                            </div>
+                        }
                         height={3000}
                         endMessage={
-                        <p style={{ textAlign: "center" }}>
-                            <b>모든 목록을 불러왔습니다.</b>
-                        </p>
+                            <div style={{width:'100%',display:'grid',justifyContent:'center'}}>
+                                <b>모든 목록을 불러왔습니다.</b>
+                            </div>
                         }
                         style={{maxWidth:'100%'}}
                     >

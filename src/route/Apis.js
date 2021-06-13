@@ -7,3 +7,4 @@ export const FRIEND_API = '/api/friends';
 export const LIKE_API = '/api/like';
 export const COMMENT_API = '/api/comment';
 export const DASHBOARD_API = '/api/dashboard';
+export const NOTICE_API = '/api/notice';

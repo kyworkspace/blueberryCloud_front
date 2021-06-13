@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
-import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API, LIKE_API, COMMENT_API, DASHBOARD_API } from "../route/Apis";
+import { CLOUD_API, PROFILE_API, SNS_API, USER_API, FRIEND_API, LIKE_API, COMMENT_API, DASHBOARD_API, NOTICE_API } from "../route/Apis";
 import url from '../route/DevUrl';
 import { errorMessage } from "./alertMethod";
 const FileDownloadlib = require('js-file-download');
@@ -600,6 +600,69 @@ export const getMainCommentList = () => {
                     resolve(response.data.list);
                 } else {
                     reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+/***************** 공지사항 *********************/
+//공지사항 목록
+export const getNoticeList = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${NOTICE_API}/list`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list)
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch({ success: false })
+    })
+}
+//공지사항 등록
+export const uploadNotice = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${NOTICE_API}/upload`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.success)
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+//공지사항 삭제
+export const deleteNotice = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${NOTICE_API}/delete`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.success);
+                } else {
+                    reject({ success: false })
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+//공지사항 수정
+export const updateNotice = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${NOTICE_API}/update`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.success);
+                } else {
+                    reject({ success: false });
                 }
             })
             .catch(err => {

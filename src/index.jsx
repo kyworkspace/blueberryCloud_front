@@ -10,6 +10,8 @@ import { CSSTransition,TransitionGroup } from 'react-transition-group'
 import {routes} from './route';
 import ConfigDB from './data/customizer/config'
 import Auth from './hoc/auth'
+//suneditor
+import 'suneditor/dist/css/suneditor.min.css'; // Import Sun Editor's CSS File
 //Login-page
 import LoginPage from './components/Login/login';
 import RegisterPage from './components/Login/register';
@@ -23,7 +25,9 @@ import SNSTimeline from './components/SNS/index';
 import UserInformation from './components/Account/UserInfomation/UserInformation';
 //axios
 import axios from 'axios';
+//notice
 import NoticeMain from './components/Notice/NoticeMain';
+import NoticeDetailModal from './components/Notice/NoticeDetailModal';
 
 //axios
 // axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "http://localhost:5000/"
@@ -55,27 +59,28 @@ const Root = (props) =>  {
             <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
                 return (<Redirect to={`${process.env.PUBLIC_URL}/cloud/dashboard`} />)
             }} />
-          <TransitionGroup>
-          <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,true)}/>
-          <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
-          <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline`} component={Auth(SNSTimeline,true)}/>
-          <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo`} component={Auth(UserInformation,true)}/>
-          <Route  exact   path={`${process.env.PUBLIC_URL}/support/notice`} component={Auth(NoticeMain,null)}/>
-            {/* {routes.map(({ path, Component }) => (
-                <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>
-                    {({ match }) => (
-                        <CSSTransition 
-                        in={match != null}
-                        timeout={100}
-                        classNames={anim} 
-                        unmountOnExit
-                        >
-                        <Component {...props}/>
-                        </CSSTransition> 
-                    )}
-                </Route>
-                ))} */}
-          </TransitionGroup>
+            <TransitionGroup>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,true)}/>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline`} component={Auth(SNSTimeline,true)}/>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo`} component={Auth(UserInformation,true)}/>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/support/notice`} component={Auth(NoticeMain,null)}/>
+                {/* {routes.map(({ path, Component }) => (
+                    <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>
+                        {({ match }) => (
+                            <CSSTransition 
+                            in={match != null}
+                            timeout={100}
+                            classNames={anim} 
+                            unmountOnExit
+                            >
+                            <Component {...props}/>
+                            </CSSTransition> 
+                        )}
+                    </Route>
+                    ))} */}
+            </TransitionGroup>
+            <NoticeDetailModal/>
           </App>
         </Switch>
         </BrowserRouter>

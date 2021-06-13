@@ -1,10 +1,12 @@
 import React, { memo, useCallback, useEffect, useState } from 'react'
 import {Card, Col, Row, CardBody } from 'reactstrap'
 import {LikeOutlined, MessageOutlined, ToolOutlined, UserOutlined} from '@ant-design/icons'
-import { getFriendsList, getMainCommentList, getMainLikeList } from '../../../../../utils/commonMethod';
+import { getFriendsList, getMainCommentList, getMainLikeList, getNoticeList } from '../../../../../utils/commonMethod';
 import { errorMessage } from '../../../../../utils/alertMethod';
-import { Empty, Space, Tooltip } from 'antd';
+import { Empty, Space, Tooltip,Divider } from 'antd';
 import url from '../../../../../route/DevUrl';
+import { useDispatch } from 'react-redux';
+import { setNoticeDetailModal } from '../../../../../redux/notice/_actions/notice_actions';
 
 
 const CloudUseGraph=memo((props) =>{
@@ -14,7 +16,7 @@ const CloudUseGraph=memo((props) =>{
   const [commentsList, setCommentsList] = useState([]);
   const [noticeList, setNoticeList] = useState([]);
 
-  // const [commentsWidth, setCommentsWidth] = useState('100%');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(user.isAuth){
@@ -60,7 +62,25 @@ const CloudUseGraph=memo((props) =>{
     }
     //공지사항 목록 가져오기
     const getMainNoticeHandler =()=>{
-
+      const body = {
+        limit : 8,
+        skip : 0,
+      }
+      getNoticeList(body)
+      .then(list=>{
+        setNoticeList(list);
+      })
+      .catch(err=>{
+        errorMessage("공지사항을 불러오는제 오류가 발생하였습니다.")
+      })
+    };
+    //공지사항 상세 보기
+    const onNoticeDetail=(notice)=>{
+      const body={
+        ...notice,
+        show:true
+      }
+      dispatch(setNoticeDetailModal(body))
     }
     //댓글쪽 부모 노트 크기 구하기 ref에 넣으면 됨
     // const comDiv = useCallback(
@@ -80,12 +100,40 @@ const CloudUseGraph=memo((props) =>{
                     <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
                       <h3 className="font-primary" ><ToolOutlined /> 공지사항</h3>
                     </div>
+                    <div style={{height:'430px', overflowY:'hidden'}} >
+                    <Divider/>
+                      { noticeList.length > 0 ?
+                      <Row style={{overflow:'hidden',width:'100%', display:'grid', justifyContent:'center'}}>
+                        {noticeList.map((item,index)=>{
+                            return (
+                              <Col xs={12} key={item._id} onClick={()=>onNoticeDetail(item)} style={{cursor:'pointer'}}>
+                                <Space>
+                                  <div style={{height:'50px', maxWidth:'300px', whiteSpace:'nowrap', overflow:'hidden',textOverflow:'ellipsis'}}>
+                                    <div style={{whiteSpace:'nowrap', overflow:'hidden',textOverflow:'ellipsis'}}>
+                                      {item.title}
+                                    </div>
+                                    <div style={{whiteSpace:'nowrap', overflow:'hidden',textOverflow:'ellipsis'}}>
+                                      {item.subTitle}
+                                    </div>
+                                  </div>
+                                </Space>
+                                <Divider/>
+                              </Col>
+                            )
+                        })}
+                      </Row>
+                      :
+                      <div style={{height:'100%'}}>
+                        <Empty description="기록이 없습니다"/>
+                      </div>
+                      }
+                    </div>
                   </Col>
                   <Col xl="4" className="earning-content p-0">
                     <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
                       <h3 className="font-primary"><LikeOutlined /> 좋아요</h3>
                     </div>
-                    <div style={{height:'430px'}}>
+                    <div style={{height:'430px', overflowY:'hidden'}} >
                       { likeList.length > 0 ?
                       <Space size={10} direction="vertical" className="p-10">
                         {likeList.map((item,index)=>{
@@ -114,7 +162,7 @@ const CloudUseGraph=memo((props) =>{
                     <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}}>
                       <h3 className="font-primary"><MessageOutlined /> 최근 댓글</h3>
                     </div>
-                    <div style={{height:'430px',width:'100%'}}>
+                    <div style={{height:'430px',width:'100%',overflowY:'hidden'}} >
                       { commentsList.length > 0 ?
                       <Space size={10} direction="vertical" className="p-10">
                         {commentsList.map((item,index)=>{

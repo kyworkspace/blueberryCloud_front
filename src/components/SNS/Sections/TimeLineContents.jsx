@@ -175,7 +175,7 @@ function TimeLineContents(props){
                     }
                     
                     <div className="timeline-content">
-                        <div style={{maxHeight:'200px', overflow:'auto'}} className="withoutScroll">
+                        <div style={{maxHeight:'200px', overflow:'auto'}}>
                                 {htmlParser(contents.description)}
                         </div>
                         <Divider/>
