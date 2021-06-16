@@ -7,15 +7,18 @@ import { useSelector } from 'react-redux'
 import { pictureInsert } from '../../../../../../utils/commonMethod'
 import url from '../../../../../../route/DevUrl';
 import { Alert, Col, Divider, Row, Space, Spin } from 'antd'
-import { errorMessage } from '../../../../../../utils/alertMethod'
+import { errorMessage, infoMessage } from '../../../../../../utils/alertMethod'
 
 const PictureUpload=(props) =>{
     const [Files, setFiles] = useState([])
     const [fileInformation, setFileInformation] = useState({});
     const [informationModalViewer, setinformationModalViewer] = useState(false);
-    const {loading, setLoading,refreshFunction} = props;
+    const {loading, setLoading,refreshFunction,allOpenrating} = props;
 
     const onDropHandler = async (files)=>{
+        if(Files.length + files.length > 20){
+            return infoMessage("최대 20장씩 가능합니다.")
+        }
         setLoading(true);
         const uploadFileList = await Promise.all(
             files.map(file=>{
@@ -114,7 +117,7 @@ const PictureUpload=(props) =>{
                 
             </div>
             </Col>
-        {informationModalViewer && <PictureInfomationModal isOpen={informationModalViewer} ModalHandler={setinformationModalViewer} picture={fileInformation} pictureHandler={onPictureDescriptionHandler}/>}
+        {informationModalViewer && <PictureInfomationModal isOpen={informationModalViewer} ModalHandler={setinformationModalViewer} picture={fileInformation} pictureHandler={onPictureDescriptionHandler} allOpenrating={allOpenrating}/>}
         </Row>
     )
 }

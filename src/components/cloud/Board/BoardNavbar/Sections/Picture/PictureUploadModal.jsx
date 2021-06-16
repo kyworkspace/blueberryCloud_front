@@ -7,6 +7,8 @@ import { CLOUD_API } from '../../../../../../route/Apis';
 import { CloudBoardContext } from '../../../CloudViewer';
 import { toast } from 'react-toastify';
 import { dateToString } from '../../../../../../utils/commonMethod';
+import { Space, Select } from 'antd';
+const {Option} = Select;
 
 const PictureUploadModal=memo((props)=> {
 
@@ -14,6 +16,7 @@ const PictureUploadModal=memo((props)=> {
     const folderPath = useSelector(state => state.folder.path)
     const {refreshFileList} = useContext(CloudBoardContext)
     const {buttonLabel,className} = props;
+    const [allOpenrating, setAllOpenrating] = useState(null)
     
     const [Image, setImage] = useState([]);
     const [Loading, setLoading] = useState(false);
@@ -27,6 +30,9 @@ const PictureUploadModal=memo((props)=> {
           return;
         }
         Image.map(item=>{
+          if(allOpenrating){
+            item.openrating = allOpenrating;
+          }
           item.writer = user.userData._id;
           // 경로 앞부분 수정
           let newPath =  folderPath.split("/");
@@ -50,12 +56,28 @@ const PictureUploadModal=memo((props)=> {
     };
     const updateImages = (newImages) => {
       setImage(newImages);
-  }
+    }
+    const onAllOpenratingHandler = (value)=>{
+      setAllOpenrating(value);
+    }
+
     return (
       <Modal isOpen={props.isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
         <ModalHeader toggle={onCloseModal}>사진 업로드</ModalHeader>
         <ModalBody>
-          <PictureUpload refreshFunction={updateImages} loading={Loading} setLoading={setLoading}/>
+          <Space direction="vertical">
+            <Space size={10} style={{width:'100%'}}>
+              공개 여부 일괄적용
+              <Select value={allOpenrating} onChange={onAllOpenratingHandler} style={{width:'150px'}}>
+                  <Option value={null}>설정안함</Option>
+                  <Option value={2}>비공개</Option>
+                  <Option value={1}>친구에게만</Option>
+                  <Option value={0}>전체 공개</Option>
+              </Select>
+            </Space>
+          <PictureUpload refreshFunction={updateImages} loading={Loading} setLoading={setLoading} allOpenrating={allOpenrating}/>
+          </Space>
+          
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={onConfirmModal} disabled={Loading}>저장</Button>{' '}
