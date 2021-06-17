@@ -8,6 +8,7 @@ import PhotosTab from './photosTab';
 import { useSelector } from 'react-redux';
 import url from '../../route/DevUrl';
 import SNSNavbar from './Sections/SNSNavbar';
+import { Link, Route } from 'react-router-dom';
 
 export const SNSContext = createContext({
     activeTab : '0',
@@ -16,6 +17,7 @@ export const SNSContext = createContext({
 })
 
 const SocialApp = memo((props) => {
+    const theme = props.match.params.theme
     const {user} = props;
     if(Object.keys(user).length === 0) return (<></>);
     const [activeTab, setActiveTab] = useState('1');
@@ -26,6 +28,22 @@ const SocialApp = memo((props) => {
     })
     const [profileImage, setprofileImage] = useState(user.userData.profileImage);
     const [userInfo, setUserInfo] = useState(user.userData);
+
+    const renderTab = ()=>{
+        switch (theme) {
+            case 'list':
+                return <TimelineTab/>
+            case 'about':
+                return <AboutTab/>
+            case 'friends':
+                return <FriendsTab/>
+            case 'photo':
+                return <PhotosTab/>
+            default:
+                return <TimelineTab/>
+        }
+    }
+
 
     const contextValue = {
         activeTab,
@@ -55,8 +73,13 @@ const SocialApp = memo((props) => {
                                 </Card>
                             </Col>
                         </Row>
-                        <TabContent activeTab={activeTab} className="tab-content">
+                        {renderTab()}
+                        {/* <TabContent activeTab={activeTab} className="tab-content">
+                            
+                                {renderTab()}
+                            
                             <TabPane tabId="1">
+                                {props.children}
                                 <TimelineTab />
                             </TabPane>
                             <TabPane tabId="2">
@@ -68,7 +91,7 @@ const SocialApp = memo((props) => {
                             <TabPane tabId="4">
                                 <PhotosTab />
                             </TabPane>
-                        </TabContent>
+                        </TabContent> */}
                     </div>
                 </Container>
             </Fragment>

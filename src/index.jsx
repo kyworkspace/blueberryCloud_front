@@ -62,8 +62,11 @@ const Root = (props) =>  {
             <TransitionGroup>
               <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/dashboard`} component={Auth(CloudDashBoard,true)}/>
               <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
-              <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline`} component={Auth(SNSTimeline,true)}/>
+              
+              <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline/:theme`} component={Auth(SNSTimeline,true)}/>
               <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo`} component={Auth(UserInformation,true)}/>
+
+              
               <Route  exact   path={`${process.env.PUBLIC_URL}/support/notice`} component={Auth(NoticeMain,null)}/>
                 {/* {routes.map(({ path, Component }) => (
                     <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>

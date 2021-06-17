@@ -453,7 +453,7 @@ export const upLike = (body) => {
 }
 export const unLike = (body) => {
     return new Promise((resolve, reject) => {
-        axios.post(`${LIKE_API}/like/unLike`, body)
+        axios.post(`${LIKE_API}/unLike`, body)
             .then(response => {
                 if (response.data.success) {
                     resolve(response.data);
