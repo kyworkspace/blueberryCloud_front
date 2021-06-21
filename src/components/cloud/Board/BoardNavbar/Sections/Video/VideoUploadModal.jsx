@@ -9,6 +9,7 @@ import { calcUnit } from '../../../../../../utils/fileSizeUnit';
 import { dateToString, uploadVideo } from '../../../../../../utils/commonMethod';
 import { toast } from 'react-toastify';
 import { Select } from 'antd';
+import { confirmMessage } from '../../../../../../utils/alertMethod';
 const {Option} = Select;
 
 const VideoUploadModal=memo((props) =>{
@@ -27,6 +28,11 @@ const VideoUploadModal=memo((props) =>{
     const [openrating, setOpenrating] = useState(2)
 
     const onCloseModal = () => {
+        if(FileUploading){
+            confirmMessage('파일이 전송중입니다 취소하시겠습니까?','실행','취소',()=>{
+                ModalHandler(false)        
+            })
+        }
         ModalHandler(false)
     };
 
@@ -37,7 +43,10 @@ const VideoUploadModal=memo((props) =>{
         originalpath[0] = user.userData._id; //루트 폴더명으로 바꿔줌
 
         let body ={
-            ...FileInfo,
+            size : FileInfo.size,
+            filename : FileInfo.name,
+            originalname : FileInfo.name,
+            mimetype : FileInfo.type,
             description : Description,
             writer : user.userData._id,
             originalpath : `${originalpath.join("/")}/${dateToString(new Date(),false)}`,
@@ -46,6 +55,7 @@ const VideoUploadModal=memo((props) =>{
             thumbnailname : ThumbnailName,
             openrating
         }
+        console.log(body);
         uploadVideo(body).then(response=>{
             if(response.data.success){
                 toast.success("업로드 성공 !", {position: toast.POSITION.BOTTOM_RIGHT,autoClose:2000})
@@ -77,9 +87,9 @@ const VideoUploadModal=memo((props) =>{
             <Table responsive="md">
                 <tr>
                     <td>제목</td>
-                    <td>{FileInfo.originalname}</td>
+                    <td>{FileInfo.name}</td>
                     <td>확장자</td>
-                    <td>{FileInfo.mimetype}</td>
+                    <td>{FileInfo.type}</td>
                 </tr>
                 <tr>
                     <td>용량</td>

@@ -26,7 +26,7 @@ import VideoUploadModal from './Sections/Video/VideoUploadModal';
 import CloudSearch from './Sections/Search/CloudSearch';
 import {dateToString, FileSave, FileUpload} from '../../../../utils/commonMethod'
 import SweetAlert from 'sweetalert2';
-import { errorMessage, infoMessage } from '../../../../utils/alertMethod';
+import { confirmMessage, errorMessage, infoMessage } from '../../../../utils/alertMethod';
 
 const BoardNavbar= memo(()=> {
     const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents,refreshFileList,selectFileList} = useContext(CloudBoardContext);
@@ -89,10 +89,13 @@ const BoardNavbar= memo(()=> {
           alert("선택된 파일이 없습니다.");
         return;
       }
-      let body={
-        fileList : selectedFiles,
-      }
-      selectedFileDelete(body);
+      confirmMessage(`${selectedFiles.length}개의 파일을 삭제합니다.`,'실행','취소',()=>{
+        let body={
+          fileList : selectedFiles,
+        }
+        selectedFileDelete(body);  
+      })
+      
     }
     const onAllFileSelection=()=>{ //전체 파일 선택
       let selectedFiles = [...Files];

@@ -20,10 +20,10 @@ export const mimeTypeFinder = (file) => {
     let type = mimetype.split('/')[0];
     let ret = {};
     switch (type) {
-        case 'video':
-            ret.type = type[1];
-            ret.image = `url(${url}/${thumbnailpath})`;
-            break;
+        // case 'video':
+        //     ret.type = type[1];
+        //     ret.image = `url(${url}/${logicPath})`;
+        //     break;
         case 'image':
             ret.type = type[1];
             ret.image = `url(${url}/${logicPath})`;

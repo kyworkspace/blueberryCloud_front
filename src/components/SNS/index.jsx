@@ -11,16 +11,13 @@ import SNSNavbar from './Sections/SNSNavbar';
 import { Link, Route } from 'react-router-dom';
 
 export const SNSContext = createContext({
-    activeTab : '0',
     userInfo :null,
-    setActiveTab:()=>{},
 })
 
 const SocialApp = memo((props) => {
     const theme = props.match.params.theme
     const {user} = props;
     if(Object.keys(user).length === 0) return (<></>);
-    const [activeTab, setActiveTab] = useState('1');
     const [profileBackground, setProfileBackground] = useState({
         padding:'0px',
         height: '470px',
@@ -46,8 +43,6 @@ const SocialApp = memo((props) => {
 
 
     const contextValue = {
-        activeTab,
-        setActiveTab,
         userInfo,
     }
 

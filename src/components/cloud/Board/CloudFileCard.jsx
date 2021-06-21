@@ -4,6 +4,7 @@ import { CloudBoardContext } from './CloudViewer';
 import { dateToString, FileDownload } from '../../../utils/commonMethod';
 import { calcUnit } from '../../../utils/fileSizeUnit';
 import { mimeTypeFinder } from '../../../utils/mimeTypeAsset';
+import url from '../../../route/DevUrl';
 
 const CloudFileCard = memo((props) =>{
     const {openFolder,onFileDetail,SelectionMode,Files,setFiles} = useContext(CloudBoardContext)
@@ -64,7 +65,22 @@ const CloudFileCard = memo((props) =>{
         <li className="file-box"
          style={{marginTop:'10px',marginLeft:'10px'}}
           key={item.filename}>
-            {cardImage}
+            {typeMainCategory[0] === 'video'?
+            <div 
+                className="file-top"
+                style={{
+                    height:'200px' 
+                    , backgroundSize:'70%'
+                    , backgroundPosition:'center'
+                    , backgroundRepeat:'no-repeat'
+                    }}
+                >
+                    <video src={`${url}/${item.logicPath}`} style={{width:'80%',maxHeight:'90%'}}/>
+                    {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
+            </div>
+            :
+                cardImage
+            }
             <div className="file-bottom" onClick={cardEvent} style={{cursor:'pointer'}}>
                 <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>
                     <h6>{item.originalname}</h6>

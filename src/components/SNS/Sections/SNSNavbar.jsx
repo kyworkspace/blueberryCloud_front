@@ -3,7 +3,8 @@ import { Nav, NavItem, NavLink } from 'reactstrap'
 import { SNSContext } from '..'
 import {withRouter} from 'react-router-dom'
 const SNSNavbar=memo((props) =>{
-    const {activeTab,setActiveTab,userInfo} = useContext(SNSContext);
+    const theme = props.match.params.theme
+    const {userInfo} = useContext(SNSContext);
     const tabSet =(menu)=>{
         props.history.push(`/sns/timeline/${menu}`)
     }
@@ -11,12 +12,12 @@ const SNSNavbar=memo((props) =>{
         return (
             <Nav tabs className="border-tab tabs-scoial">
                 <NavItem className="nav" id="myTab" role="tablist">
-                    <NavLink tag="a" className={activeTab === 'list' ? 'active' : ''} onClick={() => tabSet('list')}>
+                    <NavLink tag="a" className={theme === 'list' ? 'active' : ''} onClick={() => tabSet('list')}>
                         TimeLine
                 </NavLink>
                 </NavItem>
                 <NavItem className="nav" id="myTab" role="tablist">
-                    <NavLink tag="a" className={activeTab === 'about' ? 'active' : ''} onClick={() => tabSet('about')}>
+                    <NavLink tag="a" className={theme === 'about' ? 'active' : ''} onClick={() => tabSet('about')}>
                         About
                 </NavLink>
                 </NavItem>
@@ -26,12 +27,12 @@ const SNSNavbar=memo((props) =>{
                     <div className="desc mt-2">{userInfo.greeting}</div>
                 </NavItem>
                 <NavItem className="nav" id="myTab" role="tablist">
-                    <NavLink tag="a" className={activeTab === 'friends' ? 'active' : ''} onClick={() => tabSet('friends')}>
+                    <NavLink tag="a" className={theme === 'friends' ? 'active' : ''} onClick={() => tabSet('friends')}>
                         Friends
                 </NavLink>
                 </NavItem>
                 <NavItem className="nav" id="myTab" role="tablist">
-                    <NavLink tag="a" className={activeTab === 'photo' ? 'active' : ''} onClick={() => tabSet('photo')}>
+                    <NavLink tag="a" className={theme === 'photo' ? 'active' : ''} onClick={() => tabSet('photo')}>
                         Photos
                 </NavLink>
                 </NavItem>
