@@ -28,6 +28,7 @@ import axios from 'axios';
 //notice
 import NoticeMain from './components/Notice/NoticeMain';
 import NoticeDetailModal from './components/Notice/NoticeDetailModal';
+import ContectMe from './components/ContectMe/ContectMe';
 
 //axios
 // axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "http://localhost:5000/"
@@ -68,6 +69,7 @@ const Root = (props) =>  {
 
               
               <Route  exact   path={`${process.env.PUBLIC_URL}/support/notice`} component={Auth(NoticeMain,null)}/>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/support/developerInfo`} component={Auth(ContectMe,null)}/>
                 {/* {routes.map(({ path, Component }) => (
                     <Route key={path} exact   path={`${process.env.PUBLIC_URL}${path}`}>
                         {({ match }) => (

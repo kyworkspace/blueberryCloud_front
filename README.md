@@ -1,4 +1,19 @@
 # BLUEBERRY CLOUD _ FRONT
+### 2021-06 테스트 시작
+- URL : https://blueberry.hopto.org/
+### 메인 화면
+![image](https://user-images.githubusercontent.com/45280952/123668477-1c737000-d876-11eb-9c29-a695e463264c.png)
+### 클라우드 파일 관리자 화면
+![image](https://user-images.githubusercontent.com/45280952/123668758-62303880-d876-11eb-80ff-dfac9b941c4d.png)
+### 업로드 
+![image](https://user-images.githubusercontent.com/45280952/123668821-75db9f00-d876-11eb-95c8-51cff1234fa3.png)
+### 타임 라인
+![image](https://user-images.githubusercontent.com/45280952/123668940-9146aa00-d876-11eb-89f7-680db4fdcbe7.png)
+### 사용자 목록
+![image](https://user-images.githubusercontent.com/45280952/123668994-9e639900-d876-11eb-9cb9-3774d2fc26b6.png)
+### 공지 사항
+![image](https://user-images.githubusercontent.com/45280952/123669077-b0ddd280-d876-11eb-8802-ea744378e767.png)
+
 ### 2021-03-13
 - First Init
 - 리덕스 환경 및 프록시 설정
