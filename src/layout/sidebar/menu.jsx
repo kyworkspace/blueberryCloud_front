@@ -22,7 +22,7 @@ export const MENUITEMS = [
             {
                 title: 'SNS HOME', icon: Anchor , type: 'sub', active: false, children: [
                     { path: `${process.env.PUBLIC_URL}/sns/timeline/list`, title: '타임라인', type: 'link' },
-                    { path: `${process.env.PUBLIC_URL}/sns/userinfo`, title: '나의 이야기', type: 'link' },
+                    { path: `${process.env.PUBLIC_URL}/sns/userinfo/self`, title: '나의 이야기', type: 'link' },
                 ]
             },
             // {

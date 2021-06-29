@@ -65,7 +65,7 @@ const Root = (props) =>  {
               <Route  exact   path={`${process.env.PUBLIC_URL}/cloud/viewer/:theme`} component={Auth(CloudViewer,true)}/>
               
               <Route  exact   path={`${process.env.PUBLIC_URL}/sns/timeline/:theme`} component={Auth(SNSTimeline,true)}/>
-              <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo`} component={Auth(UserInformation,true)}/>
+              <Route  exact   path={`${process.env.PUBLIC_URL}/sns/userinfo/:userId`} component={Auth(UserInformation,true)}/>
 
               
               <Route  exact   path={`${process.env.PUBLIC_URL}/support/notice`} component={Auth(NoticeMain,null)}/>

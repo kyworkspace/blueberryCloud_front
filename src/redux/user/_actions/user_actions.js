@@ -6,6 +6,7 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     UPDATE_USER,
+    PASSWORD_UPDATE
 } from './types';
 
 
@@ -53,5 +54,12 @@ export function updateUserProfile(body) {
     return {
         type: UPDATE_USER,
         payload: body
+    }
+}
+export function setPasswordUpdate(body) {
+    const request = axios.post(`${USER_API}/password/update`, body).then(res => res.data);
+    return {
+        type: PASSWORD_UPDATE,
+        payload: request
     }
 }

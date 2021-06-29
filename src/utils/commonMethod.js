@@ -301,6 +301,19 @@ export const profileUpdate = (body) => {
             })
     })
 }
+//사람 상세 정보 가져옴
+export const getUserInfo = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${PROFILE_API}/info/user`, body)
+            .then(res => {
+                if (res.data.success) {
+                    resolve(res.data.userInfo)
+                } else {
+                    reject(res)
+                }
+            })
+    })
+}
 //타임 라인 목록 가져옴
 export const getTimeLineList = (body) => {
     return new Promise((resolve, reject) => {

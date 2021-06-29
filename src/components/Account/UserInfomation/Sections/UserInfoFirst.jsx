@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Row } from 'reactstrap';
 import {Mail, Users} from 'react-feather';
+import moment from 'moment';
 
 function UserInfoFirst(props) {
 
@@ -18,7 +19,7 @@ function UserInfoFirst(props) {
                 </Col>
                 <Col md="6">
                     <div className="ttl-info text-left ttl-sm-mb-0">
-                    <h6><i className="fa fa-calendar"></i>  Birth Day</h6><span>{bod ? bod : "비공개"}</span>
+                    <h6><i className="fa fa-calendar"></i>  Birth Day</h6><span>{ bod ? moment(bod).format('YYYY-MM-DD') : "비공개"}</span>
                     </div>
                 </Col>
                 </Row>

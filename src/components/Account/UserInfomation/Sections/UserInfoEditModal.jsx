@@ -1,4 +1,4 @@
-import { DatePicker, Space } from 'antd';
+import { Col, DatePicker, Row, Space } from 'antd';
 import React, { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
@@ -10,8 +10,10 @@ import moment from 'moment';
 const UserInfoEditModal=memo((props) =>{
     const {isOpen, ModalHandler,item}  = props;
     const dispatch = useDispatch();
+    const [name, setName] = useState(item.name);
+    const [nickName, setNickName] = useState(item.nickName);
     const [email, setEmail] = useState(item.email);
-    const [birthDay, setBirthDay] = useState(item.birthDay);
+    const [birthDay, setBirthDay] = useState(item.birthDay||new Date());
     const [phoneNumber, setPhoneNumber] = useState(item.phoneNumber);
     const [greeting, setGreeting] = useState(item.greeting)
 
@@ -21,6 +23,8 @@ const UserInfoEditModal=memo((props) =>{
     const profileSave =()=>{
 
         let body={
+            name,
+            nickName,
             email,
             birthDay,
             phoneNumber,
@@ -40,45 +44,49 @@ const UserInfoEditModal=memo((props) =>{
     }
 
     return (
-        <Modal isOpen={isOpen} toggle={onCloseModal} style={{width:'500px', height:'600px'}}>
+        <Modal isOpen={isOpen} toggle={onCloseModal} style={{width:'50vh',maxWidth:'90%', fontFamily:'twayair'}}>
             <ModalHeader toggle={onCloseModal}>
                 프로필 수정
             </ModalHeader>
             <ModalBody>
-                <Space size={10} direction="vertical">
-                    <Space size={20}>
-                        <div>
-                            인사말
-                        </div>
-                        <div>
-                            <Input style={{width:'400px'}} value={greeting} onChange={(e)=>setGreeting(e.currentTarget.value)} maxLength={50}/>
-                        </div>
-                    </Space>
-                    <Space size={20}>
-                        <div>
-                            E-mail
-                        </div>
-                        <div>
-                            <Input type="email" style={{width:'400px'}} value={email} onChange={(e)=>setEmail(e.currentTarget.value)}/>
-                        </div>
-                    </Space>
-                    <Space size={20}>
-                        <div>
-                            생일
-                        </div>
-                        <div>
-                            <DatePicker onChange={(date,dateString)=>{setBirthDay(dateString)}} value={moment(new Date(birthDay))} style={{width:'400px'}}/>
-                        </div>
-                    </Space>
-                    <Space size={20}>
-                        <div>
-                            연락처
-                        </div>
-                        <div>
-                            <Input style={{width:'400px'}} value={phoneNumber} onChange={(e)=>{setPhoneNumber(e.currentTarget.value)}}/>
-                        </div>
-                    </Space>
-                </Space>
+                <Row gutter={[10,10]}>
+                    <Col xs={6}>
+                        성명
+                    </Col>
+                    <Col xs={18}>
+                        <Input value={name} onChange={(e)=>setName(e.currentTarget.value)} maxLength={50}/>
+                    </Col>
+                    <Col xs={6}>
+                        닉네임
+                    </Col>
+                    <Col xs={18}>
+                        <Input value={nickName} onChange={(e)=>setNickName(e.currentTarget.value)} maxLength={50}/>
+                    </Col>
+                    <Col xs={6}>
+                    인사말
+                    </Col>
+                    <Col xs={18}>
+                        <Input value={greeting} onChange={(e)=>setGreeting(e.currentTarget.value)} maxLength={50}/>
+                    </Col>
+                    <Col xs={6}>
+                        E-mail
+                    </Col>
+                    <Col xs={18}>
+                        <Input type="email" value={email} onChange={(e)=>setEmail(e.currentTarget.value)}/>
+                    </Col>
+                    <Col xs={6}>
+                        생일
+                    </Col>
+                    <Col xs={18}>
+                        <DatePicker onChange={(date,dateString)=>{setBirthDay(dateString)}} value={moment(birthDay)} />
+                    </Col>
+                    <Col xs={6}>
+                        연락처
+                    </Col>
+                    <Col xs={18}>
+                        <Input value={phoneNumber} onChange={(e)=>{setPhoneNumber(e.currentTarget.value)}}/>
+                    </Col>
+                </Row>
             </ModalBody>
             <ModalFooter>
                 <Button color="primary" onClick={profileSave}>

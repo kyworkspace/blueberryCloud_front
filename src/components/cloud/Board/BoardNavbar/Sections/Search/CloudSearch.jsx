@@ -82,7 +82,7 @@ const CloudSearch=memo((props) =>{
         onCloseModal();
     }
     return (
-        <Modal isOpen={isOpen} style={{minWidth:'600px', fontFamily:'twayair'}}>
+        <Modal isOpen={isOpen} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
             <ModalHeader toggle={onCloseModal}>파일검색</ModalHeader>
             <ModalBody>
                 <Row gutter={[16,25]}>
@@ -96,16 +96,16 @@ const CloudSearch=memo((props) =>{
                         </div>
                     </Col>
                     <Col sm={24} md={6} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Label className="d-block" for="chk-ani">
-                            <Input className="checkbox_animated" id="chk-ani" type="checkbox" checked={DateFlag} onChange={onSearchDatehandler}/> 기간 검색
+                        <Label className="d-block" for="searchTerm">
+                            <Input className="checkbox_animated" id="searchTerm" type="checkbox" checked={DateFlag} onChange={onSearchDatehandler}/> 기간 검색
                         </Label>
                     </Col>
                     <Col sm={24} md={18}>
                         <RangePicker size='large' onChange={onRangeDatehandler} disabled={!DateFlag}/>
                     </Col>
                     <Col sm={24} md={6} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Label className="d-block" for="chk-ani">
-                            <Input className="checkbox_animated" id="chk-ani" type="checkbox" checked={sizeFlag} onChange={(e)=>setSizeFlag(e.target.checked)}/> 파일크기
+                        <Label className="d-block" for="fileSize">
+                            <Input className="checkbox_animated" id="fileSize" type="checkbox" checked={sizeFlag} onChange={(e)=>setSizeFlag(e.target.checked)}/> 파일크기
                         </Label>
                     </Col>
                     <Col sm={24} md={18} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
@@ -124,8 +124,8 @@ const CloudSearch=memo((props) =>{
                         </Select>
                     </Col>
                     <Col sm={24} md={6} style={{display:'flex', justifyContent:'center', alignItems:'center'}}>
-                        <Label className="d-block" for="chk-ani">
-                            <Input className="checkbox_animated" id="chk-ani" type="checkbox" checked={typeFlag} onChange={(e)=>setTypeFlag(e.target.checked)}/> 파일 형식
+                        <Label className="d-block" for="fileType">
+                            <Input className="checkbox_animated" id="fileType" type="checkbox" checked={typeFlag} onChange={(e)=>setTypeFlag(e.target.checked)}/> 파일 형식
                         </Label>
                     </Col>
                     <Col sm={24} md={18}>
