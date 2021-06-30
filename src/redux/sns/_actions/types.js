@@ -1,0 +1,1 @@
+export const GET_ALL_LIKE_COUNT = 'GET_ALL_LIKE_COUNT';

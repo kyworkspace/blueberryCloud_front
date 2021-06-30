@@ -9,6 +9,8 @@ import htmlParser from 'html-react-parser'
 import { Divider } from 'antd';
 import { SNSContext } from '..';
 import { errorMessage, infoMessage } from '../../../utils/alertMethod';
+import moment from 'moment';
+import {withRouter} from 'react-router-dom'
 
 function TimeLineContents(props){
     const {userInfo} = useContext(SNSContext)
@@ -137,20 +139,24 @@ function TimeLineContents(props){
     const onMoreCommentHandler = ()=>{
         setCommentCount(commentCount+10);
     }
+    const onMoveToUserInfo =(id)=>{
+        props.history.push(`/sns/userinfo/${id}`);
+    }
     return (
         <Col sm="12">
             <Card>
                 <CardBody>
                     <div className="new-users-social">
-                        <Media>
+                        <Media onClick={()=>onMoveToUserInfo(writer._id)} style={{cursor:'pointer'}}>
                             <Media className="rounded-circle m-r-15" 
                             src={`${url}/${writer.profileImage}`} 
                             alt="" />
                             <Media body>
                                 <h6 className="mb-0 f-w-700">
-                                    {writer.name}
+                                    {writer.nickName || writer.name}
                                     </h6>
-                                <p>{dateTimeToString(contents.createdAt,'ss')}</p>
+                                <p>{moment(contents.createdAt).fromNow()}</p>
+                                {/* <p>{dateTimeToString(contents.createdAt,'ss')}</p> */}
                             </Media>
                             <span className="pull-right mt-0">
                                 <MoreVertical />
@@ -306,4 +312,4 @@ function TimeLineContents(props){
         </Col>
     )
 }
-export default TimeLineContents
+export default withRouter(TimeLineContents);

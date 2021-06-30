@@ -29,7 +29,8 @@ import axios from 'axios';
 import NoticeMain from './components/Notice/NoticeMain';
 import NoticeDetailModal from './components/Notice/NoticeDetailModal';
 import ContectMe from './components/ContectMe/ContectMe';
-
+//moment
+import 'moment/locale/ko';
 //axios
 // axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "http://localhost:5000/"
 

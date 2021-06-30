@@ -5,7 +5,7 @@ import { changeProfileImage, profileInsert } from '../../../../utils/commonMetho
 import url from '../../../../route/DevUrl';
 
 const UserProfileImage=memo((props) =>{
-    const {imageUrl} = props
+    const {imageUrl, self} = props
     const [profileUrl, setProfileUrl] = useState(imageUrl);
 
     const readProfileUrl = (event) => {
@@ -30,11 +30,14 @@ const UserProfileImage=memo((props) =>{
     return (
         <div className="user-image">
             <div className="avatar"><Media body alt="" src={`${url}/${profileUrl}`}/></div>
-            <div className="icon-wrapper">
-            <i className="icofont icofont-pencil-alt-5">
-                <input className="upload" type="file" accept="image/*" onChange={(e) => readProfileUrl(e)} />
-            </i>
-            </div>
+              {
+                self &&
+                <div className="icon-wrapper">
+                  <i className="icofont icofont-pencil-alt-5">
+                      <input className="upload" type="file" accept="image/*" onChange={(e) => readProfileUrl(e)} />
+                  </i>
+                </div>
+              }
         </div>
     )
 })

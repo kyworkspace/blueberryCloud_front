@@ -4,6 +4,7 @@ import { Button, Space, Tooltip } from 'antd';
 import url from '../../../../route/DevUrl';
 import { friendHadler } from '../../../../utils/commonMethod';
 import { errorMessage } from '../../../../utils/alertMethod';
+import {withRouter} from 'react-router-dom'
 const ReceivedFriends=memo((props) =>{
     const {user,onFriendReceiveList} = props;
 
@@ -20,17 +21,22 @@ const ReceivedFriends=memo((props) =>{
             errorMessage("통신 중 오류가 발생하였습니다. 새로고침 후 다시 시도해 주세요");
         })
     }
-
+    const onMoveToUserInfo =(id)=>{
+        props.history.push(`/sns/userinfo/${id}`);
+    }
     return (
         <Col md="6" xl="4 box-col-6 xl-50" >
             <Card className="custom-card">
                 {/* <CardHeader>
                     <Media body className="img-fluid" src={ user.backgroundImage && `${url}/${user.backgroundImage}`} alt="" />
                 </CardHeader> */}
-                <div className="card-profile"style={{
+                <div className="card-profile"
+                onClick={()=>onMoveToUserInfo(user._id)}
+                style={{
                     backgroundImage:`url(${url}/${user.backgroundImage})` , backgroundPosition:"center", backgroundSize:'cover', backgroundRepeat:'no-repeat'
                     , height:'200px'
                     , display:'grid', alignItems:'flex-end', justifyContent:'center'
+                    , cursor:'pointer'
                     }}>
                     <Media body className="rounded-circle" src={`${url}/${user.profileImage}`} alt="" />
                 </div>
@@ -49,4 +55,4 @@ const ReceivedFriends=memo((props) =>{
     )
 })
 
-export default ReceivedFriends
+export default withRouter(ReceivedFriends)

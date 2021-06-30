@@ -99,27 +99,6 @@ const FriendsTab = () => {
             <Card>
             <CardHeader>
                 <FriendNavbar getFriendList={getFriendList} listHandler={onTabTypeHandler} setSearchTerm={setSearchTerm}/>
-            {/* <Space>
-                <div>
-                    친구 찾기
-                </div>
-                <Search
-                    placeholder="이름, 이메일, 전화번호 ..."
-                    allowClear
-                    enterButton="검색"
-                    size="large"
-                    onSearch={getFriendList}
-                    value={searchTerm}
-                    onChange={(e)=>{setSearchTerm(e.currentTarget.value)}}
-                    style={{width:'30vw'}}
-                    />
-                    <Button size="large" onClick={()=>onTabTypeHandler(0)}>전체</Button>
-                    <Button size="large" onClick={()=>onTabTypeHandler(1)}>친구 목록</Button>
-                    <Button size="large" onClick={()=>onTabTypeHandler(2)}>친구 신청 목록</Button>
-                    <Button size="large" onClick={()=>onTabTypeHandler(3)}>친구 요청</Button>
-                    <Button size="large" onClick={()=>onTabTypeHandler(4)}>팔로워 목록</Button>
-                    <Button size="large" onClick={()=>onTabTypeHandler(5)}>팔로잉 목록</Button>
-            </Space> */}
             </CardHeader>
             <CardBody>
                 <Row>

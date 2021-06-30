@@ -5,7 +5,7 @@ import url from '../../../../route/DevUrl';
 import { errorMessage } from '../../../../utils/alertMethod';
 import { changeProfileImage, profileInsert } from '../../../../utils/commonMethod';
 const UserBackgroundImage=memo((props) =>{
-    const {imageUrl} = props
+    const {imageUrl, self} = props
     const [backgroundStyle, setBackgroundStyle] = useState({
         background:imageUrl ? `url(${url}/${imageUrl}) center/cover no-repeat`:`url(https://picsum.photos/1600/470)` ,
         padding:'0px',
@@ -70,12 +70,15 @@ const UserBackgroundImage=memo((props) =>{
             onMouseEnter={onBackgroundMouseEnter}
             onMouseLeave={onBackgroundMouseLeave}
         >
-            <div style={modifyStyle}>
-                <Space size={10}>
-                    <Button color="secondary" onClick={onBackgroundModify}>수정</Button>
-                </Space>
-                
-            </div>
+            {
+                self &&
+                <div style={modifyStyle}>
+                    <Space size={10}>
+                        <Button color="secondary" onClick={onBackgroundModify}>수정</Button>
+                    </Space>
+                </div>
+            }
+            
         </CardHeader>
         
         <input type="file" ref={fileUploadRef} accept="image/*" style={{display:'none'}} onChange={readBackgroundUrl}/>

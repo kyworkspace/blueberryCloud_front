@@ -5,6 +5,9 @@ import url from '../../../../route/DevUrl';
 import { SmileOutlined, UserAddOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import { setFriendAdd,setFriendDelete } from '../../../../utils/commonMethod';
 import { confirmMessage, errorMessage, successMessage } from '../../../../utils/alertMethod';
+import {withRouter} from 'react-router-dom'
+
+
 const AllFriends=memo((props) =>{
     const {user,refreshList} = props;
 
@@ -37,17 +40,23 @@ const AllFriends=memo((props) =>{
             })
         })
     }
+    const onMoveToUserInfo =(id)=>{
+        props.history.push(`/sns/userinfo/${id}`);
+    }
 
     return (
         <Col md="6" xl="4 box-col-6 xl-50" >
-            <Card className="custom-card">
+            <Card className="custom-card" >
                 {/* <CardHeader>
                     <Media body className="img-fluid" src={ user.backgroundImage ? `${url}/${user.backgroundImage}`:`https://picsum.photos/1600/470`} alt="" />
                 </CardHeader> */}
-                <div className="card-profile" style={{
+                <div className="card-profile"
+                    onClick={()=>onMoveToUserInfo(user._id)}
+                     style={{
                     backgroundImage:`url(${url}/${user.backgroundImage})` , backgroundPosition:"center", backgroundSize:'cover', backgroundRepeat:'no-repeat'
                     , height:'200px'
                     , display:'grid', alignItems:'flex-end', justifyContent:'center'
+                    , cursor:'pointer'
                     }}>
                     <Media body className="rounded-circle" src={`${url}/${user.profileImage}`} alt="" />
                 </div>
@@ -120,4 +129,4 @@ const AllFriends=memo((props) =>{
     )
 })
 
-export default AllFriends
+export default withRouter(AllFriends)

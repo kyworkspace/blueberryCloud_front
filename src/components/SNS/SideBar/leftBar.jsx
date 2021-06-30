@@ -1,4 +1,4 @@
-import React, { Fragment ,useContext,useState} from 'react';
+import React, { Fragment ,useContext,useEffect,useState} from 'react';
 import {Col,Card,CardHeader,CardBody,Button,Media,Form,FormGroup,Input ,Collapse, UncontrolledTooltip } from 'reactstrap';
 import one from "../../../assets/images/user/1.jpg";
 import three from "../../../assets/images/user/3.jpg";
@@ -15,13 +15,34 @@ import url from '../../../route/DevUrl'
 
 import {MyProfile,BuckyBarnes,JasonBorne,SarahLoren,AndewJon,JohnyWaston,JohnyWilliam,ComerenDiaz,MyPage,View,MutualFriends,ActivityFeed,Messages,Likes,Notification } from "../../../constant";
 import { SNSContext } from '../index';
+import { useDispatch } from 'react-redux';
+import { getAllLikeCount } from '../../../redux/sns/_actions/sns_actions';
+import { infoMessage } from '../../../utils/alertMethod';
+import {  ThumbsUp } from 'react-feather';
 
 
 const LeftBar = () => {
+    const dispatch = useDispatch();
     const {userInfo} = useContext(SNSContext);
     const [isProfile, setisProfile] = useState(true);
     const [isMutual, setisMutual] = useState(true);
     const [isActivity, setisActivity] = useState(true);
+    const [likeCount, setLikeCount] = useState(0);
+    useEffect(() => {
+        if(userInfo._id){
+
+            dispatch(getAllLikeCount())
+            .then(res=>{
+                if(res.payload.success){
+                    setLikeCount(res.payload.count)
+                }else{
+                    setLikeCount('오류 발생')
+                }
+            })
+        }
+    }, [])
+
+
     
     if(userInfo){
         return (
@@ -41,7 +62,7 @@ const LeftBar = () => {
                                 <Media><Media className="img-50 img-fluid m-r-20 rounded-circle" src={`${url}/${userInfo.profileImage}`} alt="" style={{height:'50px'}}/>
                                     <Media body>
                                         <h6 className="font-primary f-w-600">
-                                            {userInfo.name}
+                                            {userInfo.nickName||userInfo.name}
                                         </h6>
                                         <span className="d-block">
                                             <span>
@@ -65,10 +86,13 @@ const LeftBar = () => {
                                     <Button color="primary text-center" type="button">{Likes}</Button>
                                     <Button color="light text-center" type="button">{View}</Button>
                                 </div>
+                                <div className="text-center">내가 받은 좋아요  </div>
                                 <div className="likes-profile text-center">
-                                    <h5><span><i className="fa fa-heart font-danger"></i> {"884"}</span></h5>
+                                    <h5><span><i className="fa fa-heart font-danger"></i> {likeCount}</span></h5>
                                 </div>
-                                <div className="text-center">{"35 New Likes This Week"}</div>
+                                
+                                {/* 주간 좋아요 획득 할때 이렇게 바꿀것 */}
+                                {/* <div className="text-center">{"35 New Likes This Week"}</div>
                                 <div className="customers text-center social-group">
                                     <ul>
                                         <li className="d-inline-block">
@@ -108,7 +132,7 @@ const LeftBar = () => {
                                             </UncontrolledTooltip>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </CardBody>
                         </Collapse>
                     </Card>
