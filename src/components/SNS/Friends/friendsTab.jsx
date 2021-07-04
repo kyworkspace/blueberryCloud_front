@@ -17,13 +17,14 @@ const FriendsTab = () => {
     const [limit, setLimit] = useState(8);
     const [skip, setSkip] = useState(0);
     const [tabType, setTabType] = useState(0);
-    const user = useSelector(state => state.user);
+    const [loading, setloading] = useState(false);
 
     useEffect(() => {
         getFriendList(null);
       },[])
 
     const getFriendList = (value)=>{
+        setloading(true);
         setSearchTerm(value)
         let body={
             searchTerm : value,
@@ -38,9 +39,14 @@ const FriendsTab = () => {
         .catch(err=>{
             errorMessage("회원 정보를 불러오는데 오류가 발생하였습니다.")
         })
+        .finally(()=>{
+            setloading(false)
+        })
+        
     }
     const onFriendReceiveList = useCallback(
         () => {
+            setloading(true)
             getFriendReceiveList()
             .then(response=>{
                 if(response.data.success){
@@ -51,17 +57,24 @@ const FriendsTab = () => {
             .catch(err=>{
                 errorMessage("통신 중 오류가 발생하였습니다. 새로고침 후 다시 시도해 주세요");
             })
+            .finally(()=>{
+                setloading(false)
+            })
         },
         [],
     )
     const onFriendsList = useCallback(
         (level) => {
+            setloading(true)
             getFriendsList(level)
             .then(list=>{
                 setUserList(list);
             })
             .catch(err=>{
                 errorMessage("통신 중 오류가 발생하였습니다. 새로고침 후 다시 시도해 주세요");
+            })
+            .finally(()=>{
+                setloading(false)
             })
         },
         [],
@@ -102,10 +115,23 @@ const FriendsTab = () => {
             </CardHeader>
             <CardBody>
                 <Row>
-                    {renderUserCard}
-                    {userList.map((user, i) => 
-                        renderUserCard(user)
-                    )}
+                    {loading ? 
+                        <Col xs={12}>
+                        <h6 className="sub-title mb-0 text-center">사용자 목록을 가져오는 중입니다....</h6>
+                            <div className="loader-box">
+                                <div className="loader-4"></div>
+                            </div>
+                        </Col>
+                    :
+                    userList.length > 0 ? 
+                        userList.map((user, i) => 
+                            renderUserCard(user)
+                        )
+                        :
+                        <Col xs={12}>
+                            <h6 className="sub-title mb-0 text-center">조건에 맞는 사용자가 없습니다.</h6>    
+                        </Col>
+                    }
                 </Row>
             </CardBody>
             </Card>

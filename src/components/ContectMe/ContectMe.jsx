@@ -74,11 +74,11 @@ const ContectMe=memo(() =>{
                                         <hr/>
                                             <div style={{display:'flex', justifyContent:'space-between', width:'15rem', margin:'1rem'}}>
                                                 <div>TheHRDer</div>
-                                                <div>2020.04~</div>
+                                                <div>2021.04~</div>
                                             </div>
                                             <div style={{display:'flex', justifyContent:'space-between', width:'15rem', margin:'1rem'}}>
                                                 <div>GMT</div>
-                                                <div>2019.08~2020.04</div>
+                                                <div>2019.08~2021.04</div>
                                             </div>
                                             <div style={{display:'flex', justifyContent:'space-between', width:'15rem', margin:'1rem'}}>
                                                 <div>디벨롭퍼스트</div>

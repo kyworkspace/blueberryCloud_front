@@ -19,7 +19,7 @@ const App = ({children}) => {
           {children}
         </div>
         <Footer/>
-        <ThemeCustomize/>
+        {/* <ThemeCustomize/> */}
         </div>
       </div>
       <ToastContainer/>

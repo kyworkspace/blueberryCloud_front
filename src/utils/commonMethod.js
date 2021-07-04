@@ -312,6 +312,25 @@ export const getUserInfo = (body) => {
                     reject(res)
                 }
             })
+            .catch(err => {
+                reject(err)
+            })
+    })
+}
+// 사람 공유 미디어 파일 가져옴
+export const getUserMediaList = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${PROFILE_API}/list/user/media`, body)
+            .then(res => {
+                if (res.data.success) {
+                    resolve(res.data.list);
+                } else {
+                    reject(res);
+                }
+            })
+            .catch(err => {
+                reject(err)
+            })
     })
 }
 //타임 라인 목록 가져옴

@@ -13,6 +13,7 @@ const UserDropdownComponent= memo((props) => {
   const user = useSelector(state => state.user)
   const [userStatus, setUserStatus] = useState(false);
   const [name, setName] = useState("");
+  const [role, setRole] = useState(0);
   const dispatch = useDispatch();
   
 
@@ -22,6 +23,7 @@ const UserDropdownComponent= memo((props) => {
       if(userData.error)
         return;
       setName(userData.name);
+      setRole(userData.role)
       setUserStatus(true);
     }
     
@@ -57,7 +59,15 @@ const UserDropdownComponent= memo((props) => {
             <div className="media profile-media">
               <img className="b-r-10" src={`${url}/${user.userData.profileImage}`} alt="" />
               <div className="media-body"><span>{name}</span>
-                <p className="mb-0 font-roboto">{'일반 사용자'} <i className="middle fa fa-angle-down"></i></p>
+                <p className="mb-0 font-roboto">
+                  { role ?
+                  '관리자'
+                  :
+                  '일반 사용자'
+                  }
+                  
+                  <i className="middle fa fa-angle-down"/>
+                </p>
               </div>
             </div>
             <ul className="profile-dropdown onhover-show-div">
