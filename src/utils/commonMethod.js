@@ -184,6 +184,24 @@ export const FileUpdate = (body) => {
     })
 }
 /**
+ * 파일 경로 수정
+ **/
+export const getFolderList = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/folder/list`, body)
+            .then(response => {
+                if (response.data.success) {
+                    resolve(response.data.list)
+                } else {
+                    reject(response)
+                }
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+/**
  * 비디오 파일 컨버팅
  * **/
 export const videoConvert = (body) => {

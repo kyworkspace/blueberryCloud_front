@@ -59,7 +59,7 @@ const TimelineTab = () => {
                                 <h4>다음 목록을 가져오는 중입니다.</h4>
                             </div>
                         }
-                        height={3000}
+                        height={800}
                         endMessage={
                             <div style={{width:'100%',display:'grid',justifyContent:'center'}}>
                                 <b>모든 목록을 불러왔습니다.</b>

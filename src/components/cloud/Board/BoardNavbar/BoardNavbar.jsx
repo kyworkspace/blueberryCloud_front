@@ -27,6 +27,7 @@ import CloudSearch from './Sections/Search/CloudSearch';
 import {dateToString, FileSave, FileUpload} from '../../../../utils/commonMethod'
 import SweetAlert from 'sweetalert2';
 import { confirmMessage, errorMessage, infoMessage } from '../../../../utils/alertMethod';
+import FolderMoveModal from './Sections/FolderMove/FolderMoveModal';
 
 const BoardNavbar= memo(()=> {
     const {setSelectionMode,SelectionMode,Files,setFiles,selectedFileDelete,searchContents,setSearchContents,refreshFileList,selectFileList} = useContext(CloudBoardContext);
@@ -43,6 +44,9 @@ const BoardNavbar= memo(()=> {
     const folderPath = useSelector(state => state.folder.path)
     // 검색 모드
     const [searchModal, setSearchModal] = useState(false);
+    //파일 이동 모달
+    const [moveModal, setMoveModal] = useState(false);
+
     // 파일 업로드
     const fileUploadRef = useRef();
 
@@ -59,6 +63,15 @@ const BoardNavbar= memo(()=> {
     }
     const onSearchModalOpen=(flag)=>{ //검색모달
       setSearchModal(flag)
+    }
+    const onMoveModalHandler=(flag)=>{ // 파일 이동 모달
+      // let selectedFiles = Files.filter((item)=>item.selected);
+      // let count = selectedFiles.length;
+      // if(count===0){
+      //     alert("선택된 파일이 없습니다.");
+      //   return;
+      // }
+      setMoveModal(flag);
     }
     const onMoveToPrevFolder =()=>{ //이전 폴더 가기
       let splitedPath = folderPath.split("/");
@@ -193,16 +206,9 @@ const BoardNavbar= memo(()=> {
                 <NavLink onClick={onSelectedFileDelete}>선택파일 삭제</NavLink>
               </NavItem>
               }
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  공유
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    공유 기능은 기획 중입니다.
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink onClick={()=>onMoveModalHandler(true)}>파일 이동</NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink onClick={()=>onSearchModalOpen(true)}>파일 검색</NavLink>
               </NavItem>
@@ -224,10 +230,11 @@ const BoardNavbar= memo(()=> {
         </div>
         
         
-        {pictureModal && <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>}
-        {folderModal && <FolderCreateModal ModalHandler = {onCreateNewFolderModalOpen} isOpen={folderModal}/>}
-        {videoModal && <VideoUploadModal ModalHandler = {onVideoUploadModalOpen} isOpen={videoModal}/>}
-        {searchModal && <CloudSearch ModalHandler = {onSearchModalOpen} isOpen={searchModal}/> }
+        <PictureUploadModal ModalHandler = {onPictureUploadModalOpen} isOpen={pictureModal}/>
+        <FolderCreateModal ModalHandler = {onCreateNewFolderModalOpen} isOpen={folderModal}/>
+        <VideoUploadModal ModalHandler = {onVideoUploadModalOpen} isOpen={videoModal}/>
+        <CloudSearch ModalHandler = {onSearchModalOpen} isOpen={searchModal}/>
+        <FolderMoveModal ModalHandler={onMoveModalHandler} isOpen={moveModal}/>
       </div>
     )
 })

@@ -20,12 +20,22 @@
 @import "vendors/animate/animate";
 @import "vendors/sticky/sticky";
 @import "vendors/todo/todo";
+/* 폰트 */
 @font-face {
-    font-family: 'twayair';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_tway@1.0/twayair.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
+    font-family:nanumB;
+    // font-weight:bold;
+    src:local(※), url(../fonts/NanumSquare_acEB.woff) format('woff');
+  }
+  @font-face {
+    font-family:nanumL;
+    // font-weight:lighter;
+    src:local(※), url(../fonts/NanumSquare_acB.woff) format('woff');
+  }
+  @font-face {
+    font-family:nanumR;
+    // font-weight:medium;
+    src:local(※), url(../fonts/NanumSquare_acL.woff) format('woff');
+  }
 
 
 

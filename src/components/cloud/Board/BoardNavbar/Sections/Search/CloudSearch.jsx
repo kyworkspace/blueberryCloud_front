@@ -82,7 +82,7 @@ const CloudSearch=memo((props) =>{
         onCloseModal();
     }
     return (
-        <Modal isOpen={isOpen} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
+        <Modal isOpen={isOpen} style={{width:'600px',maxWidth:'90%', fontFamily:'nanumL'}}>
             <ModalHeader toggle={onCloseModal}>파일검색</ModalHeader>
             <ModalBody>
                 <Row gutter={[16,25]}>

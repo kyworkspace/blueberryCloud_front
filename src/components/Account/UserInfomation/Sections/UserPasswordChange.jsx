@@ -36,7 +36,7 @@ function UserPasswordChange(props) {
         })
     }
     return (
-        <Modal isOpen={isOpen} toggle={onCloseModal} style={{width:'50vh',maxWidth:'90%', fontFamily:'twayair'}}>
+        <Modal isOpen={isOpen} toggle={onCloseModal} style={{width:'50vh',maxWidth:'90%', fontFamily:'nanumL'}}>
             <ModalHeader toggle={onCloseModal}>
                 프로필 수정
             </ModalHeader>

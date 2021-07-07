@@ -47,7 +47,7 @@ const NoticeUploadModal=memo((props) =>{
         onCloseModal();
     }
     return (
-        <Modal isOpen = {isOpen} toggle={onCloseModal} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
+        <Modal isOpen = {isOpen} toggle={onCloseModal} style={{width:'600px',maxWidth:'90%', fontFamily:'nanumL'}}>
             <ModalHeader toggle={onCloseModal}>공지사항 등록</ModalHeader>
             <ModalBody>
                 <Divider orientation="left" plain>

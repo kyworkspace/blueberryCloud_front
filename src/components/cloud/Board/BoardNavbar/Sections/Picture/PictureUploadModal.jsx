@@ -62,7 +62,7 @@ const PictureUploadModal=memo((props)=> {
     }
 
     return (
-      <Modal isOpen={props.isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
+      <Modal isOpen={props.isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'nanumL'}}>
         <ModalHeader toggle={onCloseModal}>사진 업로드</ModalHeader>
         <ModalBody>
           <Space direction="vertical">

@@ -18,7 +18,7 @@ const NoticeDetailModal=memo((props) =>{
 
     if(notice.show){
         return (
-            <Modal isOpen={notice.show} toggle={onCloseModal}  style={{width:'600px', maxWidth:'90%', height:'600px',maxHeight:'70%', fontFamily:'twayair'}} >
+            <Modal isOpen={notice.show} toggle={onCloseModal}  style={{width:'600px', maxWidth:'90%', height:'600px',maxHeight:'70%', fontFamily:'nanumL'}} >
                 <ModalHeader toggle={onCloseModal}>{notice.title}</ModalHeader>
                 <ModalBody>
                     <Divider orientation="left" plain>한줄 설명</Divider>

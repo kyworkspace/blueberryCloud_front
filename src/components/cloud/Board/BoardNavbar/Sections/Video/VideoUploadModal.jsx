@@ -80,7 +80,7 @@ const VideoUploadModal=memo((props) =>{
 
     return (
         <>
-        <Modal isOpen={isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'twayair'}}>
+        <Modal isOpen={isOpen} className={className} style={{width:'600px',maxWidth:'90%', fontFamily:'nanumL'}}>
             <ModalHeader toggle={onCloseModal}>동영상 업로드</ModalHeader>
             <ModalBody>
             <VideoUpload onFileInfoHandler={setFileInfo} onThumbnailHandler={onThumbnailHandler} loading={FileUploading} setLoading={setFileUploading}/>
