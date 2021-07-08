@@ -1,10 +1,12 @@
-import React, { memo, useEffect, useRef, useState } from 'react'
+import React, { memo, useContext, useEffect, useRef, useState } from 'react'
 import {Modal,ModalHeader,ModalBody, ModalFooter, Button, Row, Col} from 'reactstrap'
-import { errorMessage } from '../../../../../../utils/alertMethod';
-import { getFolderList } from '../../../../../../utils/commonMethod';
+import { errorMessage, successMessage } from '../../../../../../utils/alertMethod';
+import { filePathMove, getFolderList } from '../../../../../../utils/commonMethod';
 import folderImage from '../../../../../../assets/images/dashboard/folder.png'
+import { CloudBoardContext } from '../../../CloudViewer';
 
 const FolderMoveModal=memo((props) =>{
+    const {Files,selectFileList} = useContext(CloudBoardContext)
     const {isOpen, className,ModalHandler} = props;
     const [Loading, setLoading] = useState(false);
     const [selectedPath, setSelectedPath] = useState('ALL')
@@ -19,6 +21,15 @@ const FolderMoveModal=memo((props) =>{
         ModalHandler(false)
     };
     const onConfirmModal =()=>{
+        const  selectedFiles = Files.filter((item)=>item.selected);
+        const body={
+            path:selectedPath,
+            fileList : selectedFiles
+        }
+        filePathMove(body).then(success=>{
+            successMessage(`${selectedFiles.length}개의 파일이 이동 되었습니다.`);
+            selectFileList(1);
+        })
         console.log(selectedPath,'저장')
     }
     const getFolderListHandler =(path)=>{

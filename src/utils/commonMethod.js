@@ -184,7 +184,7 @@ export const FileUpdate = (body) => {
     })
 }
 /**
- * 파일 경로 수정
+ * 폴더 목록 가져옴
  **/
 export const getFolderList = (body) => {
     return new Promise((resolve, reject) => {
@@ -194,6 +194,24 @@ export const getFolderList = (body) => {
                     resolve(response.data.list)
                 } else {
                     reject(response)
+                }
+            })
+            .catch(err => {
+                reject(err);
+            })
+    })
+}
+/**
+ * 파일 경로 수정
+ * **/
+export const filePathMove = (body) => {
+    return new Promise((resolve, reject) => {
+        axios.post(`${CLOUD_API}/folder/move`, body)
+            .then(res => {
+                if (res.data.success) {
+                    resolve(res.data.success)
+                } else {
+                    reject(res)
                 }
             })
             .catch(err => {
