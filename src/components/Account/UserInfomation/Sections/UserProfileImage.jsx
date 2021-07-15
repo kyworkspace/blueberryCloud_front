@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Media } from 'reactstrap';
 import { errorMessage } from '../../../../utils/alertMethod';
 import { changeProfileImage, profileInsert } from '../../../../utils/commonMethod';
@@ -6,7 +6,11 @@ import url from '../../../../route/DevUrl';
 
 const UserProfileImage=memo((props) =>{
     const {imageUrl, self} = props
-    const [profileUrl, setProfileUrl] = useState(imageUrl);
+    const [profileUrl, setProfileUrl] = useState();
+
+    useEffect(() => {
+      setProfileUrl(imageUrl)
+    }, [imageUrl])
 
     const readProfileUrl = (event) => {
         profileInsert(event.target.files)

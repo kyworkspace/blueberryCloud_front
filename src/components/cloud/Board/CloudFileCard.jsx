@@ -9,12 +9,13 @@ import url from '../../../route/DevUrl';
 const CloudFileCard = memo((props) =>{
     const {openFolder,onFileDetail,SelectionMode,Files,setFiles} = useContext(CloudBoardContext)
     const {item} = props;
-    
+    const [checked, setChecked] = useState(item.checked);
     const onCheckboxHandler =(e)=>{
+        setChecked(!checked);
         let objList = [...Files];
         objList.forEach((obj)=>{
             if(obj._id === item._id){
-                obj.selected = e.target.checked;
+                obj.selected = !checked;
             }
         });
         setFiles(objList);
@@ -61,10 +62,11 @@ const CloudFileCard = memo((props) =>{
             cardEvent = ()=>{ FileDownload(item);}
             break;
     }
+    if(SelectionMode) cardEvent = onCheckboxHandler; //선택모드일때는 체크 여부만 확인
     return (
         <li className="file-box"
          style={{marginTop:'10px',marginLeft:'10px'}}
-          key={item.filename}>
+          key={item.filename} onClick={cardEvent} style={{cursor:'pointer'}}>
             {typeMainCategory[0] === 'video'?
             <div 
                 className="file-top"
@@ -76,12 +78,12 @@ const CloudFileCard = memo((props) =>{
                     }}
                 >
                     <video src={`${url}/${item.logicPath}`} style={{width:'80%',maxHeight:'90%'}}/>
-                    {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
+                    {SelectionMode && <i className="f-14 ellips" ><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
             </div>
             :
                 cardImage
             }
-            <div className="file-bottom" onClick={cardEvent} style={{cursor:'pointer'}}>
+            <div className="file-bottom"  >
                 <div style={{whiteSpace:'nowrap' , overflow:'hidden', textOverflow:'ellipsis', width:150}}>
                     <h6>{item.originalname}</h6>
                 </div>

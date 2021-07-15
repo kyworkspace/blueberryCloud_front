@@ -5,12 +5,9 @@ import url from '../../../../route/DevUrl';
 import { errorMessage } from '../../../../utils/alertMethod';
 import { changeProfileImage, profileInsert } from '../../../../utils/commonMethod';
 const UserBackgroundImage=memo((props) =>{
+
     const {imageUrl, self} = props
-    const [backgroundStyle, setBackgroundStyle] = useState({
-        background:imageUrl ? `url(${url}/${imageUrl}) center/cover no-repeat`:`url(https://picsum.photos/1600/470)` ,
-        padding:'0px',
-        height: '470px',
-    })
+    const [backgroundStyle, setBackgroundStyle] = useState({})
     const [modifyStyle, setModifyStyle] = useState(
         {
             display:'none',
@@ -21,8 +18,16 @@ const UserBackgroundImage=memo((props) =>{
             alignItems : 'flex-start',
             padding:'20px'
         });
+    
     // 파일 업로드
     const fileUploadRef = useRef();
+    useEffect(() => {
+        setBackgroundStyle({
+            background:imageUrl ? `url(${url}/${imageUrl}) center/cover no-repeat`:`url(https://picsum.photos/1600/470)` ,
+            padding:'0px',
+            height: '470px',
+        });
+    }, [imageUrl])
 
     const readBackgroundUrl =(event)=>{
         profileInsert(event.target.files)

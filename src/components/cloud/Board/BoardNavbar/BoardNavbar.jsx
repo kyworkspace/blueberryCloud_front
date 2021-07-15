@@ -65,12 +65,11 @@ const BoardNavbar= memo(()=> {
       setSearchModal(flag)
     }
     const onMoveModalHandler=(flag)=>{ // 파일 이동 모달
-      // let selectedFiles = Files.filter((item)=>item.selected);
-      // let count = selectedFiles.length;
-      // if(count===0){
-      //     alert("선택된 파일이 없습니다.");
-      //   return;
-      // }
+      let selectedFiles = Files.filter((item)=>item.selected);
+      let count = selectedFiles.length;
+      if(count===0){
+        return infoMessage('선택된 파일이 없습니다.');
+      }
       setMoveModal(flag);
     }
     const onMoveToPrevFolder =()=>{ //이전 폴더 가기

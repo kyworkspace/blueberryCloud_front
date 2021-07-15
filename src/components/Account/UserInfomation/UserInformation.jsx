@@ -13,6 +13,7 @@ import { confirmMessage, errorMessage, successMessage } from '../../../utils/ale
 import UserPasswordChange from './Sections/UserPasswordChange';
 import { Space } from 'antd';
 import UserPhotos from './Sections/UserPhotos';
+import UserMediaList from './Sections/UserMediaList';
 const UserInformation = (props) => {
   const user = useSelector(state => state.user);
   const userId = props.match.params.userId;
@@ -22,50 +23,42 @@ const UserInformation = (props) => {
 
   const [self, setSelf] = useState(false);
   const [friend, setFriend] = useState(false);
-  const [mediaList, setMediaList] = useState([]);
-  const [skip, setSkip] = useState(0);
-  const [limit, setLimit] = useState(12);
-  const [mediaHasMore, setMediaHasMore] = useState(true)
   const targetID = useRef(userId);
-
   
   useEffect(() => {
+    
     if(user.userData){
       if(!user.userData.isAuth) return false;
       if(userId === 'self'){
+        setSelf(true)
         targetID.current = user.userData._id;
       }else{
+        setSelf(false)
         targetID.current = userId;
       }
       getUserInfoHandler(targetID.current);
-      getUserMediaHandler(targetID.current);
     }
   }, [user,userId]);
 
   const getUserInfoHandler =(userId)=>{
     const body ={ userId };
     getUserInfo(body)
-    .then(info=>{
-      setUserInfo(info)
-      if(user.userData._id === info._id){ //본인인지 아닌지
-        setSelf(true)
-      }else{
-        setSelf(false)
+      .then(info=>{
+        setUserInfo(info)
         getFriendsList(3) //친구인지 확인
-        .then(list=>{
-          let user = list.filter(x=>x._id === userId);
-          if(user.length > 0){
-            setFriend(true);
-          }else{
-            setFriend(false);
-          }
+          .then(list=>{
+            let user = list.filter(x=>x._id === userId);
+            if(user.length > 0){
+              setFriend(true);
+            }else{
+              setFriend(false);
+            }
 
-        })
-      }
-    })
-    .catch(err=>{
-      errorMessage('유저정보를 불러오는데 오류가 발생하였습니다.')
-    })
+          })
+      })
+      .catch(err=>{
+        errorMessage('유저정보를 불러오는데 오류가 발생하였습니다.')
+      })
 
   }
   const onFriendAdd =()=>{
@@ -94,26 +87,7 @@ const UserInformation = (props) => {
         })
     })
   }
-  const getUserMediaHandler =(id)=>{
-    const body ={
-      userId:id,
-      skip,
-      limit
-    }
-    getUserMediaList(body)
-    .then(list=>{
-
-      setMediaList([...mediaList,...list]);
-      setSkip(skip+limit);
-
-      if([...mediaList,...list].length < skip+limit){
-        setMediaHasMore(false)
-      }
-    })
-    .catch(err=>{
-      errorMessage("회원 사진 정보를 불러오는데 오류가 발생하였습니다.")
-    })
-  }
+  
   
  
   return (
@@ -159,33 +133,7 @@ const UserInformation = (props) => {
             }
             
           </div>
-          <Row >
-            <Col sm="12">
-                <Card>
-                    <CardHeader>
-                        <h5>{'회원 자료'}</h5>
-                    </CardHeader>
-                    <CardBody className="my-gallery row gallery-with-description">
-                      
-                    {mediaList.map((item,idx)=>(
-                      <UserPhotos item={item}/>
-                    ))}
-                    <Row style={{width:'100%'}}>
-                        <Col xs={12} style={{display:'grid', justifyContent:'center'}}>
-                          {
-                            mediaHasMore ? 
-                            <a href={'javascript:void(0)'} onClick={()=>getUserMediaHandler(targetID.current)}>더보기</a>
-                            :
-                            <a href={'javascript:void(0)'} >모든 목록을 불러왔습니다.</a>
-                          }
-                          
-                        </Col>
-                      </Row>
-                    </CardBody>
-                </Card>
-                
-            </Col>
-          </Row>
+          <UserMediaList id = {targetID.current}/>
         </Container>
             <UserInfoEditModal isOpen = {profileEditModal} ModalHandler = {setProfileEditModal} item={userInfo}/>
             <UserPasswordChange isOpen = {passwordChangeModal} ModalHandler = {setPasswordChangeModal}/>
