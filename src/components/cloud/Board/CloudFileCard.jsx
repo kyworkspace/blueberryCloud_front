@@ -28,13 +28,7 @@ const CloudFileCard = memo((props) =>{
     cardImage =(
         <div 
             className="file-top"
-            style={{
-                backgroundImage:image
-                , height:'200px' 
-                , backgroundSize:'70%'
-                , backgroundPosition:'center'
-                , backgroundRepeat:'no-repeat'
-                }}
+            style={image}
             >
                 {SelectionMode && <i className="f-14 ellips" style={{cursor:'pointer'}}><Checkbox onChange={onCheckboxHandler} checked={item.selected}/></i>}
         </div>
