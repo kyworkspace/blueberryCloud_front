@@ -31,6 +31,7 @@ import NoticeDetailModal from './components/Notice/NoticeDetailModal';
 import ContectMe from './components/ContectMe/ContectMe';
 //moment
 import 'moment/locale/ko';
+import Forgetpwd from './components/Login/forgetpwd';
 //axios
 // axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "/" : "http://localhost:5000/"
 
@@ -56,6 +57,7 @@ const Root = (props) =>  {
         <BrowserRouter basename={`/`}>
         <Switch>
           <Route exact path={`${process.env.PUBLIC_URL}/user/login`} component={Auth(LoginPage,false)}/>
+          <Route exact path={`${process.env.PUBLIC_URL}/user/forgetPwd`} component={Auth(Forgetpwd,false)}/>
           <Route exact path={`${process.env.PUBLIC_URL}/user/register`} component={Auth(RegisterPage,false)}/>
           <App>
             <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {

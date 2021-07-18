@@ -49,7 +49,7 @@ function UserPasswordChange(props) {
                         현재 비밀번호
                     </Col>
                     <Col xs={14}>
-                        <Input type={togglePassword ?  "text" : "password" } value={password} onChange={(e) => setPassword(e.currentTarget.value)}/>
+                        <Input type={togglePassword ?  "text" : "password" } value={password} onChange={(e) => setPassword(e.currentTarget.value)} name="login[password]"/>
                     </Col>
                     <Col xs={2}>
                         <div onClick={() => HideShowPassword(togglePassword)}>{togglePassword ? 'hide' : 'show'} </div>
@@ -58,13 +58,13 @@ function UserPasswordChange(props) {
                         신규 비밀번호
                     </Col>
                     <Col xs={16}>
-                    <Input type={togglePassword ?  "text" : "password" } value={newPassword} onChange={(e) => setNewPassword(e.currentTarget.value)} />
+                    <Input type={togglePassword ?  "text" : "password" } value={newPassword} onChange={(e) => setNewPassword(e.currentTarget.value)}  name="login[password]" />
                     </Col>
                     <Col xs={8}>
                         신규 비밀번호 확인
                     </Col>
                     <Col xs={16}>
-                    <Input type={togglePassword ?  "text" : "password" }  value={newPasswordConfirm} onChange={(e) => setNewPasswordConfirm(e.currentTarget.value)} />
+                    <Input type={togglePassword ?  "text" : "password" }  value={newPasswordConfirm} onChange={(e) => setNewPasswordConfirm(e.currentTarget.value)}  name="login[password]" />
                     </Col>
                 </Row>
                 </FormGroup>

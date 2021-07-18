@@ -36,7 +36,8 @@ const Register = (props) => {
     const [validCheck, setValidCheck] = useState(false);
     const [authInput, setAuthInput] = useState(false);
     const [authValue, setAuthValue] = useState("");
-    const authNumberRef = useRef()
+    const [passwordError, setPasswordError] = useState(false);
+    const authNumberRef = useRef();
 
     const onEmailHandler =(e)=>{
       setEmail(e.currentTarget.value)
@@ -47,7 +48,17 @@ const Register = (props) => {
     }
 
     const onPasswordHandler = (e) => {
-      setPassword(e.target.value)
+      let text = e.target.value
+      let korCheck = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+      text = text.replace(korCheck,"");
+      let pwcheck = /^(?=.*[0-9])(?=.*[a-z]).{8,}/;
+      let flag = pwcheck.test(text);
+      if(!flag){
+        setPasswordError(true)
+      }else{
+        setPasswordError(false)
+      }
+      setPassword(text)
     }
     const onPasswordCheckHandler = (e) => {
       setPasswordCheck(e.target.value)
@@ -159,15 +170,16 @@ const Register = (props) => {
                     <Label className="col-form-label">비밀번호</Label>
                     <Input className="form-control" type={togglePassword ?  "text" : "password" } name="login[password]" value={password} onChange={(e) => onPasswordHandler(e)} required="" placeholder="*********"/>
                     <div className="show-hide" onClick={() => HideShowPassword(togglePassword)}><span className={togglePassword ? "" : "show"}></span></div>
+                    {passwordError && <div style={{color:'red'}}>영문자 최소 1개, 숫자 최소 1개를 필요로 합니다(최소 8자)</div>}
                     <Label className="col-form-label">비밀번호 재확인</Label>
                     <Input className="form-control" type="password" name="login[password]" value={passwordCheck} onChange={(e) => onPasswordCheckHandler(e)} required="" placeholder="*********"/>
                   </FormGroup>
                   <div className="form-group mb-0">
                     <div className="checkbox ml-3">
                       <Input id="checkbox1" type="checkbox"/>
-                      <Label className="text-muted" for="checkbox1">{"Agree with"}<a className="ml-2" href="#javascript">{PrivacyPolicy}</a></Label>
+                      <Label className="text-muted" for="checkbox1">{"Agree with"}<a className="ml-2" href="#javascript">Privacy Policy</a></Label>
                     </div>
-                    <Button color="primary" className="btn-block" onClick={onRegisterHandler} disabled={!validCheck}>{CreateAccount}</Button>
+                    <Button color="primary" className="btn-block" onClick={onRegisterHandler} disabled={!validCheck||passwordError}>Create Account</Button>
                   </div>
                   <h6 className="text-muted mt-4 or">{"Or signup with"}</h6>
                   <div className="social mt-4">

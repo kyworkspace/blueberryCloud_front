@@ -17,6 +17,7 @@ const Logins = (props) => {
 
   const [password,setPassword] = useState("")
   const [selected, setSelected] = useState("firebase");
+  const [passwordError, setPasswordError] = useState(false);
   const [Email, setEmail] = useState(initialEmail)
   const [RememberMe, setRememberMe] = useState(rememberMeChecked);
 
@@ -24,7 +25,10 @@ const Logins = (props) => {
     setEmail(e.currentTarget.value);
   }
   const handleChange = (e) => {
-    setPassword(e.target.value)
+    let text = e.target.value
+    let korCheck = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+    text = text.replace(korCheck,"");
+    setPassword(text)
   }
   const HideShowPassword  = (tPassword) => {
     setTogglePassword(!tPassword)
@@ -60,6 +64,9 @@ const Logins = (props) => {
         })
     },500)
   }
+  const onPwdSearch=()=>{
+    props.history.push("/user/forgetPwd");
+  }
 
   return (
       <Container fluid={true} className="p-0">
@@ -93,7 +100,7 @@ const Logins = (props) => {
                           <Label className="text-muted" for="checkbox1">아이디 기억하기</Label>
                         </div>
                         {/* 비밀번호 찾기 */}
-                        <a className="link" href="#javascript">{ForgotPassword}</a>
+                        <a className="link" href="javascript:void(0)" onClick={onPwdSearch}>비밀번호 찾기</a>
                         {/* 로그인 버튼 */}
                         <Button color="primary" className="btn-block" onClick={onLoginHandler}>Access To Bluberry CLOUD(로그인)</Button>
                       </div>
@@ -116,7 +123,7 @@ const Logins = (props) => {
                         </div>
                       </div>
                       {/* 회원가입 */}
-                      <p className="mt-4 mb-0">{"Don't have account?"}<a className="ml-2" href={`${process.env.PUBLIC_URL}/user/register`}>{CreateAccount}</a></p>
+                      <p className="mt-4 mb-0">계정이 없으신가요?<a className="ml-2" href={`${process.env.PUBLIC_URL}/user/register`}>계정 만들기</a></p>
                     </Form>
               </div>
             </div>

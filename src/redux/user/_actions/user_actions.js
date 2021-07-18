@@ -6,7 +6,8 @@ import {
     AUTH_USER,
     LOGOUT_USER,
     UPDATE_USER,
-    PASSWORD_UPDATE
+    PASSWORD_UPDATE,
+    PASSWORD_RESET
 } from './types';
 
 
@@ -60,6 +61,13 @@ export function setPasswordUpdate(body) {
     const request = axios.post(`${USER_API}/password/update`, body).then(res => res.data);
     return {
         type: PASSWORD_UPDATE,
+        payload: request
+    }
+}
+export function setPasswordReset(body) {
+    const request = axios.post(`${USER_API}/password/reset`, body).then(res => res.data);
+    return {
+        type: PASSWORD_RESET,
         payload: request
     }
 }
