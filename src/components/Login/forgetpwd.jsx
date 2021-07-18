@@ -92,8 +92,8 @@ const Forgetpwd = (props) => {
           return infoMessage('입력한 신규 비밀번호가 다릅니다.')
       }
       const body={
-          password : password,
-          newPassword : passwordCheck
+          email: Email,
+          newPassword : password
       }
       dispatch(setPasswordReset(body))
       .then(res=>{
