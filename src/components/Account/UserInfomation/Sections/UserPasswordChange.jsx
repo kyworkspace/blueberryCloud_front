@@ -11,13 +11,27 @@ function UserPasswordChange(props) {
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
-    const [togglePassword,setTogglePassword] = useState(false)
+    const [togglePassword,setTogglePassword] = useState(false);
+    const [passwordError, setPasswordError] = useState(true);
 
     const HideShowPassword  = (tPassword) => {
         setTogglePassword(!tPassword)
       }
     const onCloseModal=()=>{
         ModalHandler(false);
+    }
+    const onChangeNewPassword =(e)=>{
+        let text = e.target.value
+        let korCheck = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+        text = text.replace(korCheck,"");
+        let pwcheck = /^(?=.*[0-9])(?=.*[a-z]).{8,}/;
+        let flag = pwcheck.test(text);
+        if(!flag){
+            setPasswordError(true)
+        }else{
+            setPasswordError(false)
+        }
+        setNewPassword(text)
     }
     const onPasswordChange=()=>{
         if(newPassword !== newPasswordConfirm){
@@ -58,8 +72,13 @@ function UserPasswordChange(props) {
                         신규 비밀번호
                     </Col>
                     <Col xs={16}>
-                    <Input type={togglePassword ?  "text" : "password" } value={newPassword} onChange={(e) => setNewPassword(e.currentTarget.value)}  name="login[password]" />
+                    <Input type={togglePassword ?  "text" : "password" } value={newPassword} onChange={onChangeNewPassword}  name="login[password]" />
                     </Col>
+                    {passwordError &&
+                    <Col xs={24}>
+                         <div style={{color:'red'}}>영문자 최소 1개, 숫자 최소 1개를 필요로 합니다(최소 8자)</div>
+                    </Col>
+                    }
                     <Col xs={8}>
                         신규 비밀번호 확인
                     </Col>
@@ -73,7 +92,7 @@ function UserPasswordChange(props) {
             </ModalBody>
             
             <ModalFooter>
-                <Button color="primary" onClick={onPasswordChange}>
+                <Button color="primary" onClick={onPasswordChange} disabled={passwordError}>
                     저장
                 </Button>
                 <Button onClick={()=>{ModalHandler(false)}}>
