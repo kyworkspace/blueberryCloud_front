@@ -40,7 +40,7 @@ export const MENUITEMS = [
             {
                 title: '개발 정보', icon: Headphones, type: 'sub',active: false, children: [
                         { title: 'Contact Me', type: 'link', path: `${process.env.PUBLIC_URL}/support/developerInfo` },
-                        { title: '건의함', type: 'link', path: `${process.env.PUBLIC_URL}/support/suggestion` },
+                        // { title: '건의함', type: 'link', path: `${process.env.PUBLIC_URL}/support/suggestion` },
                         { title: '공지사항', type: 'link', path: `${process.env.PUBLIC_URL}/support/notice` },
                 ]
             }

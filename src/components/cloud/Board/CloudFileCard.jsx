@@ -59,8 +59,8 @@ const CloudFileCard = memo((props) =>{
     if(SelectionMode) cardEvent = onCheckboxHandler; //선택모드일때는 체크 여부만 확인
     return (
         <li className="file-box"
-         style={{marginTop:'10px',marginLeft:'10px'}}
-          key={item.filename} onClick={cardEvent} style={{cursor:'pointer'}}>
+         style={{margin:'0.2rem',cursor:'pointer'}}
+          key={item.filename} onClick={cardEvent} >
             {typeMainCategory[0] === 'video'?
             <div 
                 className="file-top"
